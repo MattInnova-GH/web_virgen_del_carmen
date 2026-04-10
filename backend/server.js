@@ -10,10 +10,7 @@ const appRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Middlewares básicos
-
-// cambios en rutas
+// middleware
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -27,10 +24,17 @@ app.use(
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Servir archivos estáticos (HTML, CSS, JS)
+// archivos estáticos
 app.use(express.static(path.join(__dirname, 'static')));
 
+app.use('/api', appRoutes.AcademicPersonalRoutes);
+app.use('/api', appRoutes.CareerRoutes);
+app.use('/api', appRoutes.CommentsRoutes);
+app.use('/api', appRoutes.ContactsRoutes);
+app.use('/api', appRoutes.InvestigationsRoutes);
 app.use('/api', appRoutes.NewsRoutes);
+app.use('/api', appRoutes.PressReleasesRoutes);
+app.use('/api', appRoutes.UsersRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'templates', 'index.html'));
