@@ -10,8 +10,7 @@ const appRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-// Middlewares básicos
+// middleware
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -25,7 +24,7 @@ app.use(
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Servir archivos estáticos (HTML, CSS, JS)
+// archivos estáticos
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.use('/api', appRoutes.AcademicPersonalRoutes);
