@@ -1,6 +1,6 @@
-const buildCommmentsQuery = (where = {}, order = []) => ({
+const buildCommentsQuery = (where = {}, order = []) => ({
     where,
     order
 });
 
-module.exports = buildCommmentsQuery;
+module.exports = buildCommentsQuery;
