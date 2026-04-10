@@ -12,6 +12,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares básicos
+
+// cambios en rutas
 app.use(
     helmet({
         contentSecurityPolicy: {
