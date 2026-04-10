@@ -10,8 +10,8 @@ exports.createNew = async (req, res) => {
             title, content, img_url, description
         });
         return res.status(201).json(newContent);
-    } catch (e) {
-        console.error(e.message);
+    } catch (error) {
+        console.error(error.message);
         res.status(500).json({message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'});
     }
 }
@@ -20,12 +20,31 @@ exports.getNews = async(req, res) => {
     try {
         const query = buildNewsQuery(
             {},
-            [['createdAt', 'ASC']]
+            [['createdAt', 'DESC']]
         )
         const allNews = await db.News.findAll(query);
         res.status(200).json(allNews);
     } catch (e) {
         console.error(e.message);
         res.status(500).json({message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'});
+    }
+}
+
+exports.deleteNews = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const news = await db.News.findOne({
+            where: {id, status: true},
+        });
+        if (!news)
+            return res.status(404).json({message: 'Noticia no encontrada.'});
+
+        await news.update({status: false});
+        return res.status(200).json({message: 'Noticia desactivada correctamente.'});
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
     }
 }
