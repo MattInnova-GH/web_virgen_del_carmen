@@ -1,45 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/style.css">
-    <title>I.E.S. Virgen del Carmen - Administración</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Admin - Virgen del Carmen</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/css/dashboard.css">
 </head>
 
 <body>
-    <header>
-    <div>
-        <figure>
-            <a href="/admin">
-                <img src="/img/logo.png">
-            </a>
-        </figure>
-    </div>
-    <nav>
-        <ul>
-            <li><a href="#0">Noticias</a></li>
-            <li><a href="#1">Trayectoria</a></li>
-            <li><a href="#2">Investigaciones</a></li>
-            <li><a href="#3">Administración</a></li>
-            <li><a href="#4">Usuarios</a></li>
-            <li><a href="#5">Personal</a></li>
-            <li><a href="#6">Contacto</a></li>
-        </ul>
-    </nav>
-    <button>Transparencia</button>
-</header>
-    <h1>INSTITUTO DE EDUCACIÓN SUPERIOR</h1>
-    <div>
-        <section>
-            <div id="news">
-                <h2>Últimas noticias</h2>
-            </div>
-        </section>
-    </div>
+
+  <!-- HEADER -->
+  <header class="topbar">
+    <img src="/img/logo.png" class="logo">
+    <h1>I.E.S.P Virgen del Carmen</h1>
+  </header>
+
+  <!-- CONTENEDOR -->
+  <div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <ul>
+        <li data-section="news">Noticias</li>
+        <li data-section="trayectoria">Trayectoria</li>
+        <li data-section="investigaciones">Investigaciones</li>
+        <li data-section="admin">Administración</li>
+        <li data-section="usuarios">Usuarios</li>
+        <li data-section="personal">Personal</li>
+        <li data-section="contacto">Contacto</li>
+      </ul>
+    </aside>
+
+    <!-- PANEL DERECHO -->
+    <main class="content" id="content">
+      <h2>Bienvenido, Admin</h2>
+      <p>Selecciona una opción del menú.</p>
+    </main>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2026 Todos los Derechos Reservados
+  </footer>
+
+  <!-- JS -->
+  <script src="/js/dashboard.js"></script>
 </body>
-<footer>
-<small>© 2026 Todos los Derechos Reservados</small>
-</footer>
 </html>

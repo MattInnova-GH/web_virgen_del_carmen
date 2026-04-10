@@ -1,6 +1,6 @@
-const buildAcadmeicPersonalQuery = (where = {}, order = []) => ({
+const buildAcademicPersonalQuery = (where = {}, order = []) => ({
     where,
     order
 });
 
-module.exports = buildAcadmeicPersonalQuery;
+module.exports = buildAcademicPersonalQuery;

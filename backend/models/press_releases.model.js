@@ -25,7 +25,7 @@ const PressReleases = sequelize.define('Press_Release', {
         defaultValue: true
     }
 }, {
-    tableName: 'press_release',
+    tableName: 'press_releases',
     timestamps: true
 });
 

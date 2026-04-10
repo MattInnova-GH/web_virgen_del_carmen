@@ -3,5 +3,6 @@ const router = express.Router();
 const CareerControllers = require('../controllers/career.controller');
 
 router.post('/career/create', CareerControllers.createCareer);
+router.get('/career/list', CareerControllers.getCareer);
 
 module.exports = router;
