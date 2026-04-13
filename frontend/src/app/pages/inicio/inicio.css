@@ -1,0 +1,218 @@
+
+/* HERO */
+.hero {
+  position: relative;
+  height: 520px;
+}
+
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Overlay */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+/* Texto */
+.hero-content {
+  position: absolute;
+  top: 90px;
+  left: 60px;
+  color: white;
+}
+
+.hero-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+}
+
+.hero-content p {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 100%;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+.buttons-section {
+  padding-left: 110px;
+  margin-top: -80px;
+  display: flex;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* CARDS */
+.btn-card {
+  width: 130px;
+  height: 160px;
+  background: #2f3f7f;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-card .icon {
+  margin-bottom: 10px;
+}
+
+.btn-card span {
+  font-size: 14px;
+}
+
+/* BOTÓN BASE */
+.licencia {
+  position: relative;
+  overflow: visible; /* 🔥 IMPORTANTE */
+}
+
+/* POPUP (OCULTO) */
+.licencia-popup {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 140px;
+  height: 160px;
+
+  border-radius: 10px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    rgba(47, 63, 127, 0.9),
+    rgba(47, 63, 127, 0.4)
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+  transform: translateX(-20px) scale(0.95);
+  transition: all 0.4s ease;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* IMAGEN */
+.licencia-popup img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* HOVER → APARECE */
+.licencia:hover .licencia-popup {
+  opacity: 1;
+  transform: translateX(10px) scale(1);
+}
+
+/* SALIDA SUAVE */
+.licencia-popup {
+  pointer-events: none;
+}
+/* Botones laterales */
+.side-buttons {
+  position: absolute;
+  right: 20px;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.side-item {
+  display: flex;
+  align-items: center;
+}
+
+.side-btn {
+  width: 55px;
+  height: 55px;
+  background: #3f4f8f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.side-btn img {
+  width: 32px;
+  height: 32px;
+}
+
+/* Texto animado */
+.side-text {
+  position: absolute;
+  right: 70px; /* se posiciona a la izquierda del botón */
+  color: #ffffff;
+  font-weight: 900;
+  white-space: nowrap;
+
+  opacity: 0;
+  transform: translateX(20px); /* empieza oculto hacia la derecha */
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s;
+}
+
+.side-item:hover .side-text {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* SALIDA: REGRESA AL BOTÓN */
+.side-item:not(:hover) .side-text {
+  transform: translateX(20px);
+  opacity: 0;
+}
+/* WhatsApp */
+.whatsapp {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  width: 55px;
+  height: 55px;
+  background: #25d366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Iconos */
+.icon i {
+  font-size: 58px;
+}
+
+.side-btn i {
+  font-size: 18px;
+}
+
+.whatsapp i {
+  color: white;
+  font-size: 26px;
+}
