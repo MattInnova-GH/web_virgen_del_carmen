@@ -4,5 +4,7 @@ const InvestigationsControllers = require('../controllers/investigations.control
 
 router.post('/investigations/create', InvestigationsControllers.createInvestigation);
 router.get('/investigations/list', InvestigationsControllers.getInvestigations);
+router.put('/investigations/update/:id', InvestigationsControllers.updateInvestigation);
+router.delete('/investigations/delete/:id', InvestigationsControllers.deleteInvestigations);
 
 module.exports = router;

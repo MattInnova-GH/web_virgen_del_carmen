@@ -3,11 +3,11 @@ const builUsersQuery = require('../helpers/users.query');
 
 exports.createUsers = async (req, res) => {
     try {
-        const {names, last_name, username, password, description} = req.body;
-        if (!names || !last_name || !username || !password)
+        const {names, last_names, username, password, description} = req.body;
+        if (!names || !last_names || !username || !password)
             return res.status(400).json({error: 'Complete el campos obligatorios.'});
 
-        const newUser = await db.Users.create({names, last_name, username, password, description});
+        const newUser = await db.Users.create({names, last_names, username, password, description});
 
         return res.status(201).json(newUser);
     } catch (error) {
@@ -45,6 +45,31 @@ exports.deleteUser = async (req, res) => {
 
         await user.update({status: false});
         return res.status(200).json({message: 'Usuario desactivado correctamente.'});
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
+    }
+}
+
+exports.updateUser = async (req, res) => {
+    const {id} = req.params;
+    const {names, last_names, username, password, description} = req.body;
+    try {
+        const users = await db.Users.findByPk(id);
+        if(!users)
+            return res.status(404).json({message: 'Usuario no encontrado.'});
+
+        users.names = names;
+        users.last_name = last_names;
+        users.username = username;
+        users.password = password;
+        users.description = description;
+
+        await users.save();
+        res.status(200).json(users);
+
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({

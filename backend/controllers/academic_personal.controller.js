@@ -10,7 +10,6 @@ exports.createAcademicPersonal = async (req, res) => {
                 error: 'Completo todos los campos.'
             });
         }
-
         const newAcademicPersonal = await db.AcademicPersonal.create({
             type,
             names,
@@ -18,9 +17,7 @@ exports.createAcademicPersonal = async (req, res) => {
             grade,
             description
         });
-
-        return res.status(201).json(newInvestigation);
-
+        return res.status(201).json(newAcademicPersonal);
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({
@@ -56,6 +53,30 @@ exports.deleteAcademicPersonal = async (req, res) => {
 
         await academicPersonal.update({status: false});
         return res.status(200).json({message: 'Datos de personal académico desactivados correctamente.'});
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
+    }
+}
+
+exports.updateAcademicPersonal = async (req, res) => {
+    const {id} = req.params;
+    const {type, names, last_name, grade, description } = req.body;
+    try {
+        const academicPersonal =  await db.AcademicPersonal.findByPk(id);
+        if(!academicPersonal)
+            return res.status(404).json({message: 'Personal académico no encontrado.'});
+
+        academicPersonal.type = type;
+        academicPersonal.names = names;
+        academicPersonal.last_name = last_name;
+        academicPersonal.grade = grade;
+        academicPersonal.description = description;
+
+        await academicPersonal.save();
+        res.status(200).json(academicPersonal);
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({
