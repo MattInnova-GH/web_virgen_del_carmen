@@ -70,3 +70,34 @@ exports.deleteCareer = async (req, res) => {
         });
     }
 }
+
+exports.updateCareer = async (req, res) => {
+    const {id} = req.params;
+    const {
+        history,
+        mision,
+        vision,
+        values,
+        description
+    } = req.body;
+    try {
+        const career = await db.Career.findByPk(id);
+        if(!career)
+            return res.status(404).json({message: 'Trayectoria no encontrada.'});
+
+        career.history = history;
+        career.mision = mision;
+        career.vision = vision;
+        career.values = values;
+        career.description = description;
+
+        await career.save();
+        res.status(200).json(career);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
+    }
+}
+
