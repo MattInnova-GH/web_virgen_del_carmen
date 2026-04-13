@@ -8,10 +8,6 @@ const Contacts = sequelize.define('Contacts', {
         primaryKey: true,
         allowNull: false
     },
-    icon_img_url: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
     phone: {
         type: DataTypes.TEXT,
         allowNull: false
