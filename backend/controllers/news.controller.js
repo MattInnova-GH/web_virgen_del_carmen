@@ -19,7 +19,7 @@ exports.createNew = async (req, res) => {
 exports.getNews = async(req, res) => {
     try {
         const query = buildNewsQuery(
-            {},
+            {status: true},
             [['createdAt', 'DESC']]
         )
         const allNews = await db.News.findAll(query);
@@ -41,6 +41,31 @@ exports.deleteNews = async (req, res) => {
 
         await news.update({status: false});
         return res.status(200).json({message: 'Noticia desactivada correctamente.'});
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
+    }
+}
+
+exports.updateNews = async (req, res) => {
+    const {id} = req.params;
+    const {title, content, img_url, description} = req.body;
+
+    try {
+        const news = await db.News.findByPk(id);
+
+        if(!news)
+            return res.status(404).json({message: 'Noticia no encontrada.'});
+    
+        news.title = title;
+        news.content = content;
+        news.img_url = img_url;
+        news.description = description;
+
+        await news.save();
+        res.status(200).json(news);
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({
