@@ -1,0 +1,29 @@
+<!-- Layout principal -->
+<div class="becas-layout">
+
+  <!-- Sidebar izquierda con lista de documentos -->
+  <div class="docs-sidebar">
+    <div
+      *ngFor="let doc of documentos"
+      class="doc-item"
+      [class.activo]="doc === documentoActivo"
+      (click)="seleccionarDocumento(doc)"
+    >
+      <i class="fas fa-file-pdf"></i>
+      {{ doc.titulo }}
+    </div>
+  </div>
+
+  <!-- Visor de PDF -->
+  <div class="pdf-viewer">
+    <iframe
+      [src]="pdfUrl"
+      width="100%"
+      height="560px"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+    ></iframe>
+  </div>
+
+</div>
