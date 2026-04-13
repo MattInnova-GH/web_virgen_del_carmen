@@ -1,0 +1,164 @@
+
+<!-- Transparencia Section -->
+<section class="transparencia-section">
+  <div class="transparencia-content">
+    <h1>Transparencia</h1>
+    <p>
+      El Instituto de Educación  Superior Pedagógico Publico Virgen del Carmen, mediante la transparencia institucional agrega varios contenidos para conocimiento  de los estudiantes y publico en general
+    </p>
+    <div class="quick-buttons">
+      <button class="quick-btn" data-section="Programas">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Programas</span>
+      </button>
+      <button class="quick-btn" data-section="Horarios">
+        <i class="fas fa-calendar-alt"></i>
+        <span>Horarios</span>
+      </button>
+    </div>
+  </div>
+  <div class="sidebar">
+    <a
+      href="/becas"
+      class="sidebar-item"
+      data-tooltip="Información sobre becas disponibles"
+    >
+      <div class="sidebar-item-content">
+        <i class="fas fa-pencil-alt"></i>
+        <span>Becas y<br />Créditos</span>
+      </div>
+      <div class="expand-icon"><i class="fas fa-arrow-right"></i></div>
+    </a>
+    <a
+      href="/costos"
+      class="sidebar-item"
+      data-tooltip="Detalle de costos"
+    >
+      <div class="sidebar-item-content">
+        <i class="fas fa-dollar-sign"></i>
+        <span>Costos</span>
+      </div>
+      <div class="expand-icon"><i class="fas fa-arrow-right"></i></div>
+    </a>
+    <a
+      href="/docentes"
+      class="sidebar-item"
+      data-tooltip="Información del cuerpo docente"
+    >
+      <div class="sidebar-item-content">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <span>Docentes</span>
+      </div>
+      <div class="expand-icon"><i class="fas fa-arrow-right"></i></div>
+    </a>
+  </div>
+</section>
+
+<!-- Investigacion Section -->
+<section class="investigacion-section">
+  <div class="investigacion-content">
+    <h2>Investigación</h2>
+    <!-- Carrusel de Investigación -->
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item" [class.active]="currentSlide === 0">
+            <img
+              src="images/image12.png"
+              alt="Investigación 1"
+            />
+            <div class="carousel-content">
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia
+                purus malesuada, cras ligula est arcu ....
+              </p>
+              <strong>Proyecto de Innovación 2024</strong>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item" [class.active]="currentSlide === 1">
+            <img
+              src="images/image12.png"
+              alt="Investigación 2"
+            />
+            <div class="carousel-content">
+              <p>
+                Descubriendo nuevos horizontes en la investigación educativa y
+                tecnológica para el futuro.
+              </p>
+              <strong>Laboratorio de Investigación</strong>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item" [class.active]="currentSlide === 2">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1661503228332-03778ab6d6a1?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cmV1bmklQzMlQjNufGVufDB8fDB8fHww"
+              alt="Investigación 3"
+            />
+            <div class="carousel-content">
+              <p>
+                Estudiantes y docentes trabajando juntos en proyectos de
+                investigación aplicada.
+              </p>
+              <strong>Jornadas de Investigación 2024</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botones de navegación -->
+        <button class="carousel-control prev" aria-label="Anterior" (click)="prevSlide()" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control next" aria-label="Siguiente" (click)="nextSlide()" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Indicadores -->
+        <div class="carousel-indicators">
+          <button class="indicator" [class.active]="currentSlide === 0" (click)="goToSlide(0)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
+          <button class="indicator" [class.active]="currentSlide === 1" (click)="goToSlide(1)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
+          <button class="indicator" [class.active]="currentSlide === 2" (click)="goToSlide(2)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="right-panel">
+    <button class="btn-estadisticas" data-section="Estadísticas">
+      <i class="fas fa-chart-line"></i>
+      <span>ESTADISTICAS</span>
+    </button>
+
+    <div class="banner-licencia-moderno">
+      <!-- Icono award GRANDE en esquina superior IZQUIERDA -->
+      <div class="award-badge award-badge-top-left award-badge-small">
+        <i class="fas fa-award"></i>
+      </div>
+
+      <img
+        src="images/lic.jpeg"
+        alt="Licencia Institucional"
+        class="banner-image"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- Info Cards -->
+<section class="info-cards">
+  <div class="info-card" data-section="Reglamento">
+    <i class="fas fa-file-alt"></i>
+    <span>Reglamento</span>
+  </div>
+  <div class="info-card" data-section="Inversiones">
+    <i class="fas fa-home"></i>
+    <span>Inversiones</span>
+  </div>
+  <div class="info-card" data-section="Procedimientos">
+    <i class="fas fa-user-tie"></i>
+    <span>Procedimientos</span>
+  </div>
+</section>
+
