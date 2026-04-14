@@ -11,22 +11,29 @@ import { RouterLink } from '@angular/router';
 })
 export class Transparencia implements OnInit, OnDestroy {
   currentSlide = 0;
-  private autoPlayInterval: any;
-  private readonly autoPlayDelay = 3000;
+  private intervalId: any;
+
+  readonly totalSlides = 3;
+  readonly delay = 4000;
 
   ngOnInit() {
-    this.initCarousel();
-    this.initScrollAnimations();
-    this.initButtonListeners();
+    this.startAutoPlay();
   }
 
   ngOnDestroy() {
     this.stopAutoPlay();
   }
 
-  // Carousel methods
-  private initCarousel() {
-    this.startAutoPlay();
+  // CONTROL DEL CARRUSEL
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    this.resetAutoPlay();
+  }
+
+  prevSlide() {
+    this.currentSlide = (this.currentSlide - 1 + this.totalSlides) % this.totalSlides;
+    this.resetAutoPlay();
   }
 
   goToSlide(index: number) {
@@ -34,74 +41,25 @@ export class Transparencia implements OnInit, OnDestroy {
     this.resetAutoPlay();
   }
 
-  nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % 3;
-    this.resetAutoPlay();
-  }
-
-  prevSlide() {
-    this.currentSlide = (this.currentSlide - 1 + 3) % 3;
-    this.resetAutoPlay();
-  }
+  // 🔁 AUTOPLAY
 
   startAutoPlay() {
-    if (this.autoPlayInterval) return;
-    this.autoPlayInterval = setInterval(() => {
-      this.nextSlide();
-    }, this.autoPlayDelay);
+    if (this.intervalId) return;
+
+    this.intervalId = setInterval(() => {
+      this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+    }, this.delay);
   }
 
   stopAutoPlay() {
-    if (this.autoPlayInterval) {
-      clearInterval(this.autoPlayInterval);
-      this.autoPlayInterval = null;
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      this.intervalId = null;
     }
   }
 
   private resetAutoPlay() {
     this.stopAutoPlay();
     this.startAutoPlay();
-  }
-
-  // Scroll animations
-  private initScrollAnimations() {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px',
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          (entry.target as HTMLElement).style.opacity = '1';
-          (entry.target as HTMLElement).style.transform = 'translateY(0)';
-        }
-      });
-    }, observerOptions);
-
-    setTimeout(() => {
-      document.querySelectorAll('.info-card, .carousel-item, .sidebar-item').forEach((el, index) => {
-        (el as HTMLElement).style.opacity = '0';
-        (el as HTMLElement).style.transform = 'translateY(20px)';
-        (el as HTMLElement).style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
-        observer.observe(el);
-      });
-    }, 100);
-  }
-
-  // Button listeners
-  private initButtonListeners() {
-    document.querySelectorAll('.quick-btn, .info-card').forEach((card) => {
-      card.addEventListener('mouseenter', () => {
-        (card as HTMLElement).style.transform = 'translateY(-5px)';
-      });
-      card.addEventListener('mouseleave', () => {
-        (card as HTMLElement).style.transform = 'translateY(0)';
-      });
-    });
-  }
-
-  showAlert(section: string) {
-    alert(`Sección: ${section}\n\nAquí se redirigiría a la página de ${section}`);
   }
 }
