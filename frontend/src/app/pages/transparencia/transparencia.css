@@ -83,11 +83,6 @@ main {
   padding: 40px 5%;
 }
 
-.img-banner {
-  width: 100%;
-  background-image: url('/images/banner-hero-nosotros.png');
-}
-
 /* Transparencia Section */
 .transparencia-section {
   display: grid;
