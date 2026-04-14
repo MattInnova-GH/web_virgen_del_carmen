@@ -62,3 +62,27 @@ exports.deleteInvestigations = async (req, res) => {
         });
     }
 }
+
+exports.updateInvestigation= async (req, res) => {
+    const {id} = req.params;
+    const { title, investigation, img_url, description } = req.body;
+    try {
+        const investigations = await db.Investigations.findByPk(id);
+
+        if(!investigations)
+            return res.status(404).json({message: 'Investigación no encontrada.'});
+
+        investigations.title = title;
+        investigations.investigation = investigation;
+        investigations.img_url = img_url;
+        investigations.description = description;
+
+        await investigations.save();
+        res.status(200).json(investigations);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({
+            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
+        });
+    }
+}
