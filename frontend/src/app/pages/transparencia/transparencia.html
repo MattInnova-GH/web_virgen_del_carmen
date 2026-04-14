@@ -1,10 +1,11 @@
-
 <!-- Transparencia Section -->
 <section class="transparencia-section">
   <div class="transparencia-content">
     <h1>Transparencia</h1>
     <p>
-      El Instituto de Educación  Superior Pedagógico Publico Virgen del Carmen, mediante la transparencia institucional agrega varios contenidos para conocimiento  de los estudiantes y publico en general
+      El Instituto de Educación Superior Pedagógico Publico Virgen del Carmen, mediante la
+      transparencia institucional agrega varios contenidos para conocimiento de los estudiantes y
+      publico en general
     </p>
     <div class="quick-buttons">
       <button class="quick-btn" data-section="Programas">
@@ -18,33 +19,21 @@
     </div>
   </div>
   <div class="sidebar">
-    <a
-      routerLink="/becas"
-      class="sidebar-item"
-      data-tooltip="Información sobre becas disponibles"
-    >
+    <a routerLink="/becas" class="sidebar-item" data-tooltip="Información sobre becas disponibles">
       <div class="sidebar-item-content">
         <i class="fas fa-pencil-alt"></i>
         <span>Becas y<br />Créditos</span>
       </div>
       <div class="expand-icon"><i class="fas fa-arrow-right"></i></div>
     </a>
-    <a
-      href="/costos"
-      class="sidebar-item"
-      data-tooltip="Detalle de costos"
-    >
+    <a href="/costos" class="sidebar-item" data-tooltip="Detalle de costos">
       <div class="sidebar-item-content">
         <i class="fas fa-dollar-sign"></i>
         <span>Costos</span>
       </div>
       <div class="expand-icon"><i class="fas fa-arrow-right"></i></div>
     </a>
-    <a
-      href="/docentes"
-      class="sidebar-item"
-      data-tooltip="Información del cuerpo docente"
-    >
+    <a href="/docentes" class="sidebar-item" data-tooltip="Información del cuerpo docente">
       <div class="sidebar-item-content">
         <i class="fas fa-chalkboard-teacher"></i>
         <span>Docentes</span>
@@ -64,14 +53,11 @@
         <div class="carousel-inner">
           <!-- Slide 1 -->
           <div class="carousel-item" [class.active]="currentSlide === 0">
-            <img
-              src="images/image12.png"
-              alt="Investigación 1"
-            />
+            <img src="images/image12.png" alt="Investigación 1" />
             <div class="carousel-content">
               <p>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia
-                purus malesuada, cras ligula est arcu ....
+                Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras
+                ligula est arcu ....
               </p>
               <strong>Proyecto de Innovación 2024</strong>
             </div>
@@ -79,14 +65,11 @@
 
           <!-- Slide 2 -->
           <div class="carousel-item" [class.active]="currentSlide === 1">
-            <img
-              src="images/image12.png"
-              alt="Investigación 2"
-            />
+            <img src="images/image12.png" alt="Investigación 2" />
             <div class="carousel-content">
               <p>
-                Descubriendo nuevos horizontes en la investigación educativa y
-                tecnológica para el futuro.
+                Descubriendo nuevos horizontes en la investigación educativa y tecnológica para el
+                futuro.
               </p>
               <strong>Laboratorio de Investigación</strong>
             </div>
@@ -100,8 +83,7 @@
             />
             <div class="carousel-content">
               <p>
-                Estudiantes y docentes trabajando juntos en proyectos de
-                investigación aplicada.
+                Estudiantes y docentes trabajando juntos en proyectos de investigación aplicada.
               </p>
               <strong>Jornadas de Investigación 2024</strong>
             </div>
@@ -109,18 +91,48 @@
         </div>
 
         <!-- Botones de navegación -->
-        <button class="carousel-control prev" aria-label="Anterior" (click)="prevSlide()" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
+        <button
+          class="carousel-control prev"
+          aria-label="Anterior"
+          (click)="prevSlide()"
+          (mouseenter)="stopAutoPlay()"
+          (mouseleave)="startAutoPlay()"
+        >
           <i class="fas fa-chevron-left"></i>
         </button>
-        <button class="carousel-control next" aria-label="Siguiente" (click)="nextSlide()" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()">
+        <button
+          class="carousel-control next"
+          aria-label="Siguiente"
+          (click)="nextSlide()"
+          (mouseenter)="stopAutoPlay()"
+          (mouseleave)="startAutoPlay()"
+        >
           <i class="fas fa-chevron-right"></i>
         </button>
 
         <!-- Indicadores -->
         <div class="carousel-indicators">
-          <button class="indicator" [class.active]="currentSlide === 0" (click)="goToSlide(0)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
-          <button class="indicator" [class.active]="currentSlide === 1" (click)="goToSlide(1)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
-          <button class="indicator" [class.active]="currentSlide === 2" (click)="goToSlide(2)" (mouseenter)="stopAutoPlay()" (mouseleave)="startAutoPlay()"></button>
+          <button
+            class="indicator"
+            [class.active]="currentSlide === 0"
+            (click)="goToSlide(0)"
+            (mouseenter)="stopAutoPlay()"
+            (mouseleave)="startAutoPlay()"
+          ></button>
+          <button
+            class="indicator"
+            [class.active]="currentSlide === 1"
+            (click)="goToSlide(1)"
+            (mouseenter)="stopAutoPlay()"
+            (mouseleave)="startAutoPlay()"
+          ></button>
+          <button
+            class="indicator"
+            [class.active]="currentSlide === 2"
+            (click)="goToSlide(2)"
+            (mouseenter)="stopAutoPlay()"
+            (mouseleave)="startAutoPlay()"
+          ></button>
         </div>
       </div>
     </div>
@@ -137,11 +149,7 @@
         <i class="fas fa-award"></i>
       </div>
 
-      <img
-        src="images/lic.jpeg"
-        alt="Licencia Institucional"
-        class="banner-image"
-      />
+      <img src="images/lic.jpeg" alt="Licencia Institucional" class="banner-image" />
     </div>
   </div>
 </section>
@@ -161,4 +169,3 @@
     <span>Procedimientos</span>
   </div>
 </section>
-
