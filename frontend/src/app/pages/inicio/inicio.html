@@ -1,69 +1,125 @@
 <section class="hero">
-      <img src="images/baner_hero.png" class="hero-bg" />
+  <img src="images/baner_hero.png" class="hero-bg" />
 
-      <div class="overlay"></div>
+  <div class="overlay"></div>
 
-      <div class="hero-content">
-        <h1>INSTITUTO DE<br />EDUCACIÓN SUPERIOR</h1>
-        <p>Forma tu futuro con<br />excelencia y transparencia</p>
-      </div>
+  <div class="hero-content">
+    <h1>INSTITUTO DE<br />EDUCACIÓN SUPERIOR</h1>
+    <p>Forma tu futuro con<br />excelencia y transparencia</p>
+  </div>
 
-      <!-- Botones -->
+  <!-- Botones -->
 
-      <section class="buttons-section">
-        <div class="buttons-container">
-          <!-- Carreras -->
-          <a href="#carreras" class="btn-card carreras">
-            <div class="icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <span>Carreras</span>
-          </a>
-
-          <!-- Licencia -->
-          <div class="btn-card licencia" id="licenciaBtn">
-            <!-- CONTENIDO NORMAL -->
-            <div class="front">
-              <div class="icon">
-                <i class="fas fa-award"></i>
-              </div>
-              <span>Licencia</span>
-            </div>
-
-            <!-- PANEL ANIMADO EXTERNO -->
-            <div class="licencia-popup">
-              <img src="images/licencia.png" alt="Licencia" />
-            </div>
-          </div>
+  <section class="buttons-section">
+    <div class="buttons-container">
+      <!-- Carreras -->
+      <a href="#carreras" class="btn-card carreras">
+        <div class="icon">
+          <i class="fas fa-graduation-cap"></i>
         </div>
-      </section>
-
-      <!-- Botones laterales -->
-      <div class="side-buttons">
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_eva.png" alt="Video" />
-          </div>
-          <span class="side-text">Video</span>
-        </div>
-
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_aula.png" alt="Nosotros" />
-          </div>
-          <span class="side-text">Nosotros</span>
-        </div>
-
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_biblioteca.png" alt="Plataforma" />
-          </div>
-          <span class="side-text">Plataforma</span>
-        </div>
-      </div>
-
-      <!-- WhatsApp -->
-      <a href="#" class="whatsapp">
-        <i class="fab fa-whatsapp"></i>
+        <span>Carreras</span>
       </a>
-    </section>
+
+      <!-- Licencia -->
+      <div class="btn-card licencia" id="licenciaBtn">
+        <!-- CONTENIDO NORMAL -->
+        <div class="front">
+          <div class="icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <span>Licencia</span>
+        </div>
+
+        <!-- PANEL ANIMADO EXTERNO -->
+        <div class="licencia-popup">
+          <img src="images/licencia.png" alt="Licencia" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Botones laterales -->
+  <div class="side-buttons">
+    <div class="side-item">
+      <div class="side-btn">
+        <img src="icons/icon_eva.png" alt="Video" />
+      </div>
+      <span class="side-text">Video</span>
+    </div>
+
+    <div class="side-item">
+      <div class="side-btn">
+        <img src="icons/icon_aula.png" alt="Nosotros" />
+      </div>
+      <span class="side-text">Nosotros</span>
+    </div>
+
+    <div class="side-item">
+      <div class="side-btn">
+        <img src="icons/icon_biblioteca.png" alt="Plataforma" />
+      </div>
+      <span class="side-text">Plataforma</span>
+    </div>
+  </div>
+
+  <!-- WhatsApp -->
+  <a href="#" class="whatsapp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</section>
+<section class="main-content">
+  <div class="container">
+    <div class="content-grid">
+      <!-- NOTICIAS -->
+      <div class="card noticias">
+        <h3>Últimas Noticias</h3>
+
+        <div class="noticia-item">
+          <img src="https://imgs.deperu.com/colegios/ie_3065_virgen_del_carmen.jpg" />
+        </div>
+        <p>Lorem ipsum dolor sit amet consectetur.</p>
+      </div>
+
+      <!-- COMUNICADOS -->
+      <div class="comunicados">
+        <h3>Comunicados</h3>
+
+        <!-- BLOQUE 1 -->
+        <div class="card comunicado-item">
+          <p><strong>Lorem ipsum</strong><br />Texto de comunicado</p>
+        </div>
+
+        <!-- BLOQUE 2 -->
+        <div class="card comunicado-item">
+          <p><strong>Lorem ipsum</strong><br />Texto de comunicado</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="servicios">
+      <h3>Otros Servicios</h3>
+
+      <div class="servicios-grid">
+        <div class="servicio">
+          <img
+            src="https://gestion.pe/resizer/1T6ymSFX0AgdFomkiFv59cAuNns=/1200x675/smart/filters:format(jpeg):quality(75)/cloudfront-us-east-1.images.arcpublishing.com/elcomercio/3CLSMG7SZFDBXOYYMDTSKS4WLQ.jpg"
+          />
+          <span>Curso de Idiomas</span>
+        </div>
+
+        <div class="servicio">
+          <img src="https://canalb.pe/assets/uploads/images/77aa9-servir-capacitacion.jpg" />
+          <span>Curso de Capacitación</span>
+        </div>
+      </div>
+
+      <div class="carousel" #carousel>
+        <div class="carousel-track" #track>
+          <div class="carousel-item" *ngFor="let item of items; trackBy: trackByFn">
+            <img [src]="item" alt="Partner Logo" draggable="false" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
