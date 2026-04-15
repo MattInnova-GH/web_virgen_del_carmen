@@ -1,0 +1,85 @@
+body {
+  background-color: #ffffff;
+}
+
+/* Barra superior */
+.top-bar {
+  height: 50px;
+  background-color: #323f7c;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background-color: #ffffff;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 300px;
+  height: 78px;
+}
+
+/* Menú */
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+
+.menu li a {
+  text-decoration: none;
+  color: #323f7c;
+  font-size: 18px;
+  transition: color 0.3s ease;
+  /* Transición suave para el hover */
+}
+
+/* Hover para los enlaces del menú */
+.menu li a:hover {
+  color: #f28c1b;
+  /* Cambia a naranja al hacer hover */
+}
+
+/* Botón Transparencia */
+.btn-transparencia {
+  width: 210px;
+  height: 50px;
+  background-color: #f28c1b;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  /* Transición suave */
+}
+
+/* Hover y focus para el botón Transparencia - Color AZUL */
+.btn-transparencia:hover,
+.btn-transparencia:focus {
+  background-color: #323f7c;
+  /* Azul moderno */
+  transform: scale(1.02);
+  /* Pequeño efecto de escala */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* Sombra sutil */
+}
+
+/* También puedes mantener el naranja solo para el hover normal si prefieres */
+/* Opcional: efecto activo (cuando se hace clic) */
+.btn-transparencia:active {
+  transform: scale(0.98);
+}
