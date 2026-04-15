@@ -1,0 +1,129 @@
+<section class="hero">
+      <img src="images/baner_hero.png" class="hero-bg" />
+
+      <div class="overlay"></div>
+
+      <div class="hero-content">
+        <h1>INSTITUTO DE<br />EDUCACIÓN SUPERIOR</h1>
+        <p>Forma tu futuro con<br />excelencia y transparencia</p>
+      </div>
+
+      <!-- Botones -->
+
+      <section class="buttons-section">
+        <div class="buttons-container">
+          <!-- Carreras -->
+          <a href="#carreras" class="btn-card carreras">
+            <div class="icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <span>Carreras</span>
+          </a>
+
+          <!-- Licencia -->
+          <div class="btn-card licencia" id="licenciaBtn">
+            <!-- CONTENIDO NORMAL -->
+            <div class="front">
+              <div class="icon">
+                <i class="fas fa-award"></i>
+              </div>
+              <span>Licencia</span>
+            </div>
+
+            <!-- PANEL ANIMADO EXTERNO -->
+            <div class="licencia-popup">
+              <img src="images/licencia.png" alt="Licencia" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Botones laterales -->
+      <div class="side-buttons">
+        <div class="side-item">
+          <div class="side-btn">
+            <img src="icons/icon_eva.png" alt="Video" />
+          </div>
+          <span class="side-text">Video</span>
+        </div>
+
+        <div class="side-item">
+          <div class="side-btn">
+            <img src="icons/icon_aula.png" alt="Nosotros" />
+          </div>
+          <span class="side-text">Nosotros</span>
+        </div>
+
+        <div class="side-item">
+          <div class="side-btn">
+            <img src="icons/icon_biblioteca.png" alt="Plataforma" />
+          </div>
+          <span class="side-text">Plataforma</span>
+        </div>
+      </div>
+
+      <!-- WhatsApp -->
+      <a href="#" class="whatsapp">
+        <i class="fab fa-whatsapp"></i>
+      </a>
+    </section>
+    
+  <!-- MAIN CONTENT -->
+  <section class="main-content">
+    <div class="container">
+
+      <!-- Top Grid: Noticias (3) + Comunicados (2) -->
+      <div class="top-grid">
+
+        <!-- Noticias -->
+        <div class="news-section">
+          <h2>Últimas Noticias</h2>
+          <div class="news-card">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=700&h=400&fit=crop" alt="Noticia" />
+            <div class="news-body">
+              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comunicados -->
+        <div class="comunicados-section">
+          <h2>Comunicados</h2>
+          <div class="comunicado-item">
+            <strong>Lorem ipsum.</strong>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ....</p>
+          </div>
+          <div class="comunicado-item">
+            <strong>Lorem ipsum.</strong>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ....</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Servicios -->
+      <div class="servicios-section">
+        <h2>Otros Servicios</h2>
+        <div class="servicios-grid">
+          <div class="servicio-card">
+            <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=360&fit=crop" alt="Curso de idiomas" />
+            <div class="servicio-label">Curso de idiomas</div>
+          </div>
+          <div class="servicio-card">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=360&fit=crop" alt="Curso de Capacitación" />
+            <div class="servicio-label">Curso de Capacitación</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Carousel -->
+      <div class="carousel" #carousel>
+  <div class="carousel-track" #track>
+    <div class="carousel-item" *ngFor="let item of items">
+      <img [src]="item" alt="Logo Institucional" />
+    </div>
+  </div>
+</div>
+
+  
+
+
