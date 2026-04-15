@@ -6,11 +6,12 @@ import {
   Renderer2
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-inicio',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
@@ -18,13 +19,37 @@ export class Inicio implements AfterViewInit {
   @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('track') track!: ElementRef;
 
-  items: string[] = [
-    'https://americancomputeriquitos.com/images/difoid.png',
-    'https://upload.wikimedia.org/wikipedia/commons/2/21/Logo_del_Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA_-_MINEDU.png',
-    'https://web.gereducusco.gob.pe/wp-content/uploads/geredu_cusco_dark.png',
-    'https://www.pedagogicomariamadre.edu.pe/inicio/wp-content/uploads/2019/09/logo-siges.png',
-    'https://ugelarequipasur.gob.pe/wp-content/uploads/2021/07/logo-perueduca.png',
-    'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/12/Enlaces-de-interes_06.png'
+  items: { image: string; url: string; alt: string }[] = [
+    {
+      image: 'https://americancomputeriquitos.com/images/difoid.png',
+      url: 'https://www.minedu.gob.pe/superiorpedagogica/',
+      alt: 'MINEDU Superior Pedagógica'
+    },
+    {
+      image: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Logo_del_Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA_-_MINEDU.png',
+      url: 'https://www.gob.pe/minedu',
+      alt: 'Ministerio de Educación'
+    },
+    {
+      image: 'https://web.gereducusco.gob.pe/wp-content/uploads/geredu_cusco_dark.png',
+      url: 'https://www.gob.pe/regioncusco-geredu',
+      alt: 'GEREDU Cusco'
+    },
+    {
+      image: 'https://www.pedagogicomariamadre.edu.pe/inicio/wp-content/uploads/2019/09/logo-siges.png',
+      url: 'https://www.gob.pe/institucion/minedu/noticias/506778-minedu-crea-el-sistema-integrado-de-informacion-de-la-educacion-superior-y-tecnico-productiva',
+      alt: 'SIGES'
+    },
+    {
+      image: 'https://ugelarequipasur.gob.pe/wp-content/uploads/2021/07/logo-perueduca.png',
+      url: 'https://www.perueduca.pe/#/home',
+      alt: 'Perú Educa'
+    },
+    {
+      image: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/12/Enlaces-de-interes_06.png',
+      url: 'https://www.gob.pe/941-consultar-titulos-de-instituciones-tecnologicas-y-pedagogicas',
+      alt: 'Consulta de Títulos'
+    }
   ];
 
   private isDragging = false;
