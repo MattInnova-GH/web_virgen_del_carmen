@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './inicio.css',
 })
 export class Inicio implements AfterViewInit {
+  @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('track') track!: ElementRef;
 
   items: string[] = [
@@ -30,87 +31,62 @@ export class Inicio implements AfterViewInit {
   private startX = 0;
   private currentTranslate = 0;
   private prevTranslate = 0;
-  private animationID = 0;
-  private readonly itemWidth = 220; // Ajustar según el CSS (ancho + gap)
 
   constructor(private renderer: Renderer2) {}
 
   ngAfterViewInit() {
     const trackEl = this.track.nativeElement;
 
-    // Eventos de Mouse
+    // Mouse Events
     this.renderer.listen(trackEl, 'mousedown', (e) => this.dragStart(e));
     this.renderer.listen(window, 'mousemove', (e) => this.dragAction(e));
     this.renderer.listen(window, 'mouseup', () => this.dragEnd());
 
-    // Eventos Touch (Móviles)
+    // Touch Events
     this.renderer.listen(trackEl, 'touchstart', (e) => this.dragStart(e));
     this.renderer.listen(window, 'touchmove', (e) => this.dragAction(e));
     this.renderer.listen(window, 'touchend', () => this.dragEnd());
   }
 
-  dragStart(event: any) {
+  private dragStart(event: any) {
     this.isDragging = true;
     this.startX = this.getPositionX(event);
     this.track.nativeElement.style.transition = 'none';
     this.track.nativeElement.style.cursor = 'grabbing';
-    cancelAnimationFrame(this.animationID);
   }
 
-  dragAction(event: any) {
+  private dragAction(event: any) {
     if (!this.isDragging) return;
-    
+
     const currentPosition = this.getPositionX(event);
     const diff = currentPosition - this.startX;
-    this.currentTranslate = this.prevTranslate + diff;
-    
+    let x = this.prevTranslate + diff;
+
+    // Aplicar límites para que no se salga del contenedor
+    const maxScroll = -(this.track.nativeElement.scrollWidth - this.carousel.nativeElement.offsetWidth);
+    if (x > 0) x = 0; // Límite izquierdo
+    if (x < maxScroll) x = maxScroll; // Límite derecho
+
+    this.currentTranslate = x;
     this.updatePosition();
-    this.loopItems();
   }
 
-  dragEnd() {
+  private dragEnd() {
     this.isDragging = false;
-    this.track.nativeElement.style.cursor = 'grab';
-    this.track.nativeElement.style.transition = 'transform 0.5s cubic-bezier(0.23, 1, 0.32, 1)';
-    
-    // Snap a la posición más cercana
-    this.currentTranslate = Math.round(this.currentTranslate / this.itemWidth) * this.itemWidth;
     this.prevTranslate = this.currentTranslate;
-    
-    this.updatePosition();
+    this.track.nativeElement.style.transition = 'transform 0.4s ease-out';
+    this.track.nativeElement.style.cursor = 'grab';
   }
 
-  getPositionX(event: any): number {
+  private getPositionX(event: any): number {
     return event.type.includes('mouse') ? event.clientX : event.touches[0].clientX;
   }
 
-  updatePosition() {
+  private updatePosition() {
     this.renderer.setStyle(
       this.track.nativeElement,
       'transform',
       `translateX(${this.currentTranslate}px)`
     );
-  }
-
-  loopItems() {
-    // Lógica de bucle infinito reordenando el array
-    if (this.currentTranslate <= -this.itemWidth) {
-      const first = this.items.shift();
-      if (first) this.items.push(first);
-      this.currentTranslate += this.itemWidth;
-      this.prevTranslate += this.itemWidth;
-      this.updatePosition();
-    } 
-    else if (this.currentTranslate >= 0) {
-      const last = this.items.pop();
-      if (last) this.items.unshift(last);
-      this.currentTranslate -= this.itemWidth;
-      this.prevTranslate -= this.itemWidth;
-      this.updatePosition();
-    }
-  }
-
-  trackByFn(index: number, item: string): string {
-    return item; // o return index.toString();
   }
 }
