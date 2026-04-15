@@ -23,6 +23,7 @@ body {
   grid-template-columns: 1fr 350px;
   gap: 40px;
   margin-bottom: 40px;
+  background-image: url('/images/banner-hero-nosotros.png');
 }
 
 .transparencia-content h1 {
@@ -164,6 +165,7 @@ body {
   font-size: 28px;
   margin-bottom: 20px;
 }
+
 /* Right Panel */
 .right-panel {
   display: flex;
@@ -598,6 +600,7 @@ body {
 
 /* Responsive */
 @media (max-width: 968px) {
+
   .transparencia-section,
   .investigacion-section {
     grid-template-columns: 1fr;
