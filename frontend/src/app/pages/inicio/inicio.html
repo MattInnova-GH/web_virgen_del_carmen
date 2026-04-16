@@ -1,129 +1,232 @@
 <section class="hero">
-      <img src="images/baner_hero.png" class="hero-bg" />
+  <img src="images/baner_hero.png" class="hero-bg" />
 
-      <div class="overlay"></div>
+  <div class="overlay"></div>
 
-      <div class="hero-content">
-        <h1>INSTITUTO DE<br />EDUCACIÓN SUPERIOR</h1>
-        <p>Forma tu futuro con<br />excelencia y transparencia</p>
+  <div class="hero-content">
+    <h1>INSTITUTO DE<br />EDUCACIÓN SUPERIOR</h1>
+    <p>Forma tu futuro con<br />excelencia y transparencia</p>
+  </div>
+
+  <!-- Botones -->
+
+  <section class="buttons-section">
+    <div class="buttons-container">
+      <!-- Carreras -->
+      <a routerLink="/programas" class="btn-card carreras">
+        <div class="icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <span>Carreras</span>
+      </a>
+
+      <!-- Licencia -->
+      <a routerLink="/licenciamiento" class="btn-card licencia">
+        <div id="licenciaBtn">
+        <!-- CONTENIDO NORMAL -->
+        <div class="front">
+          <div class="icon">
+            <i class="fas fa-award"></i>
+          </div>
+          <span>Licenciamiento</span>
+        </div>
+
+        <!-- PANEL ANIMADO EXTERNO -->
+        <div class="licencia-popup">
+          <img src="images/licencia.png" alt="Licencia" />
+        </div>
       </div>
+      </a>
+    </div>
+  </section>
 
-      <!-- Botones -->
+  <!-- Botones laterales -->
+  <a target="_blank" href="https://share.google/DsKX1Yyh9tc2eetBU" class="side-buttons">
+    <div class="side-item">
+      <div class="side-btn">
+        <img src="icons/icon_eva.png" alt="Video" />
+      </div>
+      <span class="side-text">Plataforma EVA</span>
+    </div>
 
-      <section class="buttons-section">
-        <div class="buttons-container">
-          <!-- Carreras -->
-          <a href="#carreras" class="btn-card carreras">
-            <div class="icon">
-              <i class="fas fa-graduation-cap"></i>
-            </div>
-            <span>Carreras</span>
+    <a
+      target="_blank"
+      href="https://www.microsoft.com/es-es/microsoft-teams/log-in"
+      class="side-item"
+    >
+      <div class="side-btn">
+        <img src="icons/icon_aula.png" alt="aula virtual" />
+      </div>
+      <span class="side-text">Aula virtual</span>
+    </a>
+
+    <div class="side-item">
+      <div class="side-btn">
+        <img src="icons/icon_biblioteca.png" alt="Biblioteca virtual" />
+      </div>
+      <span class="side-text">Biblioteca virtual</span>
+    </div>
+  </a>
+
+  <!-- WhatsApp -->
+  <a href="#" class="whatsapp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</section>
+
+<!-- MAIN CONTENT -->
+<section class="main-content">
+  <div class="container">
+    <!-- Transparencia -->
+    <section class="gestion-section">
+      <div class="container">
+        <h2 class="section-title">Transparencia y Gestión Institucional</h2>
+        <div class="gestion-grid">
+          <a routerLink="/becas" class="gestion-card">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Becas y Créditos</h3>
+            <p>Apoyos económicos y financiamiento</p>
           </a>
 
-          <!-- Licencia -->
-          <div class="btn-card licencia" id="licenciaBtn">
-            <!-- CONTENIDO NORMAL -->
-            <div class="front">
-              <div class="icon">
-                <i class="fas fa-award"></i>
-              </div>
-              <span>Licencia</span>
-            </div>
+          <a routerLink="/costos" class="gestion-card">
+            <i class="fas fa-dollar-sign"></i>
+            <h3>Costos</h3>
+            <p>Matrículas, pensiones y derechos</p>
+          </a>
 
-            <!-- PANEL ANIMADO EXTERNO -->
-            <div class="licencia-popup">
-              <img src="images/licencia.png" alt="Licencia" />
-            </div>
-          </div>
-        </div>
-      </section>
+          <a [routerLink]="['/nosotros']" fragment="docentes" class="gestion-card">
+            <i class="fas fa-chalkboard-teacher"></i>
+            <h3>Docentes</h3>
+            <p>Planas y perfiles profesionales</p>
+          </a>
 
-      <!-- Botones laterales -->
-      <div class="side-buttons">
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_eva.png" alt="Video" />
-          </div>
-          <span class="side-text">Video</span>
-        </div>
+          <a routerLink="/estadisticas" class="gestion-card">
+            <i class="fas fa-chart-line"></i>
+            <h3>Estadísticas</h3>
+            <p>Indicadores académicos</p>
+          </a>
 
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_aula.png" alt="Nosotros" />
-          </div>
-          <span class="side-text">Nosotros</span>
-        </div>
+          <a routerLink="/reglamentos" class="gestion-card">
+            <i class="fas fa-file-alt"></i>
+            <h3>Reglamento</h3>
+            <p>Normativa institucional</p>
+          </a>
 
-        <div class="side-item">
-          <div class="side-btn">
-            <img src="icons/icon_biblioteca.png" alt="Plataforma" />
-          </div>
-          <span class="side-text">Plataforma</span>
+          <a routerLink="/inversiones" class="gestion-card">
+            <i class="fas fa-chart-pie"></i>
+            <h3>Inversiones</h3>
+            <p>Presupuesto y ejecución</p>
+          </a>
+
+          <a routerLink="/procedimientos" class="gestion-card">
+            <i class="fas fa-tasks"></i>
+            <h3>Procedimientos</h3>
+            <p>Trámites y requisitos</p>
+          </a>
         </div>
       </div>
-
-      <!-- WhatsApp -->
-      <a href="#" class="whatsapp">
-        <i class="fab fa-whatsapp"></i>
-      </a>
     </section>
-    
-  <!-- MAIN CONTENT -->
-  <section class="main-content">
-    <div class="container">
 
-      <!-- Top Grid: Noticias (3) + Comunicados (2) -->
-      <div class="top-grid">
-
-        <!-- Noticias -->
-        <div class="news-section">
-          <h2>Últimas Noticias</h2>
-          <div class="news-card">
-            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=700&h=400&fit=crop" alt="Noticia" />
-            <div class="news-body">
-              <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ...</p>
-            </div>
-          </div>
+    <!-- Servicios -->
+    <div class="servicios-section">
+      <h2>Otros Servicios</h2>
+      <div class="servicios-grid">
+        <div class="servicio-card">
+          <img
+            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=360&fit=crop"
+            alt="Curso de idiomas"
+          />
+          <div class="servicio-label">Curso de idiomas</div>
         </div>
+        <div class="servicio-card">
+          <img
+            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=360&fit=crop"
+            alt="Curso de Capacitación"
+          />
+          <div class="servicio-label">Curso de Capacitación</div>
+        </div>
+      </div>
+    </div>
 
-        <!-- Comunicados -->
-        <div class="comunicados-section">
-          <h2>Comunicados</h2>
-          <div class="comunicado-item">
-            <strong>Lorem ipsum.</strong>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ....</p>
-          </div>
-          <div class="comunicado-item">
-            <strong>Lorem ipsum.</strong>
-            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit cubilia purus malesuada, cras ligula est arcu ....</p>
+    <!-- Top Grid: Noticias (3) + Comunicados (2) -->
+    <div class="top-grid">
+      <!-- Noticias -->
+      <div class="news-section">
+        <h2>Últimas Noticias</h2>
+        <div class="news-card">
+          <img src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-01-at-9.49.59-AM-2048x1449.jpeg" alt="Noticia"/>
+          <div class="news-body">
+            <p>
+              Cuadro de resultados de la convocatoria para contrata docente en el IESPP «Virgen del Carmen»
+            </p>
           </div>
         </div>
       </div>
 
-      <!-- Servicios -->
-      <div class="servicios-section">
-        <h2>Otros Servicios</h2>
-        <div class="servicios-grid">
-          <div class="servicio-card">
-            <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=360&fit=crop" alt="Curso de idiomas" />
-            <div class="servicio-label">Curso de idiomas</div>
-          </div>
-          <div class="servicio-card">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=360&fit=crop" alt="Curso de Capacitación" />
-            <div class="servicio-label">Curso de Capacitación</div>
-          </div>
-        </div>
-      </div>
+      <!-- Comunicados -->
+      <div class="comunicados-section">
+        <h2>Comunicados</h2>
 
-      <!-- Carousel -->
-      <div class="carousel" #carousel>
-  <div class="carousel-track" #track>
-    <div class="carousel-item" *ngFor="let item of items">
-      <img [src]="item" alt="Logo Institucional" />
+        <!-- ITEM 1 -->
+        <div class="comunicado-item">
+
+          <!-- TEXTO -->
+          <div class="comunicado-text">
+            <strong>8 de Abril del 2026</strong>
+            <p>
+              Cuadro méritos final del proceso de contrata docente del IESPP "Virgen del Carmen"
+            </p>
+          </div>
+
+          <!-- IMAGEN + LINK -->
+          <div class="comunicado-media">
+            <img
+              src="https://scontent.fpio4-1.fna.fbcdn.net/v/t39.30808-6/667964249_122191694660471870_6749669765113192977_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeG7AcN801tZle-0KbZKlNFDfe7TlGcWrpV97tOUZxaulanoVzE_Gf7QQXALrW2xOIpCd6HBqu-edUjTpFzZJjK0&_nc_ohc=WTwsBllKVegQ7kNvwF0OMbb&_nc_oc=Adr5U_RHEAQa33G9cA4A4JKW7T0CcGrAZh4Z-waUWFPL6b7VGpu3TeIfSwgOJIklBok&_nc_zt=23&_nc_ht=scontent.fpio4-1.fna&_nc_gid=ni045PJHpelYsPLNTNF4Kg&_nc_ss=7a3a8&oh=00_Af1ty2SjM7nXNtGRrBnYCLWful6sAAx1BObTP9OXQ6B4aA&oe=69E6B861" />
+
+            <a href="https://www.facebook.com/share/p/1CaYaQg9Qt/" target="_blank" class="ver-mas">
+              Ver más
+            </a>
+          </div>
+
+        </div>
+
+        <!-- ITEM 2 -->
+        <div class="comunicado-item">
+
+          <div class="comunicado-text">
+            <strong>27 de marzo del 2026</strong>
+            <p>
+              Modificatoria de cronograma de matricula 2026 -I
+            </p>
+          </div>
+
+          <div class="comunicado-media">
+            <img
+              src="https://scontent.fpio4-1.fna.fbcdn.net/v/t39.30808-6/658147055_122190456182471870_3641263709599787991_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=13d280&_nc_eui2=AeHE5dq-O5zk6AeJ8QlCYQiPLfQrNLfsK-4t9Cs0t-wr7p6n2hm8Pqn0oCzqsaE_pNrkSCwVrWTS8230F-Lmw0EU&_nc_ohc=9SRKYZ8qdiQQ7kNvwHtAfA7&_nc_oc=AdodsfOmQLMMxhpDIFdCPfhqVIctYytC6Y1A3hCMPtJQ6Yzv2TFXUnmPHo_WxZO1BOI&_nc_zt=23&_nc_ht=scontent.fpio4-1.fna&_nc_gid=9vLG0Fiom7Hj8n5styrHMw&_nc_ss=7a3a8&oh=00_Af399r9wdaW9FatBSyVG_xX5BA5QbPIo0wU4Tm2seogQRw&oe=69E6EF38" />
+
+            <a href="https://www.facebook.com/share/p/18RYkwSbXD/" target="_blank" class="ver-mas">
+              Ver más
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Carousel -->
+    <div class="carousel" #carousel>
+      <div class="carousel-track" #track>
+        <a
+          class="carousel-item"
+          *ngFor="let item of items"
+          [href]="item.url"
+          [attr.target]="item.url.startsWith('http') ? '_blank' : '_self'"
+          [attr.rel]="item.url.startsWith('http') ? 'noopener noreferrer' : null"
+        >
+          <img [src]="item.image" [alt]="item.alt" />
+        </a>
+      </div>
     </div>
   </div>
-</div>
-
-  
-
-
+</section>
