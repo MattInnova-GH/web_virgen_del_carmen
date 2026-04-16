@@ -1,4 +1,5 @@
-import {  Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-nosotros',
@@ -6,7 +7,19 @@ import {  Component } from '@angular/core';
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
-export class Nosotros {
+export class Nosotros implements OnInit {
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit(): void {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment) {
+        setTimeout(() => {
+          const el = document.getElementById(fragment);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
+    });
+  }
 /**
    * Muestra el contenido seleccionado (Misión/Visión/Valores)
    * @param contentType - Tipo de contenido: 'mision', 'vision' o 'valores'
