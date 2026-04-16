@@ -207,8 +207,8 @@
           class="carousel-item"
           *ngFor="let item of items"
           [href]="item.url"
-          [attr.target]="item.url?.startsWith('http') ? '_blank' : '_self'"
-          [attr.rel]="item.url?.startsWith('http') ? 'noopener noreferrer' : null"
+          [attr.target]="item.url.startsWith('http') ? '_blank' : '_self'"
+          [attr.rel]="item.url.startsWith('http') ? 'noopener noreferrer' : null"
         >
           <img [src]="item.image" [alt]="item.alt" />
         </a>
