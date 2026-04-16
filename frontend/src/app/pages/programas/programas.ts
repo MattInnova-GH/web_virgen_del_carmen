@@ -14,22 +14,22 @@ export class Programas {
     {
       id: '1',
       label: 'Plan de Estudios',
-      pdfUrl: 'assets/pdfs/PROTOCOLO-DE-ADMISION-2026.pdf',
+      pdfUrl: 'assets/pdfs/programas/plan_de_estudios.pdf',
     },
     {
       id: '2',
       label: 'Perfil de Egreso',
-      pdfUrl: 'assets/pdfs/REGLAMENTO-DE-ADMISION-2026-1.pdf',
+      pdfUrl: 'assets/pdfs/programas/perfil_de_egreso.pdf',
     },
     {
       id: '3',
       label: 'Diseño Curricular - DCBN',
-      pdfUrl: 'assets/pdfs/PROSPECTO-DE-ADMISION-2026.pdf',
+      pdfUrl: 'assets/pdfs/programas/diseno_curricular_basico_nacional_de_la_formacion_inicial_docente.pdf',
     },
     {
       id: '4',
       label: 'Secciones - Estudiantes',
-      pdfUrl: 'assets/pdfs/641637179_122187032042471870_4663264574361598806_n.pdf',
+      pdfUrl: 'assets/pdfs/programas/secciones_estudiantes.pdf',
     },
     {
       id: '5',
