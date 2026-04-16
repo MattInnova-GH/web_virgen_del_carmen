@@ -15,6 +15,7 @@ import { Psicopedagogico } from './pages/psicopedagógico/psicopedagógico';
 import { SoporteMedico } from './pages/soporte-medico/soporte-medico';
 import { ServicioSocial } from './pages/servicio-social/servicio-social';
 import { MesaDePartes } from './pages/mesa-de-partes/mesa-de-partes';
+import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -34,4 +35,5 @@ export const routes: Routes = [
   { path: 'soporte-medico', component: SoporteMedico, title: 'Soporte Médico' },
   { path: 'servicio-social', component: ServicioSocial, title: 'Servicio Social' },
   { path: 'mesa-de-partes', component: MesaDePartes, title: 'Mesa de Partes Virtual' },
+  { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento'}
 ];

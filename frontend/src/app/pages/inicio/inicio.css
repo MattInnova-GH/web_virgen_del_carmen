@@ -324,28 +324,61 @@
   background: #dfe6ef;
   border-radius: 12px;
   padding: 18px;
-  transition: transform 0.3s ease;
-  flex: 1;
+
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .comunicado-item:hover {
-  transform: translateX(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.comunicado-item strong {
+/* TEXTO */
+.comunicado-text {
+  flex: 1;
+}
+
+.comunicado-text strong {
   color: #1d3557;
   font-size: 15px;
   display: block;
   margin-bottom: 6px;
 }
 
-.comunicado-item p {
+.comunicado-text p {
   font-size: 13px;
   color: #555;
-  line-height: 1.55;
+}
+
+/* IMAGEN + LINK */
+.comunicado-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.comunicado-media img {
+  width: 120;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 5px;
+}
+
+/* BOTÓN VER MÁS */
+.ver-mas {
+  font-size: 12px;
+  color: #2f3f7f;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.ver-mas:hover {
+  text-decoration: underline;
 }
 
 /* Servicios */
