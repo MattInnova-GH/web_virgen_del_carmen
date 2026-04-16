@@ -1,0 +1,181 @@
+<!-- Hero Section -->
+<section class="hero-component">
+  <div class="hero-content">
+    <h1>Mesa de Partes Virtual</h1>
+    <p>Instituto de Educación Superior Pedagógico Público Virgen del Carmen</p>
+  </div>
+</section>
+
+<!-- Contenido -->
+<section class="mdp-main">
+  <div class="mdp-container">
+
+    <!-- Cabecera tarjeta -->
+    <div class="mdp-card-header">
+      <h2><i class="fas fa-inbox"></i> Mesa de Partes Virtual</h2>
+      <p>Formulario para el registro y envío de documentos institucionales.</p>
+    </div>
+
+    <!-- CONFIRMACIÓN -->
+    @if (submitted) {
+      <div class="mdp-success">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h2>¡Documento enviado correctamente!</h2>
+        <p>
+          Tu solicitud ha sido recibida. Se te enviará una confirmación al correo
+          <strong>{{ form.correo }}</strong> con el número de expediente asignado.
+        </p>
+        <div class="success-detail">
+          <span><strong>Asunto:</strong> {{ form.asunto }}</span>
+          <span><strong>Tipo:</strong> {{ form.tipoDoc }}</span>
+        </div>
+        <button class="btn-nuevo" (click)="nuevoEnvio()">
+          <i class="fas fa-plus"></i> Nuevo envío
+        </button>
+      </div>
+    }
+
+    <!-- FORMULARIO -->
+    @if (!submitted) {
+      <div class="mdp-card">
+        <form (ngSubmit)="enviar()" #f="ngForm">
+
+          <div class="mdp-two-col">
+
+            <!-- ── COLUMNA IZQUIERDA: Remitente ── -->
+            <div class="mdp-section">
+              <h3 class="section-heading">
+                <i class="fas fa-user"></i> Datos del Remitente
+              </h3>
+
+              <div class="form-group">
+                <label>Nombre Completo</label>
+                <input type="text" placeholder="Ej. Juan Pérez"
+                  [(ngModel)]="form.nombres" name="nombres" required />
+              </div>
+
+              <div class="form-group">
+                <label>DNI / RUC</label>
+                <input type="text" placeholder="Ej. 123456789"
+                  [(ngModel)]="form.dni" name="dni" required />
+              </div>
+
+              <div class="form-group">
+                <label>Correo Electrónico</label>
+                <input type="email" placeholder="ejemplo&#64;email.com"
+                  [(ngModel)]="form.correo" name="correo" required />
+              </div>
+
+              <div class="form-group">
+                <label>Número de Celular/Teléfono</label>
+                <input type="tel" placeholder="Ej. +51 987654321"
+                  [(ngModel)]="form.telefono" name="telefono" required />
+              </div>
+
+              <div class="form-group">
+                <label>Condición</label>
+                <select [(ngModel)]="form.condicion" name="condicion" required>
+                  <option value="" disabled selected>Selecciona tu condición</option>
+                  <option>Estudiante</option>
+                  <option>Docente</option>
+                  <option>Administrativo</option>
+                  <option>Egresado</option>
+                  <option>Externo</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Código de Verificación</label>
+                <div class="captcha-wrap">
+                  <input type="text" placeholder="Ingrese el código"
+                    [(ngModel)]="captchaInput" name="captcha" required />
+                  <div class="captcha-img" (click)="generarCaptcha()" title="Clic para refrescar">
+                    {{ captchaCode }}
+                  </div>
+                </div>
+                <small>Ingrese el código de la imagen para verificar que no es un bot</small>
+              </div>
+            </div>
+
+            <!-- ── COLUMNA DERECHA: Documento ── -->
+            <div class="mdp-section">
+              <h3 class="section-heading">
+                <i class="fas fa-file-alt"></i> Datos del Documento
+              </h3>
+
+              <div class="form-group">
+                <label>Tipo de Documento</label>
+                <select [(ngModel)]="form.tipoDoc" name="tipoDoc" required>
+                  <option value="" disabled selected>Selecciona el tipo</option>
+                  <option>Solicitud</option>
+                  <option>Recurso de reconsideración</option>
+                  <option>Apelación</option>
+                  <option>Constancia</option>
+                  <option>Certificado</option>
+                  <option>Otro</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label>Asunto</label>
+                <input type="text" placeholder="Asunto del documento"
+                  [(ngModel)]="form.asunto" name="asunto" required />
+              </div>
+
+              <div class="form-group">
+                <label>Mensaje</label>
+                <textarea rows="5" placeholder="Mensaje o descripción detallada del documento"
+                  [(ngModel)]="form.mensaje" name="mensaje"></textarea>
+              </div>
+
+              <div class="form-group">
+                <label>Cantidad de Folios</label>
+                <input type="number" min="1"
+                  [(ngModel)]="form.folios" name="folios" required />
+              </div>
+
+              <div class="form-group">
+                <label>Adjuntar Archivo</label>
+                <div class="file-input-wrap">
+                  <i class="fas fa-upload"></i>
+                  <span>Elegir archivo</span>
+                  <input type="file" accept=".pdf,.jpg,.jpeg,.png" />
+                </div>
+                <small>Máximo 5MB. Para documentos más grandes, utilice el campo "Link de Documento"</small>
+              </div>
+
+              <div class="form-group">
+                <label>Link de Documento (Opcional)</label>
+                <input type="url" placeholder="https://ejemplo.com/documento.pdf"
+                  [(ngModel)]="form.linkDocumento" name="linkDocumento" />
+                <small>Use este campo para documentos mayores a 5MB. Debe ser un enlace directo al archivo</small>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Botón enviar -->
+          <button type="submit" class="btn-enviar" [disabled]="f.invalid">
+            Enviar Documento
+          </button>
+
+        </form>
+
+        <!-- Consultar trámite -->
+        <div class="mdp-tracking">
+          <p>¿Ya tienes un código de seguimiento?</p>
+          <button class="btn-tracking" (click)="toggleTracking()">Consultar Trámite</button>
+          @if (showTracking) {
+            <div class="tracking-input">
+              <input type="text" placeholder="Ingresa tu código de seguimiento"
+                [(ngModel)]="trackingCode" name="trackingCode" />
+              <button class="btn-consultar">Consultar</button>
+            </div>
+          }
+        </div>
+
+      </div>
+    }
+
+  </div>
+</section>
