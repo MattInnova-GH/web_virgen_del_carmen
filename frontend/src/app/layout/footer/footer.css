@@ -89,6 +89,20 @@ body {
   color: #f97316;
 }
 
+a.footer-list-item,
+.footer-list-item a {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+a.footer-list-item:hover,
+.footer-list-item a:hover {
+  color: #f97316;
+}
+
 /* Iconos SVG */
 .footer-icon {
   width: 2rem;
