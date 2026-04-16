@@ -1,0 +1,215 @@
+/* ===========================
+   HERO SECTION
+   =========================== */
+.hero-component {
+  background: linear-gradient(135deg, #1a2560, #323f7c);
+  color: white;
+  padding: 80px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-component::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(255, 255, 255, 0.04) 0%, transparent 55%),
+    radial-gradient(circle at 85% 20%, rgba(242, 140, 27, 0.08) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.breadcrumb {
+  font-size: 0.95rem;
+  opacity: 0.85;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.breadcrumb i {
+  color: #f28c1b;
+}
+
+.breadcrumb-sep {
+  color: #f28c1b;
+  font-weight: 600;
+}
+
+/* ===========================
+   CONTENIDO PRINCIPAL
+   =========================== */
+.ss-main {
+  background: #ffffff;
+  padding: 48px 20px 64px;
+}
+
+.ss-container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* Título principal */
+.ss-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #323f7c;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 20px;
+}
+
+/* Intro */
+.ss-intro {
+  color: #444;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  margin-bottom: 24px;
+}
+
+/* Funciones */
+.ss-funciones-label {
+  font-weight: 700;
+  color: #1a1a2e;
+  font-size: 0.95rem;
+  margin-bottom: 10px;
+}
+
+.ss-funciones-list {
+  list-style: disc;
+  padding-left: 24px;
+  margin-bottom: 36px;
+  color: #444;
+  font-size: 0.93rem;
+  line-height: 2;
+}
+
+/* ===========================
+   TÍTULOS DE SECCIÓN
+   =========================== */
+.ss-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #323f7c;
+  margin-bottom: 20px;
+}
+
+/* ===========================
+   ÁMBITO DE INTERVENCIÓN
+   =========================== */
+.ss-ambito-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 36px;
+  text-align: center;
+}
+
+.ss-ambito-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.ss-ambito-img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  display: block;
+}
+
+/* Etiquetas de ámbito */
+.ss-label {
+  display: inline-block;
+  padding: 8px 28px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: white;
+}
+
+.ss-label--orange {
+  background: #e8825a;
+}
+
+.ss-label--green {
+  background: #6abf69;
+}
+
+.ss-label--blue {
+  background: #7a9cc6;
+}
+
+/* ===========================
+   DIVISOR ONDULADO
+   =========================== */
+.ss-wavy-divider {
+  width: 100%;
+  height: 16px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 16' preserveAspectRatio='none'%3E%3Cpath d='M0 8 Q10 0 20 8 Q30 16 40 8 Q50 0 60 8 Q70 16 80 8 Q90 0 100 8 Q110 16 120 8' stroke='%23323f7c' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-size: 120px 16px;
+  margin: 8px 0 36px;
+  opacity: 0.5;
+}
+
+/* ===========================
+   GRILLA DE IMÁGENES (TALLERES)
+   =========================== */
+.ss-img-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.ss-img-grid img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 3px 12px rgba(50, 63, 124, 0.12);
+  display: block;
+}
+
+/* ===========================
+   BIBLIOGRAFÍA
+   =========================== */
+.ss-biblio-title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #323f7c;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .ss-ambito-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ss-img-grid {
+    grid-template-columns: 1fr;
+  }
+}

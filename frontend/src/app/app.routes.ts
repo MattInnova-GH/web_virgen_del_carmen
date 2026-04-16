@@ -11,6 +11,9 @@ import { Reglamentos } from './pages/reglamentos/reglamentos';
 import { Inversiones } from './pages/inversiones/inversiones';
 import { Procedimientos } from './pages/procedimientos/procedimientos';
 import { Horarios } from './pages/horarios/horarios';
+import { Psicopedagogico } from './pages/psicopedagógico/psicopedagógico';
+import { SoporteMedico } from './pages/soporte-medico/soporte-medico';
+import { ServicioSocial } from './pages/servicio-social/servicio-social';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -26,4 +29,7 @@ export const routes: Routes = [
   { path: 'inversiones', component: Inversiones, title: 'Inversiones' },
   { path: 'procedimientos', component: Procedimientos, title: 'Procedimientos' },
   { path: 'horarios', component: Horarios, title: 'Horarios' },
+  { path: 'psicopedagogico', component: Psicopedagogico, title: 'Soporte Psicopedagógico' },
+  { path: 'soporte-medico', component: SoporteMedico, title: 'Soporte Médico' },
+  { path: 'servicio-social', component: ServicioSocial, title: 'Servicio Social' },
 ];

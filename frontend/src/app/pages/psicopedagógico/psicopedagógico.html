@@ -1,0 +1,192 @@
+<!-- Hero Section -->
+<section class="hero-component">
+  <div class="hero-content">
+    <h1>Soporte Psicopedagógico</h1>
+    <p>Instituto de Educación Superior Pedagógico Público Virgen del Carmen</p>
+  </div>
+</section>
+
+<!-- Tabs Section -->
+<section class="tabs-section">
+  <div class="tabs-container">
+
+    <!-- Navegación de Tabs -->
+    <div class="tab-nav">
+      <button class="tab-btn" [class.active]="activeTab === 'presentacion'" (click)="setTab('presentacion')">
+        Presentación
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'talleres'" (click)="setTab('talleres')">
+        Talleres
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'campanas'" (click)="setTab('campanas')">
+        Campañas
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'reporte'" (click)="setTab('reporte')">
+        Reporte de atenciones
+      </button>
+    </div>
+
+    <!-- Contenido de Tabs -->
+    <div class="tab-content">
+
+      <!-- PRESENTACIÓN -->
+      @if (activeTab === 'presentacion') {
+        <div class="tab-panel">
+          <p>
+            El área de Soporte Psicopedagógico del Instituto de Educación Superior Pedagógico Público
+            Virgen del Carmen se dedica a brindar apoyo integral a los estudiantes, enfocándose en su
+            desarrollo personal, académico y emocional. Este equipo multidisciplinario trabaja para
+            identificar y atender las necesidades psicológicas y educativas de los estudiantes,
+            proporcionando orientación, asesoramiento y herramientas para mejorar su bienestar general
+            y su rendimiento académico. Además, se encarga de realizar intervenciones preventivas y
+            correctivas, talleres formativos, y ofrecer un acompañamiento continuo para asegurar un
+            entorno educativo saludable y propicio para el aprendizaje.
+          </p>
+        </div>
+      }
+
+      <!-- TALLERES -->
+      @if (activeTab === 'talleres') {
+        <div class="tab-panel">
+          <div class="taller-list">
+
+            <article class="taller-item">
+              <div class="taller-header">
+                <span class="taller-number">1</span>
+                <p class="taller-desc">
+                  <strong>Taller de comunicación asertiva,</strong> con el objetivo de desarrollar
+                  habilidades y técnicas que permitan a los participantes, donde se logró mejorar la
+                  capacidad para comunicar pensamientos y sentimientos de manera honesta y directa.
+                </p>
+              </div>
+              <div class="taller-img-wrap">
+                <img
+                  src="images/img1-psicope.jpeg" 
+                  alt="Taller de comunicación asertiva"
+                  class="taller-img"
+                />
+              </div>
+            </article>
+
+            <article class="taller-item">
+              <div class="taller-header">
+                <span class="taller-number">2</span>
+                <p class="taller-desc">
+                  <strong>Taller de Trata de Personas,</strong> objetivo de prevenir y concientizar
+                  a la población estudiantil en temas de trata de personas, con este taller se logró
+                  concientizar y sensibilizar a los estudiantes, aumentar el conocimiento y la
+                  comprensión de la trata de personas, sus formas de operar y sus consecuencias tanto
+                  para las víctimas como para la sociedad en general.
+                </p>
+              </div>
+              <div class="taller-img-wrap">
+                <img
+                  src="images/img2-psicope.jpeg"
+                  alt="Taller de Trata de Personas"
+                  class="taller-img"
+                />
+              </div>
+            </article>
+
+            <article class="taller-item">
+              <div class="taller-header">
+                <span class="taller-number">3</span>
+                <p class="taller-desc">
+                  <strong>Taller de Violencia de Género,</strong> objetivo comprender las violencias
+                  basadas en género a partir del reconocimiento de sus elementos, mitos de la
+                  violencia y la identificación de acciones para su prevención. Se logró tomar
+                  conciencia de la violencia de género en la desigualdad social que existe entre
+                  mujeres y hombres.
+                </p>
+              </div>
+              <div class="taller-img-wrap">
+                <img
+                  src="images/img3-psicope.jpeg"
+                  alt="Taller de Violencia de Género"
+                  class="taller-img"
+                />
+              </div>
+            </article>
+
+          </div>
+        </div>
+      }
+
+      <!-- CAMPAÑAS -->
+      @if (activeTab === 'campanas') {
+        <div class="tab-panel">
+          <div class="taller-list">
+
+            @for (campana of campanas; track campana.numero) {
+              <article class="taller-item">
+                <div class="taller-header">
+                  <span class="taller-number">{{ campana.numero }}</span>
+                  <p class="taller-desc">
+                    <strong>{{ campana.titulo }},</strong> {{ campana.descripcion }}
+                  </p>
+                </div>
+
+                <div class="carousel-wrap">
+                  <button
+                    class="carousel-btn carousel-prev"
+                    (click)="prevSlide(campana)"
+                    [disabled]="campana.imagenes.length <= 1"
+                    aria-label="Anterior"
+                  >
+                    <i class="fas fa-chevron-left"></i>
+                  </button>
+
+                  <div class="carousel-viewport">
+                    <img
+                      [src]="campana.imagenes[campana.activeIndex]"
+                      [alt]="campana.titulo"
+                      class="taller-img"
+                    />
+                  </div>
+
+                  <button
+                    class="carousel-btn carousel-next"
+                    (click)="nextSlide(campana)"
+                    [disabled]="campana.imagenes.length <= 1"
+                    aria-label="Siguiente"
+                  >
+                    <i class="fas fa-chevron-right"></i>
+                  </button>
+                </div>
+
+                @if (campana.imagenes.length > 1) {
+                  <div class="carousel-dots">
+                    @for (img of campana.imagenes; track $index) {
+                      <span
+                        class="dot"
+                        [class.active]="$index === campana.activeIndex"
+                        (click)="goToSlide(campana, $index)"
+                      ></span>
+                    }
+                  </div>
+                }
+
+              </article>
+            }
+
+          </div>
+        </div>
+      }
+
+      <!-- REPORTE DE ATENCIONES -->
+      @if (activeTab === 'reporte') {
+        <div class="tab-panel">
+          <h2 class="reporte-titulo">Reporte de Atenciones de Mayo – Agosto del 2024</h2>
+          <div class="pdf-container">
+            <iframe
+              src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/Presentacion1-1.pdf"
+              class="pdf-frame"
+              title="Reporte de Atenciones Mayo-Agosto 2024"
+            ></iframe>
+          </div>
+        </div>
+      }
+
+    </div>
+  </div>
+</section>
