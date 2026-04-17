@@ -6,7 +6,7 @@ import {
   OnDestroy,
   Renderer2,
   NgZone,
-  ChangeDetectorRef
+  ChangeDetectorRef,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -24,46 +24,55 @@ export class Inicio implements AfterViewInit, OnDestroy {
 
   // Agrega estas propiedades al componente
   heroImages: { src: string; alt: string }[] = [
-    { src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/3-copia-scaled.jpg', alt: 'Hero 1' },
+    {
+      src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/3-copia-scaled.jpg',
+      alt: 'Hero 1',
+    },
     { src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/1.png', alt: 'Hero 2' },
-    { src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/2-1-scaled.jpg', alt: 'Hero 3' },
+    {
+      src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/2-1-scaled.jpg',
+      alt: 'Hero 3',
+    },
   ];
 
   currentHeroIndex = 0;
+  licenciaActiva = false;
   private heroInterval: ReturnType<typeof setInterval> | null = null;
-
 
   items: { image: string; url: string; alt: string }[] = [
     {
       image: 'https://americancomputeriquitos.com/images/difoid.png',
       url: 'https://www.minedu.gob.pe/superiorpedagogica/',
-      alt: 'MINEDU Superior Pedagógica'
+      alt: 'MINEDU Superior Pedagógica',
     },
     {
-      image: 'https://upload.wikimedia.org/wikipedia/commons/2/21/Logo_del_Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA_-_MINEDU.png',
+      image:
+        'https://upload.wikimedia.org/wikipedia/commons/2/21/Logo_del_Ministerio_de_Educaci%C3%B3n_del_Per%C3%BA_-_MINEDU.png',
       url: 'https://www.gob.pe/minedu',
-      alt: 'Ministerio de Educación'
+      alt: 'Ministerio de Educación',
     },
     {
       image: 'https://web.gereducusco.gob.pe/wp-content/uploads/geredu_cusco_dark.png',
       url: 'https://www.gob.pe/regioncusco-geredu',
-      alt: 'GEREDU Cusco'
+      alt: 'GEREDU Cusco',
     },
     {
-      image: 'https://www.pedagogicomariamadre.edu.pe/inicio/wp-content/uploads/2019/09/logo-siges.png',
+      image:
+        'https://www.pedagogicomariamadre.edu.pe/inicio/wp-content/uploads/2019/09/logo-siges.png',
       url: 'https://www.gob.pe/institucion/minedu/noticias/506778-minedu-crea-el-sistema-integrado-de-informacion-de-la-educacion-superior-y-tecnico-productiva',
-      alt: 'SIGES'
+      alt: 'SIGES',
     },
     {
       image: 'https://ugelarequipasur.gob.pe/wp-content/uploads/2021/07/logo-perueduca.png',
       url: 'https://www.perueduca.pe/#/home',
-      alt: 'Perú Educa'
+      alt: 'Perú Educa',
     },
     {
-      image: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/12/Enlaces-de-interes_06.png',
+      image:
+        'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/12/Enlaces-de-interes_06.png',
       url: 'https://www.gob.pe/941-consultar-titulos-de-instituciones-tecnologicas-y-pedagogicas',
-      alt: 'Consulta de Títulos'
-    }
+      alt: 'Consulta de Títulos',
+    },
   ];
 
   // Auto-scroll
@@ -80,45 +89,57 @@ export class Inicio implements AfterViewInit, OnDestroy {
 
   private listeners: (() => void)[] = [];
 
-  constructor(private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private renderer: Renderer2,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   ngAfterViewInit() {
-  this.cloneItems();
-  this.startHeroSlideshow();   // ← ya no dentro de runOutsideAngular
+    this.cloneItems();
+    this.startHeroSlideshow(); // ← ya no dentro de runOutsideAngular
 
-  this.ngZone.runOutsideAngular(() => {
-    this.startAutoScroll();
-    this.bindEvents();
-  });
-}
+    this.ngZone.runOutsideAngular(() => {
+      this.startAutoScroll();
+      this.bindEvents();
+    });
+  }
 
   ngOnDestroy() {
     if (this.animationId !== null) cancelAnimationFrame(this.animationId);
-    this.listeners.forEach(fn => fn());
+    this.listeners.forEach((fn) => fn());
 
     if (this.heroInterval) clearInterval(this.heroInterval);
   }
 
-
   // Método nuevo:
   private startHeroSlideshow() {
     this.heroInterval = setInterval(() => {
-      this.ngZone.run(() => {  // ← Ejecutar dentro de Angular zone
+      this.ngZone.run(() => {
+        // ← Ejecutar dentro de Angular zone
         this.currentHeroIndex = (this.currentHeroIndex + 1) % this.heroImages.length;
-        this.cdr.detectChanges();  // ← Forzar detección de cambios
+        this.cdr.detectChanges(); // ← Forzar detección de cambios
       });
     }, 3000);
   }
-  
+
   goToHeroSlide(index: number) {
     this.currentHeroIndex = index;
+  }
+
+  toggleLicencia(event: Event) {
+    // Solo activar toggle en móvil
+    if (window.innerWidth < 768) {
+      event.preventDefault();
+      this.licenciaActiva = !this.licenciaActiva;
+    }
   }
 
   // ── Loop infinito: clona los items al final del track ──
   private cloneItems() {
     const track = this.track.nativeElement as HTMLElement;
     const origItems = Array.from(track.children) as HTMLElement[];
-    origItems.forEach(item => {
+    origItems.forEach((item) => {
       const clone = item.cloneNode(true) as HTMLElement;
       clone.setAttribute('aria-hidden', 'true');
       track.appendChild(clone);
@@ -159,7 +180,7 @@ export class Inicio implements AfterViewInit, OnDestroy {
     this.listeners.push(
       this.renderer.listen(carousel, 'mouseenter', () => {
         this.isPaused = true;
-      })
+      }),
     );
     this.listeners.push(
       this.renderer.listen(carousel, 'mouseleave', () => {
@@ -167,30 +188,26 @@ export class Inicio implements AfterViewInit, OnDestroy {
         if (!this.isDragging) {
           this.didDrag = false;
         }
-      })
+      }),
     );
 
     // Drag — mouse
     this.listeners.push(
-      this.renderer.listen(track, 'mousedown', (e: MouseEvent) => this.onDragStart(e))
+      this.renderer.listen(track, 'mousedown', (e: MouseEvent) => this.onDragStart(e)),
     );
     this.listeners.push(
-      this.renderer.listen(window, 'mousemove', (e: MouseEvent) => this.onDragMove(e))
+      this.renderer.listen(window, 'mousemove', (e: MouseEvent) => this.onDragMove(e)),
     );
-    this.listeners.push(
-      this.renderer.listen(window, 'mouseup', () => this.onDragEnd())
-    );
+    this.listeners.push(this.renderer.listen(window, 'mouseup', () => this.onDragEnd()));
 
     // Drag — touch
     this.listeners.push(
-      this.renderer.listen(track, 'touchstart', (e: TouchEvent) => this.onDragStart(e))
+      this.renderer.listen(track, 'touchstart', (e: TouchEvent) => this.onDragStart(e)),
     );
     this.listeners.push(
-      this.renderer.listen(window, 'touchmove', (e: TouchEvent) => this.onDragMove(e))
+      this.renderer.listen(window, 'touchmove', (e: TouchEvent) => this.onDragMove(e)),
     );
-    this.listeners.push(
-      this.renderer.listen(window, 'touchend', () => this.onDragEnd())
-    );
+    this.listeners.push(this.renderer.listen(window, 'touchend', () => this.onDragEnd()));
 
     // Evitar navegación al hacer click después de drag
     this.listeners.push(
@@ -199,7 +216,7 @@ export class Inicio implements AfterViewInit, OnDestroy {
           e.preventDefault();
           this.didDrag = false;
         }
-      })
+      }),
     );
   }
 

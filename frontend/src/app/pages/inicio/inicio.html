@@ -29,7 +29,12 @@
       </a>
 
       <!-- Licencia -->
-      <a routerLink="/licenciamiento" class="btn-card licencia">
+      <a
+        routerLink="/licenciamiento"
+        class="btn-card licencia"
+        [class.active]="licenciaActiva"
+        (click)="toggleLicencia($event)"
+      >
         <div id="licenciaBtn">
           <!-- CONTENIDO NORMAL -->
           <div class="front">

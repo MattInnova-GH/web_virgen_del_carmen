@@ -152,9 +152,7 @@
   border-radius: 10px;
   overflow: hidden;
 
-  background: linear-gradient(135deg,
-      rgba(47, 63, 127, 0.9),
-      rgba(47, 63, 127, 0.4));
+  background: linear-gradient(135deg, rgba(47, 63, 127, 0.9), rgba(47, 63, 127, 0.4));
 
   display: flex;
   align-items: center;
@@ -228,7 +226,6 @@
 
   opacity: 0;
   transform: translateX(20px);
-  /* empieza oculto hacia la derecha */
   transition:
     transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.3s;
@@ -273,16 +270,6 @@
   font-size: 26px;
 }
 
-.main-content {
-  background: #f5f7fb;
-  padding: 40px 20px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
-}
-
 .content-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -302,10 +289,160 @@
   color: #1d3557;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: 600px; /* más alto para acomodar botones laterales abajo */
+  }
+
+  /* Texto: igual que desktop pero con left más pequeño */
+  .hero-content {
+    top: 120px;
+    left: 24px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 18px;
+  }
+
+  /* --- BOTONES CARRERAS / LICENCIA --- */
+  .buttons-section {
+    width:;
+    padding-left: 24px;
+    bottom: 120px; /* sube para dejar espacio a los laterales */
+  }
+
+  /* --- BOTONES LATERALES → FILA HORIZONTAL ABAJO --- */
+  .side-buttons {
+    position: absolute;
+    right: unset;
+    top: unset;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+
+  .side-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Texto siempre visible, debajo del ícono */
+  .side-text {
+    position: static; /* sale del absolute */
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Sin animación de entrada/salida en móvil */
+  .side-item:not(:hover) .side-text {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- POPUP LICENCIA → HACIA ABAJO --- */
+  .licencia {
+    overflow: visible;
+  }
+
+  .licencia-popup {
+    top: 100%; /* justo debajo del botón */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
+    width: 130px;
+    height: 150px;
+    margin-top: 8px;
+  }
+
+  .licencia:hover .licencia-popup,
+  .licencia:focus .licencia-popup,
+  .licencia.active .licencia-popup {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  /* WhatsApp se queda esquina inferior derecha */
+  .whatsapp {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* ===================================
+   RESPONSIVE - MÓVIL PEQUEÑO (max 480px)
+   =================================== */
+@media (max-width: 480px) {
+  .hero {
+    height: 580px;
+  }
+
+  .hero-content {
+    top: 100px;
+    left: 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 24px;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+  }
+
+  .buttons-section {
+    padding-left: 16px;
+    bottom: 110px;
+  }
+
+  .btn-card {
+    width: 110px;
+    height: 140px;
+  }
+
+  .icon i {
+    font-size: 46px;
+  }
+
+  .side-buttons {
+    gap: 12px;
+    padding: 0 10px;
+  }
+
+  .side-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .side-btn img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .side-text {
+    font-size: 10px;
+  }
+}
+
 /* ===== MAIN CONTENT ===== */
 .main-content {
   background: #e8edf5;
-  padding: 40px 20px 60px;
+  padding: 100px 20px 60px;
 }
 
 .container {
@@ -342,7 +479,9 @@
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .news-card:hover {
@@ -383,7 +522,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .comunicado-item:hover {
@@ -455,7 +596,9 @@
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .servicio-card:hover {
@@ -515,7 +658,9 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e0e6ed;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   /* Estilos de enlace */
   text-decoration: none;

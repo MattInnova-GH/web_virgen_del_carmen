@@ -1,16 +1,47 @@
 <div class="top-bar"></div>
+
 <nav class="navbar">
   <div class="logo">
     <img routerLink="/inicio" src="images/Logo_inicio.png" alt="Logo" />
   </div>
 
-  <ul class="menu">
-    <li><a routerLink="/nosotros">NOSOTROS</a></li>
-    <li><a routerLink="/programas">PROGRAMAS</a></li>
-    <li><a routerLink="/admision">ADMISIÓN</a></li>
-    <li><a routerLink="/noticias">NOTICIAS</a></li>
-    <li><a routerLink="/servicios">SERVICIOS</a></li>
-  </ul>
+  <!-- Botón hamburguesa -->
+  <button
+    class="menu-toggle"
+    (click)="toggleMenu()"
+    [attr.aria-expanded]="isMenuOpen"
+    aria-label="Abrir menú"
+  >
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 
-  <a routerLink="/transparencia" class="btn-transparencia">TRANSPARENCIA</a>
+  <!-- Menú -->
+  <div class="nav-content" [class.active]="isMenuOpen">
+    <ul class="menu">
+      <li>
+        <a routerLink="/inicio" (click)="closeMenu()">INICIO</a>
+      </li>
+      <li>
+        <a routerLink="/nosotros" (click)="closeMenu()">NOSOTROS</a>
+      </li>
+      <li>
+        <a routerLink="/programas" (click)="closeMenu()">PROGRAMAS</a>
+      </li>
+      <li>
+        <a routerLink="/admision" (click)="closeMenu()">ADMISIÓN</a>
+      </li>
+      <li>
+        <a routerLink="/noticias" (click)="closeMenu()">NOTICIAS</a>
+      </li>
+      <li>
+        <a routerLink="/servicios" (click)="closeMenu()">SERVICIOS</a>
+      </li>
+    </ul>
+
+    <a routerLink="/transparencia" class="btn-transparencia" (click)="closeMenu()">
+      TRANSPARENCIA
+    </a>
+  </div>
 </nav>
