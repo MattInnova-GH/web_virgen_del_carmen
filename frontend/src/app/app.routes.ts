@@ -17,6 +17,7 @@ import { ServicioSocial } from './pages/servicio-social/servicio-social';
 import { MesaDePartes } from './pages/mesa-de-partes/mesa-de-partes';
 import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 import { Servicios } from './pages/servicios/servicios';
+import { Estadisticas } from './pages/estadisticas/estadisticas';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -37,5 +38,6 @@ export const routes: Routes = [
   { path: 'soporte-medico', component: SoporteMedico, title: 'Soporte Médico' },
   { path: 'servicio-social', component: ServicioSocial, title: 'Servicio Social' },
   { path: 'mesa-de-partes', component: MesaDePartes, title: 'Mesa de Partes Virtual' },
-  { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento'}
+  { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento' },
+  { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
 ];
