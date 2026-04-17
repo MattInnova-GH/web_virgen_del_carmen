@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Organigrama } from './organigrama/organigrama';
 
 @Component({
   selector: 'app-nosotros',
-  imports: [],
+  imports: [Organigrama],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
@@ -11,7 +12,7 @@ export class Nosotros implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.fragment.subscribe(fragment => {
+    this.route.fragment.subscribe((fragment) => {
       if (fragment) {
         setTimeout(() => {
           const el = document.getElementById(fragment);
@@ -20,7 +21,7 @@ export class Nosotros implements OnInit {
       }
     });
   }
-/**
+  /**
    * Muestra el contenido seleccionado (Misión/Visión/Valores)
    * @param contentType - Tipo de contenido: 'mision', 'vision' o 'valores'
    */
@@ -42,8 +43,8 @@ export class Nosotros implements OnInit {
     const allContentDivs = document.querySelectorAll('.content-text');
     const allButtons = document.querySelectorAll('.floating-btn');
 
-    allContentDivs.forEach(div => div.classList.add('hidden'));
-    allButtons.forEach(btn => btn.classList.remove('floating-btn-active'));
+    allContentDivs.forEach((div) => div.classList.add('hidden'));
+    allButtons.forEach((btn) => btn.classList.remove('floating-btn-active'));
 
     // 4. Lógica de visualización (Toggle)
     if (isAlreadyVisible) {

@@ -12,12 +12,12 @@ export class Costos {
     {
       id: '1',
       label: 'PAGOS REALIZADOS POR LOS ESTUDIANTES',
-      pdfUrl: 'assets/pdfs/PROTOCOLO-DE-ADMISION-2026.pdf',
+      pdfUrl: '',
     },
     {
       id: '2',
       label: 'OTROS PAGOS',
-      pdfUrl: 'assets/pdfs/REGLAMENTO-DE-ADMISION-2026-1.pdf',
+      pdfUrl: '',
     },
   ];
 }

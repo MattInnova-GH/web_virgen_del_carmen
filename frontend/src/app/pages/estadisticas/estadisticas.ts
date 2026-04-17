@@ -12,17 +12,17 @@ export class Estadisticas {
     {
       id: '1',
       label: 'INGRESANTES 2022 - I,II',
-      pdfUrl: 'assets/pdfs/estadisticas/estadisticas-2024.pdf',
+      pdfUrl: '',
     },
     {
       id: '2',
       label: 'MATRICULADOS 2022 - I,II',
-      pdfUrl: 'assets/pdfs/estadisticas/estadisticas-2023.pdf',
+      pdfUrl: '',
     },
     {
       id: '3',
       label: 'EGRESADOS 2022 - I,II',
-      pdfUrl: 'assets/pdfs/estadisticas/estadisticas-2023.pdf',
+      pdfUrl: '',
     },
   ];
 }
