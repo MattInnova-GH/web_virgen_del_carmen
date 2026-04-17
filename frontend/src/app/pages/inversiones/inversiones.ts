@@ -12,22 +12,22 @@ export class Inversiones {
     {
       id: '1',
       label: 'INVERSIONES',
-      pdfUrl: 'assets/pdfs/PROTOCOLO-DE-ADMISION-2026.pdf',
+      pdfUrl: '',
     },
     {
       id: '2',
       label: 'REINVERSIONES',
-      pdfUrl: 'assets/pdfs/REGLAMENTO-DE-ADMISION-2026-1.pdf',
+      pdfUrl: '',
     },
     {
       id: '3',
       label: 'DONACIONES',
-      pdfUrl: 'assets/pdfs/PROSPECTO-DE-ADMISION-2026.pdf',
+      pdfUrl: '',
     },
     {
       id: '4',
       label: 'INFRAESTRUCTURA',
-      pdfUrl: 'assets/pdfs/641637179_122187032042471870_4663264574361598806_n.pdf',
+      pdfUrl: '',
     },
   ];
 }
