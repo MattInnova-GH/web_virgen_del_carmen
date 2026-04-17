@@ -1,41 +1,87 @@
-body {
-  background-color: #ffffff;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* Barra superior */
+body {
+  background-color: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+/* Top bar */
 .top-bar {
-  height: 50px;
+  height: 40px;
   background-color: #323f7c;
 }
 
 /* Navbar */
 .navbar {
   position: relative;
-  z-index: 100;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 15px 40px;
+  padding: 12px 20px;
   background-color: #ffffff;
 }
 
 /* Logo */
-.logo {
-  display: flex;
-  align-items: center;
+.logo img {
+  width: 180px;
+  height: auto;
+  cursor: pointer;
 }
 
-.logo img {
-  width: 300px;
-  height: 78px;
+/* Botón hamburguesa */
+.menu-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1100;
+}
+
+.menu-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: #323f7c;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Contenedor del menú */
+.nav-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #ffffff;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estado activo */
+.nav-content.active {
+  display: flex;
 }
 
 /* Menú */
 .menu {
   list-style: none;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
-  gap: 38px;
+  gap: 20px;
 }
 
 .menu li a {
@@ -43,45 +89,72 @@ body {
   color: #323f7c;
   font-size: 18px;
   transition: color 0.3s ease;
-  /* Transición suave para el hover */
 }
 
-/* Hover para los enlaces del menú */
 .menu li a:hover {
   color: #f28c1b;
-  /* Cambia a naranja al hacer hover */
 }
 
-/* Botón Transparencia */
+/* Botón */
 .btn-transparencia {
-  width: 210px;
-  height: 50px;
+  margin-top: 20px;
+  width: 200px;
+  height: 45px;
   background-color: #f28c1b;
   color: white;
   border-radius: 6px;
   text-decoration: none;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
-  /* Transición suave */
 }
 
-/* Hover y focus para el botón Transparencia - Color AZUL */
 .btn-transparencia:hover,
 .btn-transparencia:focus {
   background-color: #323f7c;
-  /* Azul moderno */
-  transform: scale(1.02);
-  /* Pequeño efecto de escala */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* Sombra sutil */
+  transform: scale(1.03);
 }
 
-/* También puedes mantener el naranja solo para el hover normal si prefieres */
-/* Opcional: efecto activo (cuando se hace clic) */
-.btn-transparencia:active {
-  transform: scale(0.98);
+::ng-deep .developer-credit a {
+  color: #bfdbfe !important;
+}
+
+::ng-deep .developer-credit a:hover {
+  text-decoration: underline;
+}
+/* ===== DESKTOP ===== */
+@media (min-width: 992px) {
+  .menu-toggle {
+    display: none;
+  }
+
+  .nav-content {
+    position: static;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    box-shadow: none;
+    width: auto;
+    padding: 0;
+  }
+
+  .menu {
+    flex-direction: row;
+    gap: 38px;
+  }
+
+  .btn-transparencia {
+    margin-top: 0;
+    width: 210px;
+    height: 50px;
+    font-size: 18px;
+  }
+
+  .logo img {
+    width: 260px;
+  }
 }
