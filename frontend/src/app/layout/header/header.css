@@ -130,6 +130,10 @@ body {
   .menu-toggle {
     display: none;
   }
+  .navbar {
+    gap: 30px;
+  }
+}
 
   .nav-content {
     position: static;
@@ -156,5 +160,82 @@ body {
 
   .logo img {
     width: 260px;
+  }
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 991px) {
+  .navbar {
+    padding: 10px 15px;
+    position: relative;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .nav-content {
+    display: none !important;
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    width: 200px;
+    left: auto !important;
+    background-color: #ffffff;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 5px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    border: 1px solid #eee;
+    z-index: 2000;
+  }
+
+  .nav-content.active {
+    display: flex !important;
+  }
+
+  .menu {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100%;
+    gap: 0 !important;
+  }
+
+  .menu li {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  .menu li a {
+    padding: 10px 15px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-bottom: 1px solid #f5f5f5;
+    text-align: center;
+    display: block !important;
+    color: #323f7c;
+  }
+
+  .menu li:last-child a {
+    border-bottom: none;
+  }
+
+  .btn-transparencia {
+    width: calc(100% - 30px) !important;
+    margin: 0px auto !important;
+    height: 40px !important;
+    font-size: 13px !important;
+    display: flex !important;
+    position: static !important;
+  }
+
+  .menu-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 6px);
+  }
+
+  .menu-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .menu-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -6px);
   }
 }
