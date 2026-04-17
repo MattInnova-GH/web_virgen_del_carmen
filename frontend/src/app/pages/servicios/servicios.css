@@ -90,21 +90,55 @@
   color: #f28c1b;
 }
 
-/* ===========================
-   RESPONSIVE
-   =========================== */
+/* --- RESPONSIVE DESIGN */
 @media (max-width: 768px) {
+  .hero-component {
+    padding: 60px 15px !important;
+  }
+
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem !important;
+  }
+
+  .servicios-section {
+    padding: 35px 15px 45px !important;
   }
 
   .servicios-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+  }
+
+  .servicio-card {
+    padding: 20px 12px !important;
+  }
+
+  .servicio-card i {
+    font-size: 2rem !important;
+  }
+
+  .servicio-card h3 {
+    font-size: 0.9rem !important;
   }
 }
 
 @media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.8rem !important;
+  }
+
   .servicios-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .servicio-card p {
+    display: none;
   }
 }

@@ -566,3 +566,98 @@ body {
     font-size: 1.5rem;
   }
 }
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 1024px) {
+  .hero-section {
+    padding: 2rem !important;
+    min-height: auto;
+  }
+
+  .hero-container {
+    display: flex !important;
+    flex-direction: column;
+    text-align: center;
+    padding-bottom: 2rem;
+  }
+
+  .hero-content, .hero-image {
+    grid-column: span 12 !important;
+    width: 100%;
+  }
+
+  .historia-section {
+    flex-direction: column !important;
+    padding: 3rem 2rem !important;
+    align-items: center;
+  }
+
+  .historia-container, .historia-image {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .historia-image img {
+    height: 300px !important;
+    margin-top: 2rem;
+  }
+
+  .autoridades-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.2rem !important;
+  }
+
+  .buttons-section {
+    margin-top: -2rem !important;
+    gap: 1rem !important;
+    padding: 0 1rem !important;
+  }
+
+  .floating-btn {
+    width: 100% !important;
+    max-width: 320px;
+    padding: 1.5rem !important;
+  }
+
+  .content-area {
+    padding: 3rem 1.5rem !important;
+  }
+
+  .valores-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .autoridades-section {
+    padding: 3rem 1.5rem !important;
+  }
+
+  .autoridades-grid {
+    grid-template-columns: 1fr !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .organigrama-img img {
+    max-width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.8rem !important;
+  }
+
+  .section-title, .content-title {
+    font-size: 1.5rem !important;
+    text-align: center;
+  }
+
+  .floating-btn {
+    width: 90% !important;
+  }
+}

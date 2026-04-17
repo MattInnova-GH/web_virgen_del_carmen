@@ -254,47 +254,94 @@
   font-size: 0.9rem;
 }
 
-/* Responsive */
+/* --- RESPONSIVE DESIGN */
 @media (max-width: 768px) {
+  .hero-component {
+    padding: 60px 15px !important;
+  }
+
+  .hero-content h1 {
+    font-size: 2.2rem !important;
+  }
+
+  .main-title, .titulo-seccion {
+    font-size: 1.8rem !important;
+    text-align: center;
+  }
+
   .row {
-    flex-direction: column;
+    flex-direction: column !important;
+    gap: 25px !important;
+  }
+
+  .news-card {
+    width: 100% !important;
+  }
+
+  .image-wrapper img {
+    height: 200px !important;
+  }
+
+  .hora {
+    margin-left: 0 !important;
+    width: 100%;
+    text-align: right;
   }
 
   .noticia-fila {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 25px 0 !important;
   }
 
   .img-container {
-    width: 100%;
-    height: 180px;
+    width: 100% !important;
+    max-width: 300px;
+    height: 180px !important;
+  }
+
+  .noticia-cuerpo {
+    align-items: center !important;
+  }
+
+  .noticia-min-meta {
+    justify-content: center !important;
   }
 
   .botones {
-    flex-direction: row;
-    width: 100%;
+    flex-direction: row !important;
+    width: 100% !important;
+    justify-content: center !important;
   }
 
   .btn-naranja {
-    width: auto;
-    flex: 1;
-  }
-
-  .titulo-seccion {
-    font-size: 1.8rem;
-  }
-
-  .main-title {
-    font-size: 1.8rem;
+    width: auto !important;
+    flex: 1 !important;
+    max-width: 160px;
   }
 }
 
 @media (max-width: 480px) {
-  .container-principal {
-    padding: 15px;
+  .hero-content h1 {
+    font-size: 1.8rem !important;
+  }
+
+  .container-noticias, .container-principal {
+    padding: 15px !important;
   }
 
   .img-container {
-    height: 150px;
+    height: 150px !important;
+  }
+
+  .botones {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .btn-naranja {
+    width: 100% !important;
+    max-width: none !important;
   }
 }

@@ -244,7 +244,7 @@
 
 /* WhatsApp */
 .whatsapp {
-  position: absolute;
+  position: fixed;
   right: 20px;
   bottom: 20px;
   width: 55px;
@@ -254,8 +254,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
+  text-decoration: none;
+  color: white;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
 }
 
+.whatsapp:hover {
+  text-decoration: none;
+  color: white;
+  box-shadow: 2px 4px 10px rgba(0,0,0,0.3);
+}
 /* Iconos */
 .icon i {
   font-size: 58px;
@@ -732,4 +741,161 @@
 
 .gestion-card:hover i {
   color: #ff8c00;
+}
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .gestion-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+
+  .comunicado-item {
+    flex-direction: column !important;
+    text-align: center;
+    align-items: center;
+  }
+
+  .comunicado-media img {
+    width: 150px !important;
+    height: auto !important;
+  }
+
+  .servicios-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-content {
+    padding-top: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gestion-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .section-title,
+  .news-section h2,
+  .comunicados-section h2,
+  .servicios-section h2 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+
+  .carousel-item {
+    min-width: 220px !important;
+  }
+}
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .buttons-container {
+    width: 100%;
+    justify-content: center;
+    padding: 0 15px;
+    gap: 15px !important;
+  }
+
+  .btn-card {
+    flex: 1;
+    width: 110px !important;
+    height: 100px !important;
+    max-width: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-card .icon i {
+    font-size: 34px !important;
+  }
+
+  .btn-card span {
+    font-size: 13px !important;
+    font-weight: 600;
+  }
+
+  .licencia-popup {
+    top: 0 !important;
+    left: 108% !important;
+    transform: translateX(-10px) scale(0.9) !important;
+    width: 110px !important;
+    height: 110px !important;
+    z-index: 100;
+  }
+
+  .licencia:hover .licencia-popup {
+    opacity: 1 !important;
+    transform: translateX(0) scale(1) !important;
+  }
+
+  .gestion-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 10px;
+  }
+
+  .gestion-card {
+    width: auto !important;
+    padding: 15px 10px !important;
+  }
+
+  .gestion-card i {
+    font-size: 28px !important;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr !important;
+    padding: 0 10px;
+  }
+
+  .news-card img {
+    height: 180px !important;
+  }
+
+  .comunicado-item {
+    flex-direction: column !important;
+    padding: 15px !important;
+  }
+
+  .servicios-grid {
+    grid-template-columns: 1fr !important;
+    padding: 0 10px;
+  }
+
+  .main-content {
+    padding-top: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-card {
+    height: 105px !important;
+    max-width: 150px;
+  }
+
+  .licencia-popup {
+    width: 95px !important;
+    height: 95px !important;
+    left: 105% !important;
+  }
+
+  .gestion-card h3 {
+    font-size: 13px !important;
+  }
+
+  .gestion-card p {
+    display: none;
+  }
+
+  .whatsapp {
+    width: 50px !important;
+    height: 50px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
 }
