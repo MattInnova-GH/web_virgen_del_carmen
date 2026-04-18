@@ -392,23 +392,77 @@
   background: #f28c1b;
 }
 
-/* ===========================
-   RESPONSIVE
-   =========================== */
-@media (max-width: 700px) {
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .hero-component {
+    padding: 50px 15px !important;
+  }
+
   .hero-content h1 {
-    font-size: 1.8rem;
+    font-size: 2rem !important;
   }
 
-  .mdp-two-col {
-    grid-template-columns: 1fr;
-  }
-
-  .mdp-card {
-    padding: 24px 16px;
+  .mdp-main {
+    padding: 20px 12px 40px !important;
   }
 
   .mdp-card-header {
-    padding: 22px 16px;
+    padding: 24px 20px !important;
+  }
+
+  .mdp-card-header h2 {
+    font-size: 1.2rem !important;
+  }
+
+  .mdp-card {
+    padding: 28px 20px !important;
+  }
+
+  .mdp-two-col {
+    grid-template-columns: 1fr !important;
+    gap: 24px !important;
+  }
+
+  .tracking-input {
+    flex-direction: column !important;
+    max-width: 100% !important;
+  }
+
+  .btn-consultar {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.7rem !important;
+  }
+
+  .section-heading {
+    font-size: 0.95rem !important;
+  }
+
+  .captcha-wrap {
+    flex-direction: column !important;
+  }
+
+  .captcha-img {
+    height: 45px !important;
+    width: 100% !important;
+  }
+
+  .file-input-wrap {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+
+  .success-detail {
+    padding: 12px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .btn-nuevo {
+    width: 100% !important;
+    justify-content: center !important;
   }
 }
