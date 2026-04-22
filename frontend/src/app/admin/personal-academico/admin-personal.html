@@ -1,0 +1,38 @@
+<div class="admin-page">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Personal Académico</h1>
+      <p class="page-sub">Gestión de docentes y personal del instituto</p>
+    </div>
+    <button class="btn-add">
+      <i class="fas fa-plus"></i> Agregar Docente
+    </button>
+  </div>
+
+  <div class="admin-cards-grid">
+    @for (docente of docentes; track docente.id) {
+      <div class="docente-card">
+        <div class="docente-avatar">
+          <i class="fas fa-user-tie"></i>
+        </div>
+        <div class="docente-info">
+          <h3 class="docente-nombre">{{ docente.nombre }}</h3>
+          <p class="docente-especialidad">{{ docente.especialidad }}</p>
+          <span class="badge" [class.badge-green]="docente.condicion === 'nombrado'" [class.badge-orange]="docente.condicion === 'contratado'">
+            {{ docente.condicion }}
+          </span>
+        </div>
+        <div class="docente-actions">
+          <button class="btn-icon btn-edit" title="Editar">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button class="btn-icon btn-delete" title="Eliminar">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+</div>
