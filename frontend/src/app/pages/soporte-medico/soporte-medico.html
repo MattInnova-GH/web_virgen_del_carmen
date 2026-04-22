@@ -1,69 +1,88 @@
 <!-- Hero Section -->
 <section class="hero-component">
   <div class="hero-content">
-    <h1>Soporte Medico</h1>
+    <h1>Soporte Médico</h1>
     <p>Instituto de Educación Superior Pedagógico Público Virgen del Carmen</p>
   </div>
 </section>
 
 <!-- Contenido Principal -->
 <section class="sm-main">
-  <div class="sm-container">
+  <div class="page-layout">
 
-    <!-- Título -->
-    <h2 class="sm-title">Soporte Medico del IESPP Virgen del Carmen</h2>
+    <!-- Sidebar de Años -->
+    <aside class="year-sidebar">
+      <h3 class="year-sidebar-title">Año</h3>
+      @for (year of years; track year) {
+        <button
+          class="year-btn"
+          [class.active]="selectedYear === year"
+          (click)="selectYear(year)"
+        >
+          {{ year }}
+        </button>
+      }
+    </aside>
 
-    <!-- Imagen presentación -->
-    <div class="sm-presentacion-wrap">
-      <img
-        src="images/img1-SM.jpeg"
-        alt="Profesional de Soporte Médico"
-        class="sm-presentacion-img"
-      />
+    <!-- Área de Contenido -->
+    <div class="sm-container">
+
+      <!-- Título -->
+      <h2 class="sm-title">Soporte Médico del IESPP Virgen del Carmen — {{ selectedYear }}</h2>
+
+      @if (hasContent) {
+
+        <!-- Imagen presentación -->
+        @if (currentData.presentacionImg) {
+          <div class="sm-presentacion-wrap">
+            <img
+              [src]="currentData.presentacionImg"
+              alt="Profesional de Soporte Médico"
+              class="sm-presentacion-img"
+            />
+          </div>
+        }
+
+        <!-- Descripción -->
+        @if (currentData.descripcion.length > 0) {
+          <div class="sm-descripcion">
+            @for (parrafo of currentData.descripcion; track $index) {
+              @if (parrafo.esTitulo) {
+                <p><strong>{{ parrafo.texto }}</strong></p>
+              } @else {
+                <p>{{ parrafo.texto }}</p>
+              }
+            }
+          </div>
+        }
+
+        <!-- Campañas de salud -->
+        @if (currentData.campanasImagenes.length > 0) {
+          <h3 class="sm-section-title">Campañas de salud</h3>
+          <div class="sm-img-grid">
+            @for (img of currentData.campanasImagenes; track img.src) {
+              <img [src]="img.src" [alt]="img.alt" />
+            }
+          </div>
+        }
+
+        <!-- Talleres -->
+        @if (currentData.talleresImagenes.length > 0) {
+          <h3 class="sm-section-title">Talleres</h3>
+          <div class="sm-img-grid">
+            @for (img of currentData.talleresImagenes; track img.src) {
+              <img [src]="img.src" [alt]="img.alt" />
+            }
+          </div>
+        }
+
+        <!-- Bibliografía -->
+        <h3 class="sm-biblio-title">Listado de Bibliografía relacionada a la Promoción de la Salud</h3>
+
+      } @else {
+        <p class="empty-msg">Sin contenido disponible para {{ selectedYear }}.</p>
+      }
+
     </div>
-
-    <!-- Descripción -->
-    <div class="sm-descripcion">
-      <p><strong>La unidad de Soporte Medico de nuestra institución</strong></p>
-      <p>
-        Están a cargo de un profesional de la salud que lideran y realizan el nexo entre
-        el sistema de salud y de educación.
-      </p>
-      <p>
-        Su formación posee las competencias necesarias para brindar cuidados a lo largo
-        de todo el curso de vida, permitiéndoles resolver la mayor parte de los problemas
-        de salud que presenten los estudiantes en el colegio, desde la etapa preescolar,
-        escolar y adolescente, pudiendo también incluir la atención de la comunidad escolar.
-      </p>
-      <p><strong>Su Rol</strong></p>
-      <p>
-        Velar por el bienestar físico, psíquico y social de los estudiantes y de la
-        comunidad educativa del IESPP VC, a través de la asistencia en situaciones de
-        urgencia, seguimiento de salud, propendiendo a fortalecer conductas de autocuidado
-        y hábitos saludables mediante acciones educativas orientadas a la promoción y
-        prevención e investigación en salud.
-      </p>
-    </div>
-
-    <!-- Campañas de salud -->
-    <h3 class="sm-section-title">Campañas de salud</h3>
-    <div class="sm-img-grid">
-      <img src="images/img2-SM.jpeg" alt="Campaña de salud 1" />
-      <img src="images/img3-SM.jpeg" alt="Campaña de salud 2" />
-      <img src="images/img4-SM.jpeg" alt="Campaña de salud 3" />
-      <img src="images/img5-SM.jpeg" alt="Campaña de salud 4" />
-    </div>
-
-    <!-- Talleres -->
-    <h3 class="sm-section-title">Talleres</h3>
-    <div class="sm-img-grid">
-      <img src="images/img6-SM.jpeg" alt="Taller de salud 1" />
-      <img src="images/img7-SM.jpeg" alt="Taller de salud 2" />
-    </div>
-
-    <!-- Bibliografía -->
-    <h3 class="sm-biblio-title">Listado de Bibliografía relacionada a la Promoción de la Salud</h3>
-    
-
   </div>
 </section>
