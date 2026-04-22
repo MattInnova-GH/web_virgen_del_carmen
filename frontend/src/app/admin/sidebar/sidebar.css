@@ -1,0 +1,144 @@
+/* ===========================
+   ADMIN SIDEBAR
+   =========================== */
+.admin-sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: #1a2456;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ---- Brand ---- */
+.sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 20px 20px;
+}
+
+.brand-icon {
+  width: 40px;
+  height: 40px;
+  background: #f28c1b;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-icon i {
+  color: #ffffff;
+  font-size: 1.1rem;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.06em;
+}
+
+.brand-sub {
+  font-size: 0.7rem;
+  color: #8a9bc4;
+  font-weight: 400;
+}
+
+/* ---- Divider ---- */
+.sidebar-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 20px;
+}
+
+/* ---- Section Label ---- */
+.sidebar-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: #5a6a92;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 18px 20px 8px;
+  margin: 0;
+}
+
+/* ---- Nav Items ---- */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px;
+  gap: 2px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #a0b0d0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.sidebar-item:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+}
+
+.sidebar-item.active {
+  background: #f28c1b;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(242, 140, 27, 0.35);
+}
+
+.sidebar-icon {
+  font-size: 0.95rem;
+  width: 18px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.sidebar-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Spacer ---- */
+.sidebar-spacer {
+  flex: 1;
+}
+
+/* ---- Footer ---- */
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px 24px;
+  color: #8a9bc4;
+  font-size: 0.85rem;
+}
+
+.sidebar-footer .sidebar-icon {
+  font-size: 1.2rem;
+  color: #8a9bc4;
+}

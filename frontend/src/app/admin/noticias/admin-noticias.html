@@ -1,0 +1,49 @@
+<div class="admin-page">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Noticias</h1>
+      <p class="page-sub">Gestión de noticias del instituto</p>
+    </div>
+    <button class="btn-add">
+      <i class="fas fa-plus"></i> Nueva Noticia
+    </button>
+  </div>
+
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Título</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (noticia of noticias; track noticia.id) {
+          <tr>
+            <td class="td-id">{{ noticia.id }}</td>
+            <td>{{ noticia.titulo }}</td>
+            <td>{{ noticia.fecha }}</td>
+            <td>
+              <span class="badge" [class.badge-green]="noticia.estado === 'publicado'" [class.badge-gray]="noticia.estado === 'borrador'">
+                {{ noticia.estado }}
+              </span>
+            </td>
+            <td class="td-actions">
+              <button class="btn-icon btn-edit" title="Editar">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn-icon btn-delete" title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>

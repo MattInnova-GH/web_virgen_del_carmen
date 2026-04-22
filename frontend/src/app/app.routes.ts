@@ -1,4 +1,9 @@
 import { Routes } from '@angular/router';
+import { AdminLayout } from './admin/admin-layout/admin-layout';
+import { Dashboard } from './admin/dashboard/dashboard';
+import { AdminNoticias } from './admin/noticias/admin-noticias';
+import { AdminComunicados } from './admin/comunicados/admin-comunicados';
+import { AdminPersonal } from './admin/personal-academico/admin-personal';
 import { Inicio } from './pages/inicio/inicio';
 import { Nosotros } from './pages/nosotros/nosotros';
 import { Noticias } from './pages/noticias/noticias';
@@ -19,6 +24,17 @@ import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 import { Servicios } from './pages/servicios/servicios';
 
 export const routes: Routes = [
+  {
+    path: 'admin',
+    component: AdminLayout,
+    children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'dashboard', component: Dashboard, title: 'Admin — Dashboard' },
+      { path: 'noticias', component: AdminNoticias, title: 'Admin — Noticias' },
+      { path: 'comunicados', component: AdminComunicados, title: 'Admin — Comunicados' },
+      { path: 'personal-academico', component: AdminPersonal, title: 'Admin — Personal Académico' },
+    ],
+  },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: 'inicio', component: Inicio, title: 'Inicio' },
   { path: 'nosotros', component: Nosotros, title: 'Nosotros' },
