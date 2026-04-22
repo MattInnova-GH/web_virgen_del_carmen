@@ -3,9 +3,9 @@ const buildPressReleasesQuery = require('../helpers/press_releases.query');
 
 exports.createPressRelease = async (req, res) => {
     try {
-        const { title, press_release, description } = req.body;
+        const { title, img_url, press_release, description } = req.body;
 
-        if (!title) {
+        if (!title || !img_url || !press_release) {
             return res.status(400).json({
                 error: 'El título es obligatorio.'
             });
