@@ -1,0 +1,47 @@
+<div class="admin-page">
+
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Comunicados</h1>
+      <p class="page-sub">Gestión de comunicados institucionales</p>
+    </div>
+    <button class="btn-add">
+      <i class="fas fa-plus"></i> Nuevo Comunicado
+    </button>
+  </div>
+
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Asunto</th>
+          <th>Dirigido a</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (com of comunicados; track com.id) {
+          <tr>
+            <td class="td-id">{{ com.id }}</td>
+            <td>{{ com.asunto }}</td>
+            <td>
+              <span class="badge badge-blue">{{ com.dirigido }}</span>
+            </td>
+            <td>{{ com.fecha }}</td>
+            <td class="td-actions">
+              <button class="btn-icon btn-edit" title="Editar">
+                <i class="fas fa-pen"></i>
+              </button>
+              <button class="btn-icon btn-delete" title="Eliminar">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+</div>
