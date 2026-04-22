@@ -1,0 +1,28 @@
+<div class="admin-wrapper">
+  <app-sidebar />
+
+  <div class="admin-body">
+
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <h2 class="topbar-title">{{ pageTitle() }}</h2>
+        <span class="topbar-date">{{ today }}</span>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-icon-btn" title="Notificaciones">
+          <i class="fas fa-bell"></i>
+        </button>
+        <div class="topbar-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class="admin-main">
+      <router-outlet />
+    </main>
+
+  </div>
+</div>

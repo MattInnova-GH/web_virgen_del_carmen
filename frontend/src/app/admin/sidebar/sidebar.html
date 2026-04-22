@@ -1,1 +1,47 @@
-<p>sidebar works!</p>
+<aside class="admin-sidebar">
+
+  <!-- Brand -->
+  <div class="sidebar-brand">
+    <div class="brand-icon">
+      <i class="fas fa-graduation-cap"></i>
+    </div>
+    <div class="brand-text">
+      <span class="brand-title">IESPP</span>
+      <span class="brand-sub">Virgen del Carmen</span>
+    </div>
+  </div>
+
+  <!-- Divider -->
+  <div class="sidebar-divider"></div>
+
+  <!-- Label -->
+  <p class="sidebar-section-label">MENÚ PRINCIPAL</p>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    @for (item of menuItems; track item.route) {
+      <a
+        class="sidebar-item"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.route === '/admin/dashboard' }"
+      >
+        <i [class]="item.icon" class="sidebar-icon"></i>
+        <span class="sidebar-label">{{ item.label }}</span>
+      </a>
+    }
+  </nav>
+
+  <!-- Spacer -->
+  <div class="sidebar-spacer"></div>
+
+  <!-- Divider -->
+  <div class="sidebar-divider"></div>
+
+  <!-- Footer -->
+  <div class="sidebar-footer">
+    <i class="fas fa-circle-user sidebar-icon"></i>
+    <span class="sidebar-label">Administrador</span>
+  </div>
+
+</aside>
