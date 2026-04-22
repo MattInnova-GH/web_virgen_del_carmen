@@ -10,6 +10,7 @@ const appRoutes = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 // middleware
 app.use(
     helmet({
@@ -24,9 +25,6 @@ app.use(
 app.use(express.json());
 app.use(morgan('dev'));
 
-// archivos estáticos
-app.use(express.static(path.join(__dirname, 'static')));
-
 app.use('/api', appRoutes.AcademicPersonalRoutes);
 app.use('/api', appRoutes.CareerRoutes);
 app.use('/api', appRoutes.CommentsRoutes);
@@ -35,14 +33,6 @@ app.use('/api', appRoutes.InvestigationsRoutes);
 app.use('/api', appRoutes.NewsRoutes);
 app.use('/api', appRoutes.PressReleasesRoutes);
 app.use('/api', appRoutes.UsersRoutes);
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'templates', 'index.html'));
-});
-
-app.get('/admin', (req, res) => {
-    res.sendFile(path.join(__dirname, 'templates', 'dashboard.html'))
-});
 
 sequelize.authenticate()
     .then(() => {
