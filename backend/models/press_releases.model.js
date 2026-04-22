@@ -12,6 +12,10 @@ const PressReleases = sequelize.define('Press_Release', {
         type: DataTypes.TEXT,
         allowNull: false
     },
+    img_url: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    },
     press_release: {
         type: DataTypes.TEXT,
         allowNull: false
