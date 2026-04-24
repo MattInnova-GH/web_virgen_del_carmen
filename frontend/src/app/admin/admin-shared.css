@@ -1,7 +1,7 @@
 /* Shared admin page styles — imported in each admin page CSS */
 
 .admin-page {
-  max-width: 960px;
+  max-width: 100%;
 }
 
 /* ---- Page Header ---- */
@@ -137,6 +137,8 @@
 .btn-delete { background: #fdecea; color: #c0392b; }
 .btn-edit:hover   { background: #d0dcff; }
 .btn-delete:hover { background: #f9c9c5; }
+.btn-info   { background: #eaf0ff; color: #000000; }
+.btn-info:hover { background: #d0dcff; }
 
 /* ---- Docentes grid ---- */
 .admin-cards-grid {

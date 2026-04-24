@@ -7,13 +7,14 @@ exports.createPressRelease = async (req, res) => {
 
         if (!title || !img_url || !press_release) {
             return res.status(400).json({
-                error: 'El título es obligatorio.'
+                error: 'Completo todos los campos.'
             });
         }
 
         const newPressRelease = await db.PressReleases.create({
             title,
             press_release,
+            img_url,
             description
         });
 
@@ -31,7 +32,7 @@ exports.getPressRelease = async (req, res) => {
     try {
         const query = buildPressReleasesQuery(
             {},
-            [['createdAt','ASC']]
+            [['createdAt','DESC']]
         );
         const pressReleases = await db.PressReleases.findAll(query);
         res.status(200).json(pressReleases);
@@ -62,7 +63,7 @@ exports.deletePressReleases = async (req, res) => {
 
 exports.updatePressRelease = async (req, res) => {
     const {id} = req.params;
-    const { title, press_release, description } = req.body;
+    const { title, press_release, img_url, description } = req.body;
     try {
         const press_releases = await db.PressReleases.findByPk(id);
         

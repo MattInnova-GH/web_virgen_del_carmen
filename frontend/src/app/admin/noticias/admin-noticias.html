@@ -3,10 +3,10 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">Noticias</h1>
-      <p class="page-sub">Gestión de noticias del instituto</p>
+      <p class="page-sub">Gestión de noticias institucionales</p>
     </div>
-    <button class="btn-add">
-      <i class="fas fa-plus"></i> Nueva Noticia
+    <button class="btn-add" (click)="openCreateModal()">
+      <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
@@ -16,34 +16,123 @@
         <tr>
           <th>#</th>
           <th>Título</th>
-          <th>Fecha</th>
           <th>Estado</th>
+          <th>Fecha</th>
           <th>Acciones</th>
         </tr>
       </thead>
+
       <tbody>
-        @for (noticia of noticias; track noticia.id) {
-          <tr>
-            <td class="td-id">{{ noticia.id }}</td>
-            <td>{{ noticia.titulo }}</td>
-            <td>{{ noticia.fecha }}</td>
-            <td>
-              <span class="badge" [class.badge-green]="noticia.estado === 'publicado'" [class.badge-gray]="noticia.estado === 'borrador'">
-                {{ noticia.estado }}
-              </span>
-            </td>
-            <td class="td-actions">
-              <button class="btn-icon btn-edit" title="Editar">
-                <i class="fas fa-pen"></i>
-              </button>
-              <button class="btn-icon btn-delete" title="Eliminar">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+        @for (n of noticias(); track n.id) {
+        <tr>
+
+          <td>{{ n.id }}</td>
+
+          <td class="td-title">{{ n.title }}</td>
+
+          <td>
+            <span class="badge"
+              [class.badge-blue]="n.status"
+              [class.badge-orange]="!n.status">
+              {{ n.status ? 'Publicado' : 'No Publicado' }}
+            </span>
+          </td>
+
+          <td>{{ n.fecha | date:'yyyy-MM-dd' }}</td>
+
+          <td class="td-actions">
+            <button class="btn-icon btn-edit" (click)="openEditModal(n)">
+              <i class="fas fa-pen"></i>
+            </button>
+
+            <button class="btn-icon btn-delete" (click)="delete(n.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
         }
       </tbody>
     </table>
   </div>
+
+  @if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Editar Noticia' : 'Nueva Noticia' }}</h2>
+
+        <div class="header-actions">
+          <button class="btn-theme" (click)="toggleEditorTheme()">
+            @if (editorTheme() === 'dark') {
+            <i class="fa-solid fa-sun"></i>
+            } @else {
+            <i class="fa-solid fa-moon"></i>
+            }
+          </button>
+
+          <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-grid-2">
+
+          <div>
+            <input [(ngModel)]="formData.title" placeholder="Título">
+            <input [(ngModel)]="formData.img_url" placeholder="URL imagen">
+            <textarea [(ngModel)]="formData.description" placeholder="Descripción breve"></textarea>
+          </div>
+
+          <div class="preview">
+            <div class="preview-frame">
+
+              @if (formData.img_url) {
+              <img [src]="formData.img_url">
+
+              <button class="preview-zoom-btn" (click)="openImageViewer($event)">
+                <i class="fas fa-expand"></i>
+              </button>
+
+              } @else {
+              <div class="no-preview">Sin imagen</div>
+              }
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="editor-section">
+          <quill-editor
+            [(ngModel)]="formData.content"
+            [modules]="quillConfig"
+            theme="snow"
+            class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'"
+            [class.editor-light]="editorTheme() === 'light'">
+          </quill-editor>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button class="btn-save" (click)="save()">
+          {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
+
+  @if (imageViewer()) {
+  <div class="image-viewer" (click)="closeImageViewer()">
+    <img [src]="formData.img_url" (click)="$event.stopPropagation()">
+  </div>
+  }
 
 </div>

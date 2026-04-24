@@ -3,36 +3,116 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">Personal Académico</h1>
-      <p class="page-sub">Gestión de docentes y personal del instituto</p>
+      <p class="page-sub">Gestión de autoridades y docentes del instituto</p>
     </div>
-    <button class="btn-add">
-      <i class="fas fa-plus"></i> Agregar Docente
+    <button class="btn-add" (click)="openCreateModal()">
+      <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
   <div class="admin-cards-grid">
-    @for (docente of docentes; track docente.id) {
-      <div class="docente-card">
-        <div class="docente-avatar">
-          <i class="fas fa-user-tie"></i>
-        </div>
-        <div class="docente-info">
-          <h3 class="docente-nombre">{{ docente.nombre }}</h3>
-          <p class="docente-especialidad">{{ docente.especialidad }}</p>
-          <span class="badge" [class.badge-green]="docente.condicion === 'nombrado'" [class.badge-orange]="docente.condicion === 'contratado'">
-            {{ docente.condicion }}
+    @for (docente of docentes(); track docente.id) {
+    <div class="docente-card">
+
+      <div class="docente-avatar">
+        @if (docente.img_url) {
+        <img [src]="docente.img_url" alt="foto docente">
+        } @else {
+        <i class="fas fa-user-tie"></i>
+        }
+      </div>
+
+      <div class="docente-info">
+        <h3 class="docente-nombre">{{ docente.nombre }}</h3>
+        <p class="docente-especialidad">{{ docente.especialidad }}</p>
+
+        <div class="docente-meta">
+
+          <span class="badge badge-year">
+            {{ docente.anio }}
           </span>
-        </div>
-        <div class="docente-actions">
-          <button class="btn-icon btn-edit" title="Editar">
-            <i class="fas fa-pen"></i>
-          </button>
-          <button class="btn-icon btn-delete" title="Eliminar">
-            <i class="fas fa-trash"></i>
-          </button>
+
+          <span class="badge" [class.badge-blue]="docente.status" [class.badge-orange]="!docente.status">
+            {{ docente.status ? 'Activo' : 'Inactivo' }}
+          </span>
+
         </div>
       </div>
+
+      <div class="docente-actions">
+        <button class="btn-icon btn-info">
+          <i class="fa-sharp fa-solid fa-circle-info"></i>
+        </button>
+
+        <button class="btn-icon btn-edit" (click)="openEditModal(docente)">
+          <i class="fas fa-pen"></i>
+        </button>
+
+        <button class="btn-icon btn-delete" (click)="delete(docente.id)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+
+    </div>
     }
+
   </div>
+
+  @if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal">
+
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Editar Personal Académico' : 'Nuevo Personal Académico' }}</h2>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-grid">
+
+          <input [(ngModel)]="formData.names" placeholder="Nombres">
+
+          <input [(ngModel)]="formData.last_names" placeholder="Apellidos">
+
+          <select [(ngModel)]="formData.type">
+            <option value="Docente">Docente</option>
+            <option value="Autoridad">Autoridad</option>
+          </select>
+
+          <input [(ngModel)]="formData.grade" placeholder="Especialidad">
+
+          <input [(ngModel)]="formData.year" placeholder="Año">
+
+          <input [(ngModel)]="formData.img_url" placeholder="URL de imagen">
+
+        </div>
+
+        <!-- preview -->
+        <div class="preview">
+          <div class="preview-frame">
+            @if (formData.img_url) {
+            <img [src]="formData.img_url">
+            } @else {
+            <div class="no-preview">
+              <i class="fas fa-user"></i>
+              <span>Vista previa</span>
+            </div>
+            }
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button class="btn-save" (click)="save()">
+          {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
 
 </div>

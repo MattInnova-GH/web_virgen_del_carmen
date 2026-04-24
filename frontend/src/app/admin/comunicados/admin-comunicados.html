@@ -5,8 +5,8 @@
       <h1 class="page-title">Comunicados</h1>
       <p class="page-sub">Gestión de comunicados institucionales</p>
     </div>
-    <button class="btn-add">
-      <i class="fas fa-plus"></i> Nuevo Comunicado
+    <button class="btn-add" (click)="openCreateModal()">
+      <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
@@ -16,32 +16,123 @@
         <tr>
           <th>#</th>
           <th>Asunto</th>
-          <th>Dirigido a</th>
+          <th>Estado</th>
           <th>Fecha</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        @for (com of comunicados; track com.id) {
-          <tr>
-            <td class="td-id">{{ com.id }}</td>
-            <td>{{ com.asunto }}</td>
-            <td>
-              <span class="badge badge-blue">{{ com.dirigido }}</span>
-            </td>
-            <td>{{ com.fecha }}</td>
-            <td class="td-actions">
-              <button class="btn-icon btn-edit" title="Editar">
-                <i class="fas fa-pen"></i>
-              </button>
-              <button class="btn-icon btn-delete" title="Eliminar">
-                <i class="fas fa-trash"></i>
-              </button>
-            </td>
-          </tr>
+        @for (com of comunicados(); track com.id) {
+        <tr>
+
+          <td class="td-id">{{ com.id }}</td>
+
+          <td class="td-title">
+            {{ com.title }}
+          </td>
+
+          <td>
+            <span class="badge" [class.badge-blue]="com.status" [class.badge-orange]="!com.status">
+              {{ com.status ? 'Publicado' : 'No Publicado' }}
+            </span>
+          </td>
+
+          <td>{{ com.fecha | date:'yyyy-MM-dd' }}</td>
+
+          <td class="td-actions">
+            <button class="btn-icon btn-edit" (click)="openEditModal(com)">
+              <i class="fas fa-pen"></i>
+            </button>
+
+            <button class="btn-icon btn-delete" (click)="delete(com.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
         }
       </tbody>
     </table>
   </div>
+  <!--(click)="closeModal()" para cierre de modal sin boton-->
+  @if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal modal-xl" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Editar Comunicado' : 'Nuevo Comunicado' }}</h2>
+
+        <div class="header-actions">
+          <button class="btn-theme" (click)="toggleEditorTheme()">
+            @if (editorTheme() === 'dark') {
+            <i class="fa-solid fa-sun"></i>
+            } @else {
+            <i class="fa-solid fa-moon"></i>
+            }
+          </button>
+
+          <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+
+        <!-- GRID -->
+        <div class="form-grid-2">
+
+          <div>
+            <input [(ngModel)]="formData.title" placeholder="Título">
+
+            <input [(ngModel)]="formData.img_url" placeholder="URL imagen">
+
+            <textarea [(ngModel)]="formData.description" placeholder="Descripción breve"></textarea>
+          </div>
+
+          <!-- PREVIEW -->
+          <div class="preview">
+            <div class="preview-frame">
+
+              @if (formData.img_url) {
+              <img [src]="formData.img_url">
+
+              <!-- botón zoom -->
+              <button class="preview-zoom-btn" (click)="openImageViewer($event)">
+                <i class="fas fa-expand"></i>
+              </button>
+
+              } @else {
+              <div class="no-preview">Sin imagen</div>
+              }
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- EDITOR SEPARADO -->
+        <div class="editor-section">
+          <quill-editor [(ngModel)]="formData.press_release" [modules]="quillConfig" theme="snow" class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
+          </quill-editor>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button class="btn-save" (click)="save()">
+          {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
+
+  @if (imageViewer()) {
+  <div class="image-viewer" (click)="closeImageViewer()">
+    <img [src]="formData.img_url" (click)="$event.stopPropagation()">
+  </div>
+  }
 
 </div>

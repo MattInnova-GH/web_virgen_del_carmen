@@ -29,5 +29,25 @@ export class Sidebar {
       icon: 'fas fa-user-tie',
       route: '/admin/personal-academico',
     },
+    {
+      label: 'Trayectoria',
+      icon: 'fas fa-user-tie',
+      route: '/admin/trayectoria',
+    },
+    {
+      label: 'Contactos',
+      icon: 'fas fa-user-tie',
+      route: '/admin/contactos',
+    },
+    {
+      label: 'Investigaciones',
+      icon: 'fas fa-user-tie',
+      route: '/admin/investigaciones',
+    },
+    {
+      label: 'Usuarios',
+      icon: 'fas fa-user-tie',
+      route: '/admin/usuarios',
+    },
   ];
 }

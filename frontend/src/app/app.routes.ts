@@ -4,6 +4,9 @@ import { Dashboard } from './admin/dashboard/dashboard';
 import { AdminNoticias } from './admin/noticias/admin-noticias';
 import { AdminComunicados } from './admin/comunicados/admin-comunicados';
 import { AdminPersonal } from './admin/personal-academico/admin-personal';
+import { AdminTrayectoria } from './admin/trayectoria/trayectoria';
+import { AdminContactos } from './admin/contactos/contactos';
+import { AdminUsuarios } from './admin/usuarios/usuarios';
 import { Inicio } from './pages/inicio/inicio';
 import { Nosotros } from './pages/nosotros/nosotros';
 import { Noticias } from './pages/noticias/noticias';
@@ -22,6 +25,7 @@ import { ServicioSocial } from './pages/servicio-social/servicio-social';
 import { MesaDePartes } from './pages/mesa-de-partes/mesa-de-partes';
 import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 import { Servicios } from './pages/servicios/servicios';
+import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 
 export const routes: Routes = [
   {
@@ -33,6 +37,10 @@ export const routes: Routes = [
       { path: 'noticias', component: AdminNoticias, title: 'Admin — Noticias' },
       { path: 'comunicados', component: AdminComunicados, title: 'Admin — Comunicados' },
       { path: 'personal-academico', component: AdminPersonal, title: 'Admin — Personal Académico' },
+      { path: 'trayectoria', component: AdminTrayectoria, title: 'Admin - Trayectoria' },
+      { path: 'contactos', component: AdminContactos, title: 'Admin - Contactos' },
+      { path: 'investigaciones', component: AdminInvestigaciones, title: 'Admin - Investigaciones' },
+      { path: 'usuarios', component: AdminUsuarios, title: 'Admin - Usuarios' }
     ],
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },

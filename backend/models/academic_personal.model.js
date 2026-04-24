@@ -24,6 +24,14 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
+    img_url: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    year: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
     description: {
         type: DataTypes.TEXT,
         allowNull: true
