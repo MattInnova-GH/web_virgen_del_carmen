@@ -19,7 +19,7 @@ exports.createNew = async (req, res) => {
 exports.getNews = async(req, res) => {
     try {
         const query = buildNewsQuery(
-            {status: true},
+            {},
             [['createdAt', 'DESC']]
         )
         const allNews = await db.News.findAll(query);
