@@ -31,9 +31,7 @@
           <td class="td-title">{{ n.title }}</td>
 
           <td>
-            <span class="badge"
-              [class.badge-blue]="n.status"
-              [class.badge-orange]="!n.status">
+            <span class="badge" [class.badge-blue]="n.status" [class.badge-orange]="!n.status">
               {{ n.status ? 'Publicado' : 'No Publicado' }}
             </span>
           </td>
@@ -41,6 +39,10 @@
           <td>{{ n.fecha | date:'yyyy-MM-dd' }}</td>
 
           <td class="td-actions">
+            <button class="btn-icon btn-comments" (click)="openCommentsModal(n.id)">
+              <i class="fa-solid fa-comments"></i>
+            </button>
+
             <button class="btn-icon btn-edit" (click)="openEditModal(n)">
               <i class="fas fa-pen"></i>
             </button>
@@ -61,7 +63,7 @@
     <div class="modal" (click)="$event.stopPropagation()">
 
       <div class="modal-header">
-        <h2>{{ isEditMode() ? 'Editar Noticia' : 'Nueva Noticia' }}</h2>
+        <h2>{{ isEditMode() ? 'Editar Noticia' : 'Agregar Noticia' }}</h2>
 
         <div class="header-actions">
           <button class="btn-theme" (click)="toggleEditorTheme()">
@@ -106,13 +108,8 @@
         </div>
 
         <div class="editor-section">
-          <quill-editor
-            [(ngModel)]="formData.content"
-            [modules]="quillConfig"
-            theme="snow"
-            class="full-editor"
-            [class.editor-dark]="editorTheme() === 'dark'"
-            [class.editor-light]="editorTheme() === 'light'">
+          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
           </quill-editor>
         </div>
 
@@ -132,6 +129,54 @@
   @if (imageViewer()) {
   <div class="image-viewer" (click)="closeImageViewer()">
     <img [src]="formData.img_url" (click)="$event.stopPropagation()">
+  </div>
+  }
+
+  @if (showCommentsModal()) {
+  <div class="modal-backdrop">
+    <div class="modal modal-lg" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>Comentarios</h2>
+        <button class="close-btn" (click)="closeCommentsModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+
+        @if (comments().length === 0) {
+        <div class="no-data">No hay comentarios</div>
+        }
+
+        @for (c of comments(); track c.id) {
+        <div class="comment-card">
+
+          <div class="comment-header">
+            <strong>{{ c.nickname || 'Anónimo' }}</strong>
+            <span>{{ c.createdAt | date:'yyyy-MM-dd HH:mm' }}</span>
+          </div>
+
+          <div class="comment-body">
+            {{ c.comment }}
+          </div>
+
+          @if (c.description) {
+          <div class="comment-desc">
+            {{ c.description }}
+          </div>
+          }
+
+          <div class="comment-actions">
+            <button class="btn-delete" (click)="deleteComment(c.id)">
+              Eliminar
+            </button>
+          </div>
+
+        </div>
+        }
+
+      </div>
+
+    </div>
   </div>
   }
 

@@ -3,59 +3,74 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">Personal Académico</h1>
-      <p class="page-sub">Gestión de autoridades y docentes del instituto</p>
+      <p class="page-sub">Gestión de autoridades y docentes</p>
     </div>
+
     <button class="btn-add" (click)="openCreateModal()">
       <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
-  <div class="admin-cards-grid">
-    @for (docente of docentes(); track docente.id) {
-    <div class="docente-card">
+  <!-- TABLA -->
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Cargo</th>
+          <th>Tipo</th>
+          <th>Email</th>
+          <th>Año</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
 
-      <div class="docente-avatar">
-        @if (docente.img_url) {
-        <img [src]="docente.img_url" alt="foto docente">
-        } @else {
-        <i class="fas fa-user-tie"></i>
+      <tbody>
+        @for (p of personal(); track p.id) {
+        <tr>
+
+          <td>{{ p.id }}</td>
+
+          <td class="td-title">
+            {{ p.full_name }}
+          </td>
+
+          <td>{{ p.grade }}</td>
+
+          <td>{{ p.type }}</td>
+
+          <td>
+            @if (p.email) {
+            {{ p.email }}
+            } @else {
+            <span style="color:#777">—</span>
+            }
+          </td>
+
+          <td>{{ p.year }}</td>
+
+          <td>
+            <span class="badge" [class.badge-blue]="p.status" [class.badge-orange]="!p.status">
+              {{ p.status ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+
+          <td class="td-actions">
+            <button class="btn-icon btn-edit" (click)="openEditModal(p)">
+              <i class="fas fa-pen"></i>
+            </button>
+
+            <button class="btn-icon btn-delete" (click)="delete(p.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
         }
-      </div>
-
-      <div class="docente-info">
-        <h3 class="docente-nombre">{{ docente.nombre }}</h3>
-        <p class="docente-especialidad">{{ docente.especialidad }}</p>
-
-        <div class="docente-meta">
-
-          <span class="badge badge-year">
-            {{ docente.anio }}
-          </span>
-
-          <span class="badge" [class.badge-blue]="docente.status" [class.badge-orange]="!docente.status">
-            {{ docente.status ? 'Activo' : 'Inactivo' }}
-          </span>
-
-        </div>
-      </div>
-
-      <div class="docente-actions">
-        <button class="btn-icon btn-info">
-          <i class="fa-sharp fa-solid fa-circle-info"></i>
-        </button>
-
-        <button class="btn-icon btn-edit" (click)="openEditModal(docente)">
-          <i class="fas fa-pen"></i>
-        </button>
-
-        <button class="btn-icon btn-delete" (click)="delete(docente.id)">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>
-
-    </div>
-    }
-
+      </tbody>
+    </table>
   </div>
 
   @if (showModal()) {
@@ -63,7 +78,7 @@
     <div class="modal">
 
       <div class="modal-header">
-        <h2>{{ isEditMode() ? 'Editar Personal Académico' : 'Nuevo Personal Académico' }}</h2>
+        <h2>{{ isEditMode() ? 'Editar Personal Académico' : 'Agregar Personal Académico' }}</h2>
         <button class="close-btn" (click)="closeModal()">×</button>
       </div>
 
@@ -80,7 +95,7 @@
             <option value="Autoridad">Autoridad</option>
           </select>
 
-          <input [(ngModel)]="formData.grade" placeholder="Especialidad">
+          <input [(ngModel)]="formData.grade" placeholder="Cargo">
 
           <input [(ngModel)]="formData.year" placeholder="Año">
 

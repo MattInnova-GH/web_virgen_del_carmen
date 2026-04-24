@@ -12,24 +12,22 @@ import { FormsModule } from '@angular/forms';
 export class AdminPersonal implements OnInit {
 
   private http = inject(HttpClient);
-
   apiUrl = 'http://localhost:3000/api/academic_personal';
 
-  docentes = signal<any[]>([]);
+  personal = signal<any[]>([]);
 
-  // estado modal
   showModal = signal(false);
   isEditMode = signal(false);
 
-  // modelo formulario
   formData: any = {
     id: null,
     type: 'Docente',
     names: '',
     last_names: '',
+    email: '', // ← preparado
     grade: '',
-    img_url: '',
     year: '',
+    img_url: '',
     description: ''
   };
 
@@ -43,15 +41,19 @@ export class AdminPersonal implements OnInit {
   loadData() {
     this.http.get<any[]>(`${this.apiUrl}/list`).subscribe({
       next: (data) => {
-        this.docentes.set(
+        this.personal.set(
           data.map(item => ({
             id: item.id,
-            nombre: `${item.names} ${item.last_names}`,
-            especialidad: item.grade,
-            tipo: item.type,
-            anio: item.year,
+            names: item.names,
+            last_names: item.last_names,
+            full_name: `${item.names} ${item.last_names}`,
+            email: item.email ?? '', // ← preparado
+            type: item.type,
+            grade: item.grade,
+            year: item.year,
             img_url: item.img_url,
-            status: item.status
+            status: item.status,
+            fecha: item.updatedAt
           }))
         );
       }
@@ -59,7 +61,7 @@ export class AdminPersonal implements OnInit {
   }
 
   // =========================
-  // MODAL CONTROL
+  // MODAL
   // =========================
   openCreateModal() {
     this.isEditMode.set(false);
@@ -67,19 +69,18 @@ export class AdminPersonal implements OnInit {
     this.showModal.set(true);
   }
 
-  openEditModal(docente: any) {
+  openEditModal(p: any) {
     this.isEditMode.set(true);
 
-    const [names, ...lastParts] = docente.nombre.split(' ');
-
     this.formData = {
-      id: docente.id,
-      type: docente.tipo,
-      names: names,
-      last_names: lastParts.join(' '),
-      grade: docente.especialidad,
-      img_url: docente.img_url,
-      year: docente.anio,
+      id: p.id,
+      type: p.type,
+      names: p.names,
+      last_names: p.last_names,
+      email: p.email,
+      grade: p.grade,
+      year: p.year,
+      img_url: p.img_url,
       description: ''
     };
 
@@ -96,9 +97,10 @@ export class AdminPersonal implements OnInit {
       type: 'Docente',
       names: '',
       last_names: '',
+      email: '',
       grade: '',
-      img_url: '',
       year: '',
+      img_url: '',
       description: ''
     };
   }
@@ -107,11 +109,7 @@ export class AdminPersonal implements OnInit {
   // CRUD
   // =========================
   save() {
-    if (this.isEditMode()) {
-      this.update();
-    } else {
-      this.create();
-    }
+    this.isEditMode() ? this.update() : this.create();
   }
 
   create() {
@@ -135,7 +133,7 @@ export class AdminPersonal implements OnInit {
   }
 
   delete(id: number) {
-    if (!confirm('¿Seguro que deseas eliminar este docente?')) return;
+    if (!confirm('¿Cambiar estado del registro?')) return;
 
     this.http.delete(`${this.apiUrl}/delete/${id}`).subscribe({
       next: () => this.loadData(),

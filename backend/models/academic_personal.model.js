@@ -9,7 +9,7 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         allowNull: false
     },
     type: {
-        type: DataTypes.ENUM('Autoridad', 'Docente'),
+        type: DataTypes.ENUM('Autoridad', 'Docente', 'Administrativo'),
         allowNull: false
     },
     names: {

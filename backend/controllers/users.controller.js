@@ -55,16 +55,15 @@ exports.deleteUser = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const {id} = req.params;
-    const {names, last_names, username, password, description} = req.body;
+    const {names, last_names, username, description} = req.body;
     try {
         const users = await db.Users.findByPk(id);
         if(!users)
             return res.status(404).json({message: 'Usuario no encontrado.'});
 
         users.names = names;
-        users.last_name = last_names;
+        users.last_names = last_names;
         users.username = username;
-        users.password = password;
         users.description = description;
 
         await users.save();

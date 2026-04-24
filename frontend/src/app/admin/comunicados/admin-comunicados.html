@@ -25,12 +25,10 @@
         @for (com of comunicados(); track com.id) {
         <tr>
 
-          <td class="td-id">{{ com.id }}</td>
-
+          <td>{{ com.id }}</td>
           <td class="td-title">
             {{ com.title }}
           </td>
-
           <td>
             <span class="badge" [class.badge-blue]="com.status" [class.badge-orange]="!com.status">
               {{ com.status ? 'Publicado' : 'No Publicado' }}
@@ -60,7 +58,7 @@
     <div class="modal modal-xl" (click)="$event.stopPropagation()">
 
       <div class="modal-header">
-        <h2>{{ isEditMode() ? 'Editar Comunicado' : 'Nuevo Comunicado' }}</h2>
+        <h2>{{ isEditMode() ? 'Editar Comunicado' : 'Agregar Comunicado' }}</h2>
 
         <div class="header-actions">
           <button class="btn-theme" (click)="toggleEditorTheme()">

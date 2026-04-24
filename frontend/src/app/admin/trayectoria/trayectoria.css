@@ -1,1 +1,60 @@
 @import '../admin-shared.css';
+@import '../noticias/admin-noticias.css';
+
+/* contenedor más grande */
+.form-card-lg {
+  padding: 25px;
+}
+
+/* bloques verticales */
+.form-block {
+  margin-bottom: 25px;
+}
+
+.form-block label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+/* quill full width */
+::ng-deep quill-editor {
+  display: block;
+  width: 100%;
+}
+
+/* toolbar */
+::ng-deep .ql-toolbar {
+  border-radius: 10px 10px 0 0;
+}
+
+/* container */
+::ng-deep .ql-container {
+  border-radius: 0 0 10px 10px;
+}
+
+/* editor area */
+::ng-deep .ql-editor {
+  min-height: 180px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* botones */
+.btn-save {
+  background: #3b82f6;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-cancel {
+  background: #444;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}

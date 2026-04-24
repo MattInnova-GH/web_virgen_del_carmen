@@ -13,14 +13,13 @@ exports.createContact = async (req, res) => {
             description
         } = req.body;
 
-        if (!icon_img_url || !phone || !email || !location) {
+        if (!phone || !email || !location) {
             return res.status(400).json({
                 error: 'Complete los campos obligatorios.'
             });
         }
 
         const newContact = await db.Contacts.create({
-            icon_img_url,
             phone,
             email,
             location,
