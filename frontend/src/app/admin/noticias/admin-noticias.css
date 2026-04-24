@@ -16,7 +16,7 @@
 
 .admin-table td {
   padding: 14px 12px;
-  border-top: 1px solid rgba(255,255,255,0.05);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .td-title {
@@ -31,12 +31,12 @@
 }
 
 .badge-blue {
-  background: rgba(59,130,246,0.15);
+  background: rgba(59, 130, 246, 0.15);
   color: #3b82f6;
 }
 
 .badge-orange {
-  background: rgba(249,115,22,0.15);
+  background: rgba(249, 115, 22, 0.15);
   color: #f97316;
 }
 
@@ -44,7 +44,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.65);
+  background: rgba(0, 0, 0, 0.65);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -67,7 +67,8 @@
   gap: 20px;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   margin-top: 10px;
   padding: 10px;
@@ -111,7 +112,7 @@ input, textarea {
 .image-viewer {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.9);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -120,4 +121,70 @@ input, textarea {
 .image-viewer img {
   max-width: 90%;
   max-height: 90%;
+}
+
+/* =========================
+   COMMENTS MODAL
+========================= */
+
+.modal-lg {
+  width: 700px;
+  max-width: 95vw;
+}
+
+.no-data {
+  text-align: center;
+  color: #777;
+  padding: 20px;
+}
+
+/* tarjeta comentario */
+.comment-card {
+  background: #2a2a3d;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* header */
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+/* contenido */
+.comment-body {
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+/* descripción opcional */
+.comment-desc {
+  font-size: 13px;
+  color: #cbd5f5;
+  margin-bottom: 10px;
+}
+
+/* acciones */
+.comment-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.comment-actions .btn-delete {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment-actions .btn-delete:hover {
+  background: rgba(239, 68, 68, 0.25);
 }

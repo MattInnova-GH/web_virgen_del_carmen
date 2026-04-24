@@ -3,7 +3,7 @@ const buildCommentsQuery = require('../helpers/comments.query');
 
 exports.createComment = async (req, res) => {
     try {
-        const {new_id, nickname, comment, description} = req.body;
+        let {new_id, nickname, comment, description} = req.body;
 
         if (!new_id || !comment)
             return res.status(400).json({error: 'Complete el campo de comentario.'});
@@ -23,9 +23,15 @@ exports.createComment = async (req, res) => {
 
 exports.getComments = async (req, res) => {
     try {
+        const {new_id} = req.query;
+
+        const whereCondition = {};
+        if (new_id)
+            whereCondition.new_id = new_id;
+
         const query = buildCommentsQuery(
-            {},
-            [['createdAt', 'ASC']]
+            whereCondition,
+            [['createdAt', 'DESC']]
         );
         const comments = await db.Comments.findAll(query);
         res.status(200).json(comments);
@@ -40,14 +46,12 @@ exports.getComments = async (req, res) => {
 exports.deleteComment= async (req, res) => {
     try {
         const {id} = req.params;
-        const comment = await db.Comments.findOne({
-            where: {id, status: true},
-        });
+        const comment = await db.Comments.findByPk(id);
         if (!comment)
             return res.status(404).json({message: 'Comentario no encontrado.'});
 
-        await comment.update({status: false});
-        return res.status(200).json({message: 'Comentario desactivado correctamente.'});
+        await comment.destroy();
+        return res.status(200).json({message: 'Comentario borrado definitivamente.'});
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({

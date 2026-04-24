@@ -171,4 +171,49 @@ export class AdminNoticias implements OnInit {
     ]
   };
 
+  private COMMENTS_API = 'http://localhost:3000/api/comments';
+
+  // =========================
+  // COMMENTS STATE
+  // =========================
+  showCommentsModal = signal(false);
+  comments = signal<any[]>([]);
+  currentNewsId = signal<number | null>(null);
+
+  // =========================
+  // COMMENTS
+  // =========================
+  openCommentsModal(newsId: number) {
+    this.currentNewsId.set(newsId);
+    this.loadComments(newsId);
+    this.showCommentsModal.set(true);
+  }
+
+  closeCommentsModal() {
+    this.showCommentsModal.set(false);
+  }
+
+  loadComments(newsId: number) {
+    this.http.get<any[]>(`${this.COMMENTS_API}/list?new_id=${newsId}`)
+      .subscribe({
+        next: (data) => {
+          this.comments.set(data);
+        },
+        error: err => console.error(err)
+      });
+  }
+
+  deleteComment(id: number) {
+    if (!confirm('¿Eliminar comentario?')) return;
+
+    this.http.delete(`${this.COMMENTS_API}/delete/${id}`)
+      .subscribe({
+        next: () => {
+          // recargar lista sin cerrar modal
+          this.loadComments(this.currentNewsId()!);
+        },
+        error: err => console.error(err)
+      });
+  }
+
 }

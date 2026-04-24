@@ -26,27 +26,27 @@ export class Sidebar {
     },
     {
       label: 'Personal Académico',
-      icon: 'fas fa-user-tie',
+      icon: 'fa-solid fa-chalkboard-user',
       route: '/admin/personal-academico',
     },
     {
       label: 'Trayectoria',
-      icon: 'fas fa-user-tie',
+      icon: 'fa-solid fa-briefcase',
       route: '/admin/trayectoria',
     },
     {
       label: 'Contactos',
-      icon: 'fas fa-user-tie',
+      icon: 'fa-solid fa-address-book',
       route: '/admin/contactos',
     },
     {
       label: 'Investigaciones',
-      icon: 'fas fa-user-tie',
+      icon: 'fa-solid fa-book-bookmark',
       route: '/admin/investigaciones',
     },
     {
       label: 'Usuarios',
-      icon: 'fas fa-user-tie',
+      icon: 'fa-solid fa-users-gear',
       route: '/admin/usuarios',
     },
   ];

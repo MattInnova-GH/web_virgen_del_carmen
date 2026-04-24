@@ -1,1 +1,28 @@
 @import '../admin-shared.css';
+@import '../comunicados/admin-comunicados.css';
+
+/* ===== FIX SOLO PARA USUARIOS ===== */
+
+/* convertir el grid a 1 sola columna */
+.form-grid-2 {
+  grid-template-columns: 1fr !important;
+}
+
+/* eliminar cualquier espacio de preview residual */
+.preview {
+  display: none !important;
+}
+
+/* evitar huecos verticales innecesarios */
+.modal-body {
+  padding-bottom: 0;
+}
+
+/* compactar spacing del editor */
+.editor-section {
+  margin-top: 15px;
+}
+
+.modal {
+    width: 500px;
+}

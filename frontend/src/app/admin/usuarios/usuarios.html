@@ -5,9 +5,102 @@
       <h1 class="page-title">Usuarios</h1>
       <p class="page-sub">Gestión de usuarios de administración</p>
     </div>
-    <button class="btn-add">
+
+    <button class="btn-add" (click)="openCreateModal()">
       <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
+
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombres y Apellidos</th>
+          <th>Usuario</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (u of usuarios(); track u.id) {
+        <tr>
+
+          <td>{{ u.id }}</td>
+
+          <td class="td-title">
+            {{ u.names }} {{ u.last_names }}
+          </td>
+
+          <td>{{ u.username }}</td>
+
+          <td>
+            <span class="badge"
+              [class.badge-blue]="u.status"
+              [class.badge-orange]="!u.status">
+              {{ u.status ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+
+          <td>{{ u.fecha | date:'yyyy-MM-dd' }}</td>
+
+          <td class="td-actions">
+            <button class="btn-icon btn-edit" (click)="openEditModal(u)">
+              <i class="fas fa-pen"></i>
+            </button>
+
+            <button class="btn-icon btn-delete" (click)="delete(u.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal modal-xl" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Editar Usuario' : 'Agregar Usuario' }}</h2>
+        <button class="close-btn" (click)="closeModal()">×</button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-grid-2">
+
+          <div>
+            <input [(ngModel)]="formData.names" placeholder="Nombres">
+            <input [(ngModel)]="formData.last_names" placeholder="Apellidos">
+            <input [(ngModel)]="formData.username" placeholder="Usuario">
+
+            <!-- solo en creación -->
+            @if (!isEditMode()) {
+            <input type="password" [(ngModel)]="formData.password" placeholder="Contraseña">
+            }
+
+            <textarea [(ngModel)]="formData.description" placeholder="Descripción"></textarea>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button class="btn-save" (click)="save()">
+          {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
 
 </div>

@@ -10,27 +10,27 @@ const Contacts = sequelize.define('Contacts', {
     },
     phone: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     email: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     location: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     facebook: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     instagram: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     tiktok: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     description: {
         type: DataTypes.TEXT,

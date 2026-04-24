@@ -8,10 +8,10 @@ const ROUTE_TITLES: Record<string, string> = {
   '/admin/noticias':          'Noticias',
   '/admin/comunicados':       'Comunicados',
   '/admin/personal-academico':'Personal Académico',
-  '/admin/trayectoria': 'Trayectoria',
-  '/admin/contactos': 'Contactos',
-  '/admin/investigaciones': 'Investigaciones',
-  '/admin/usuarios': 'Usuarios'
+  '/admin/trayectoria':       'Trayectoria',
+  '/admin/contactos':         'Contactos',
+  '/admin/investigaciones':   'Investigaciones',
+  '/admin/usuarios':          'Usuarios'
 };
 
 @Component({

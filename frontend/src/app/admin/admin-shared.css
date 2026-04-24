@@ -139,6 +139,8 @@
 .btn-delete:hover { background: #f9c9c5; }
 .btn-info   { background: #eaf0ff; color: #000000; }
 .btn-info:hover { background: #d0dcff; }
+.btn-comments   { background: #eaf0ff; color: #000000; }
+.btn-comments:hover { background: #d0dcff; }
 
 /* ---- Docentes grid ---- */
 .admin-cards-grid {
