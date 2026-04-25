@@ -4,10 +4,14 @@ import {
   ViewChild,
   AfterViewInit,
   OnDestroy,
+  OnInit,
   Renderer2,
   NgZone,
-  ChangeDetectorRef
+  ChangeDetectorRef,
+  inject,
+  signal
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
@@ -18,7 +22,13 @@ import { RouterLink } from '@angular/router';
   templateUrl: './inicio.html',
   styleUrl: './inicio.css',
 })
-export class Inicio implements AfterViewInit, OnDestroy {
+export class Inicio implements OnInit, AfterViewInit, OnDestroy {
+
+  private http = inject(HttpClient);
+  private api = 'http://localhost:3000/api';
+
+  latestNoticias = signal<any[]>([]);
+  latestComunicados = signal<any[]>([]);
   @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('track') track!: ElementRef;
 
@@ -81,6 +91,15 @@ export class Inicio implements AfterViewInit, OnDestroy {
   private listeners: (() => void)[] = [];
 
   constructor(private renderer: Renderer2, private ngZone: NgZone, private cdr: ChangeDetectorRef) {}
+
+  ngOnInit(): void {
+    this.http.get<any[]>(`${this.api}/news/list`).subscribe({
+      next: data => this.latestNoticias.set(data.filter(n => n.status).slice(0, 3))
+    });
+    this.http.get<any[]>(`${this.api}/press_releases/list`).subscribe({
+      next: data => this.latestComunicados.set(data.filter(n => n.status).slice(0, 2))
+    });
+  }
 
   ngAfterViewInit() {
   this.cloneItems();

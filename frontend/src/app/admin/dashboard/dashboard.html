@@ -21,7 +21,7 @@
           <i class="fas fa-newspaper"></i>
         </div>
       </div>
-      <span class="card-value">3</span>
+      <span class="card-value">{{ totalNoticias() }}</span>
       <span class="card-trend">
         <i class="fas fa-circle-check"></i> Publicadas
       </span>
@@ -34,7 +34,7 @@
           <i class="fas fa-bullhorn"></i>
         </div>
       </div>
-      <span class="card-value">3</span>
+      <span class="card-value">{{ totalComunicados() }}</span>
       <span class="card-trend">
         <i class="fas fa-circle-check"></i> Activos
       </span>
@@ -47,7 +47,7 @@
           <i class="fas fa-user-tie"></i>
         </div>
       </div>
-      <span class="card-value">4</span>
+      <span class="card-value">{{ totalPersonal() }}</span>
       <span class="card-trend">
         <i class="fas fa-circle-check"></i> Registrados
       </span>
@@ -59,27 +59,41 @@
   <div class="dash-section">
     <h2 class="section-title">Actividad reciente</h2>
     <div class="activity-list">
+
+      @for (item of recentNoticias(); track item.id) {
       <div class="activity-item">
         <div class="activity-dot dot-blue"></div>
         <div class="activity-body">
-          <span class="activity-text">Noticia <strong>"Inicio del año académico 2024"</strong> publicada</span>
-          <span class="activity-time">01 mar 2024</span>
+          <span class="activity-text">Noticia <strong>"{{ item.title }}"</strong> publicada</span>
+          <span class="activity-time">{{ item.createdAt | date:'dd MMM yyyy' }}</span>
         </div>
       </div>
+      }
+
+      @for (item of recentComunicados(); track item.id) {
       <div class="activity-item">
         <div class="activity-dot dot-orange"></div>
         <div class="activity-body">
-          <span class="activity-text">Comunicado <strong>"Suspensión de clases por feriado"</strong> emitido</span>
-          <span class="activity-time">10 abr 2024</span>
+          <span class="activity-text">Comunicado <strong>"{{ item.title }}"</strong> emitido</span>
+          <span class="activity-time">{{ item.createdAt | date:'dd MMM yyyy' }}</span>
         </div>
       </div>
+      }
+
+      @for (item of recentPersonal(); track item.id) {
       <div class="activity-item">
         <div class="activity-dot dot-green"></div>
         <div class="activity-body">
-          <span class="activity-text">Docente <strong>Ana Gutiérrez Soto</strong> registrada</span>
-          <span class="activity-time">2024</span>
+          <span class="activity-text">{{ item.type }} <strong>{{ item.names }} {{ item.last_names }}</strong> registrado/a</span>
+          <span class="activity-time">{{ item.createdAt | date:'dd MMM yyyy' }}</span>
         </div>
       </div>
+      }
+
+      @if (recentNoticias().length === 0 && recentComunicados().length === 0 && recentPersonal().length === 0) {
+      <p style="color: #999; font-size: 0.9rem;">No hay actividad reciente.</p>
+      }
+
     </div>
   </div>
 

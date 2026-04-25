@@ -1,3 +1,26 @@
+.news-excerpt {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  white-space: normal;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.news-excerpt * {
+  display: inline;
+  font-size: inherit;
+  color: inherit;
+  font-weight: inherit;
+  margin: 0;
+  padding: 0;
+}
+
 .hero-component {
   background-image: url('/images/banner-hero-nosotros.png');
   padding: 80px 20px;
