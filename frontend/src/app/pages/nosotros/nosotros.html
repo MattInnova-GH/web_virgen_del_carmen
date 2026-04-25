@@ -64,46 +64,17 @@
   <div class="content-container">
     <div id="content-mision" class="content-text hidden">
       <h3 class="content-title">Nuestra Misión</h3>
-      <p class="content-paragraph">
-        Ofrecer una formación tecnológica superior de excelencia, basada en la investigación, la
-        innovación y la práctica pre-profesional intensiva. Nos comprometemos a desarrollar
-        competencias técnicas y habilidades blandas en nuestros estudiantes, guiados por principios
-        éticos y de responsabilidad social, para que se integren exitosamente y lideren el mercado
-        laboral global.
-      </p>
+      <p class="content-paragraph">{{ career()?.mision || 'Cargando...' }}</p>
     </div>
 
     <div id="content-vision" class="content-text hidden">
       <h3 class="content-title">Nuestra Visión</h3>
-      <p class="content-paragraph">
-        Ser reconocidos al 2030 como el instituto tecnológico líder a nivel nacional y referente en
-        Latinoamérica, destacando por la alta empleabilidad de nuestros egresados, la calidad de
-        nuestra plana docente y nuestra infraestructura tecnológica de vanguardia. Aspiramos a ser
-        el socio estratégico preferido del sector empresarial para la formación de talento y el
-        desarrollo de soluciones innovadoras.
-      </p>
+      <p class="content-paragraph">{{ career()?.vision || 'Cargando...' }}</p>
     </div>
 
     <div id="content-valores" class="content-text hidden">
       <h3 class="content-title">Nuestros Valores</h3>
-      <div class="valores-grid">
-        <div class="valor-card">
-          <strong class="valor-title">Excelencia:</strong> Buscamos la calidad máxima en cada
-          proceso académico y administrativo.
-        </div>
-        <div class="valor-card">
-          <strong class="valor-title">Integridad:</strong> Actuamos con honestidad, ética y
-          transparencia en todas nuestras acciones.
-        </div>
-        <div class="valor-card">
-          <strong class="valor-title">Innovación:</strong> Fomentamos la creatividad y la adopción
-          constante de nuevas tecnologías.
-        </div>
-        <div class="valor-card">
-          <strong class="valor-title">Compromiso:</strong> Nos dedicamos plenamente al desarrollo y
-          éxito de nuestros estudiantes y la sociedad.
-        </div>
-      </div>
+      <div class="content-paragraph valores-html" [innerHTML]="career()?.values || 'Cargando...'"></div>
     </div>
   </div>
 </section>
@@ -112,32 +83,7 @@
 <section class="historia-section">
   <div class="historia-container">
     <h2 class="section-title">Historia</h2>
-    <p class="historia-text">
-      El Instituto de Educación Superior Pedagógico Público «Virgen del Carmen» de Paucartambo lleva
-      el nombre en honor a la Mamacha Carmen icono religioso de la provincia de Paucartambo. El
-      Instituto inicia sus actividades en el año de 1990 creándose como Instituto Superior
-      Tecnológico con Resolución Ministerial N° 413 – 90. Con la Carrera de Producción Agropecuaria
-      y en 1991 la secretaria regional de Asuntos Sociales con Resolución N° 146 -91 modifica y
-      adecua su funcionamiento como Instituto Superior Pedagógico, sin embargo, este funcionamiento
-      aun carecía de sustento técnico. La infraestructura para el funcionamiento y creación del
-      Instituto Superior Pedagógico Público «Virgen del Carmen» tiene como antecedente las
-      instalaciones del cuartel general de reclutamiento «Juan Velasco Alvarado» de Sunchubamba
-      local que fue donado para la actividad pedagógica de los hijos de la provincia de Paucartambo.
-      En 1992 se aprueba el ingreso a la Especialidad de Educación Primaria y en el año de 1993 bajo
-      sustento técnico ante el Ministerio de Educación, se adopta la denominación del Instituto
-      Superior Pedagógico Público «Virgen del Carmen» de Paucartambo, reconocido y publicado en el
-      diario oficial «El Peruano» a través del Decreto Supremo N° 04 – 94 ED. Amparado en la Ley
-      General de Educación N°23384 de entonces. En el año 2010, gracias a las gestiones realizadas
-      por las autoridades del Consejo Provincial de Paucartambo encabezado por el alcalde Ing. Mario
-      Condori Huallpa, Consejo Distrital de Challabamba alcalde Señor Ceferino Jancco Valencia y el
-      Director General Ing. Sebastián Canaza Mamani y otras autoridades se hizo realidad la creación
-      y apertura a admisión de las Carreras Tecnológicas de: PRODUCCIÓN AGROPECUARIA Y CONSTRUCCIÓN
-      CIVIL amparado en la Resolución Directoral N° 0266 – 10 – ED de fecha 12 de marzo del 2010;
-      luego de 23 años de funcionamiento, se cambia la razón social, a INSTITUTO SUPERIOR DE
-      EDUCACIÓN PÚBLICO «VIRGEN DEL CARMEN» DE PAUCARTAMBO. Sin embargo luego del proceso de
-      adecuación del año 2018, pasa a la denominación de INSTITUTO DE EDUCACIÓN SUPERIOR PEDAGOGICO
-      PÚBLICO «VIRGEN DEL CARMEN» DE PAUCARTAMBO.
-    </p>
+    <p class="historia-text">{{ career()?.history || 'Cargando...' }}</p>
   </div>
 </section>
 

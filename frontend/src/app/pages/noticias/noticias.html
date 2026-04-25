@@ -11,72 +11,47 @@
     <h2 class="main-title">Ultimas noticias</h2>
 
     <div class="row">
+      @for (noticia of featuredNoticias(); track noticia.id) {
       <div class="news-card">
         <div class="image-wrapper">
-          <img src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2026/04/WhatsApp-Image-2026-04-01-at-9.49.59-AM-2048x1449.jpeg" alt="Noticia 1" />
+          <img [src]="noticia.img_url" [alt]="noticia.title" />
         </div>
         <div class="news-content">
-          <h3>Cuadro de resultados de la convocatoria para contrata docente en el IESPP «Virgen del Carmen»</h3>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad eos sint mollitia. Eaque
-            architecto quos fugit omnis ea expedita eveniet optio, doloremque praesentium, eum at
-            excepturi aliquid impedit dolore libero!
-          </p>
+          <h3>{{ noticia.title }}</h3>
+          <p class="news-excerpt">{{ noticia.contentPlain }}</p>
           <div class="news-footer">
-            <span>31/03/2026</span>
-            <span class="hora">09:00 AM</span>
+            <span>{{ noticia.createdAt | date:'dd/MM/yyyy' }}</span>
           </div>
         </div>
       </div>
+      }
 
-      <div class="news-card">
-        <div class="image-wrapper">
-          <img src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/11/20210101_000000_0001.jpg" alt="Noticia 2" />
-        </div>
-        <div class="news-content">
-          <h3>Resultado final del Examen de Admisión 2026 del IESPP «Virgen del Carmen»</h3>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repudiandae soluta quasi
-            fugiat. Sapiente, ab at recusandae commodi ullam iste obcaecati laudantium neque quam
-            enim culpa temporibus corrupti! Suscipit, rerum! Eius!
-          </p>
-          <div class="news-footer">
-            <span>26/03/2026</span>
-            <span class="hora">08:00 AM</span>
-          </div>
-        </div>
-      </div>
+      @if (featuredNoticias().length === 0) {
+      <p style="color:#999">No hay noticias publicadas aún.</p>
+      }
     </div>
   </div>
 </section>
 
 <!-- OTRAS NOTICIAS -->
+  @if (otrasNoticias().length > 0) {
   <section class="main-container-otras-noticias">
     <div class="container-principal">
       <div class="header-noticias">
         <h2 class="titulo-seccion">Otras noticias</h2>
       </div>
 
-      <!-- Noticia 1 -->
+      @for (noticia of otrasNoticias(); track noticia.id) {
       <div class="noticia-fila">
         <div class="img-container">
-          <img
-            src="https://scontent.fpio2-1.fna.fbcdn.net/v/t39.30808-6/646091924_122187946292471870_7455744252259885582_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_ohc=eueGHo7GvpcQ7kNvwEZSlfp&_nc_oc=AdrfwvgV4khIgLR6CieZ2LdWyi31NT_fafKqJU3lQaBJsj_B1aabiQpl4PamcsLKWonAt4-_xMv836vGrD0ItdPw&_nc_zt=23&_nc_ht=scontent.fpio2-1.fna&_nc_gid=qKO6ocCNGscQxzCsEpqT6Q&_nc_ss=7a389&oh=00_Af1twx8kUV5s95mtDdxnCUb5XAueRpJWQLet72pWXNHRPA&oe=69E6CC0B"
-            class="img-noticia"
-            alt="noticia"
-          />
+          <img [src]="noticia.img_url" class="img-noticia" [alt]="noticia.title" />
         </div>
 
         <div class="noticia-cuerpo">
-          <h4>Resultados Finales del Proceso de Contratación Docente 2026 del IESPP "Virgen del Carmen" – Sunchubamba, Challabamba, Paucartambo</h4>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipiscing elit mauris, quis leo curabitur
-            dolor sit amet consectetur adipiscing elit. Lorem ipsum dolor sit amet consectetur
-            adipiscing elit mauris, quis leo curabitur dolor sit amet consectetur adipiscing elit.
-          </p>
+          <h4>{{ noticia.title }}</h4>
+          <p class="news-excerpt">{{ noticia.contentPlain }}</p>
           <div class="noticia-min-meta">
-            <span>05/03/2026</span>
-            <span class="hora">08:00 AM</span>
+            <span>{{ noticia.createdAt | date:'dd/MM/yyyy' }}</span>
           </div>
         </div>
 
@@ -85,59 +60,7 @@
           <button class="btn-naranja"><i class="fa-solid fa-comment-dots"></i> Comentar</button>
         </div>
       </div>
-
-      <!-- Noticia 2 -->
-      <div class="noticia-fila">
-        <div class="img-container">
-          <img
-            src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/09/WhatsApp-Image-2024-08-30-at-3.37.16-PM-768x576.jpeg"
-            class="img-noticia"
-            alt="noticia"
-          />
-        </div>
-
-        <div class="noticia-cuerpo">
-          <h4>Reconocimiento al IESPP «Virgen del Carmen» – Paucartambo, por PRIMER PUESTO en el Desfile de Danzas Típicas</h4>
-          <p>
-            Reconocimiento al IESPP «Virgen del Carmen» – Paucartambo, por PRIMER PUESTO en el Desfile de Danzas Típicas de Institutos y Escuelas de educación superior de la Región Cusco, en homenaje al saludo al mes jubilar del Cusco. Lorem ipsum dolor sit amet consectetur adipiscing elit mauris, quis leo curabitur dolor sit amet.
-          </p>
-          <div class="noticia-min-meta">
-            <span>03/09/2024</span>
-            <span class="hora">08:00 AM</span>
-          </div>
-        </div>
-
-        <div class="botones">
-          <button class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más...</button>
-          <button class="btn-naranja"><i class="fa-solid fa-comment-dots"></i> Comentar</button>
-        </div>
-      </div>
-
-      <!-- Noticia 3 -->
-      <div class="noticia-fila">
-        <div class="img-container">
-          <img
-            src="https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/6.jpg"
-            class="img-noticia"
-            alt="noticia"
-          />
-        </div>
-
-        <div class="noticia-cuerpo">
-          <h4>Listado de bibliografía sobre las Situaciones y Casos de Estudio que Interfieren en el Aprendizaje de los Estudiantes</h4>
-          <p>
-            La calidad del aprendizaje estudiantil está profundamente influenciada por diversos factores que pueden interferir en el rendimiento académico y el bienestar general de los estudiantes. Lorem ipsum dolor sit amet consectetur adipiscing elit mauris, quis leo curabitur dolor sit amet consectetur adipiscing elit mauris quis leo.
-          </p>
-          <div class="noticia-min-meta">
-            <span>19/08/2024</span>
-            <span class="hora">08:00 AM</span>
-          </div>
-        </div>
-
-        <div class="botones">
-          <button class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más...</button>
-          <button class="btn-naranja"><i class="fa-solid fa-comment-dots"></i> Comentar</button>
-        </div>
-      </div>
+      }
     </div>
   </section>
+  }

@@ -338,6 +338,9 @@
 }
 
 .news-card {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
   background: #ffffff;
   border-radius: 14px;
   overflow: hidden;

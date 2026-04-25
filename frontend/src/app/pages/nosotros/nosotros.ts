@@ -1,16 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-nosotros',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
 export class Nosotros implements OnInit {
+
+  private http = inject(HttpClient);
+  career = signal<any>(null);
+
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.http.get<any[]>('http://localhost:3000/api/career/list').subscribe({
+      next: data => {
+        const activo = data.find(c => c.status);
+        if (activo) this.career.set({
+          ...activo,
+          history: this.stripHtml(activo.history),
+          mision:  this.stripHtml(activo.mision),
+          vision:  this.stripHtml(activo.vision),
+        });
+      }
+    });
+
     this.route.fragment.subscribe(fragment => {
       if (fragment) {
         setTimeout(() => {
@@ -24,6 +42,14 @@ export class Nosotros implements OnInit {
    * Muestra el contenido seleccionado (Misión/Visión/Valores)
    * @param contentType - Tipo de contenido: 'mision', 'vision' o 'valores'
    */
+  private stripHtml(html: string): string {
+    if (!html) return '';
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    const text = tmp.textContent || tmp.innerText || '';
+    return text.replace(/\s+/g, ' ').trim();
+  }
+
   showContent(contentType: string): void {
     // 1. Obtener referencias principales
     const displayArea = document.getElementById('content-display-area');
