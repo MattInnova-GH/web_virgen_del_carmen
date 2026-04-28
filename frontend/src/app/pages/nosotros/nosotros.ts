@@ -4,9 +4,27 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Organigrama } from './organigrama/organigrama';
 
+interface Personal {
+  nombre: string;
+  cargo: string;
+  foto: string;
+}
+
+interface AcademicPersonalDB {
+  id: number;
+  type: string;
+  names: string;
+  last_names: string;
+  grade: string;
+  img_url: string;
+  year: number;
+  description: string;
+  status: boolean;
+}
+
 @Component({
   selector: 'app-nosotros',
-  imports: [Organigrama, CommonModule],
+  imports: [CommonModule, Organigrama],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
@@ -14,6 +32,33 @@ export class Nosotros implements OnInit {
 
   private http = inject(HttpClient);
   career = signal<any>(null);
+
+  selectedYear = 2026;
+  readonly years = [2026, 2025, 2024, 2023, 2022];
+
+  private allPersonal = signal<AcademicPersonalDB[]>([]);
+
+  private abbreviateName(names: string, lastNames: string): string {
+    const parts = (names ?? '').trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return `${parts[0]} ${parts[1][0]}. ${lastNames}`;
+    }
+    return `${names} ${lastNames}`;
+  }
+
+  get currentPersonal(): Personal[] {
+    return this.allPersonal()
+      .filter(p => p.status && p.year === this.selectedYear)
+      .map(p => ({
+        nombre: this.abbreviateName(p.names, p.last_names),
+        cargo: p.grade,
+        foto: p.img_url ?? '',
+      }));
+  }
+
+  selectYear(year: number): void {
+    this.selectedYear = year;
+  }
 
   constructor(private route: ActivatedRoute) { }
 
@@ -28,6 +73,10 @@ export class Nosotros implements OnInit {
           vision: this.stripHtml(activo.vision),
         });
       }
+    });
+
+    this.http.get<AcademicPersonalDB[]>('http://localhost:3000/api/academic_personal/list').subscribe({
+      next: data => this.allPersonal.set(data),
     });
 
     this.route.fragment.subscribe(fragment => {

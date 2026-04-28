@@ -83,141 +83,44 @@
 <section class="autoridades-section" id="docentes">
   <h2 class="section-title">Autoridades y docentes</h2>
 
-  <div class="autoridades-grid">
-    <!-- Tarjeta 1 -->
-    <div class="autor-card">
-      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
-        alt="Director General" class="autor-img" />
-      <div class="autor-info">
-        <h3 class="autor-name">José García Ccahuata</h3>
-        <p class="autor-role">Director General</p>
-      </div>
+  <div class="autoridades-layout">
+
+    <!-- Sidebar de Años -->
+    <aside class="year-sidebar">
+      <h3 class="year-sidebar-title">Año</h3>
+      @for (year of years; track year) {
+        <button
+          class="year-btn"
+          [class.active]="selectedYear === year"
+          (click)="selectYear(year)"
+        >{{ year }}</button>
+      }
+    </aside>
+
+    <!-- Grid de personal -->
+    <div class="autoridades-content">
+      @if (currentPersonal.length > 0) {
+        <div class="autoridades-grid">
+          @for (persona of currentPersonal; track persona.nombre) {
+            <div class="autor-card" [class.autor-placeholder]="!persona.foto">
+              @if (persona.foto) {
+                <img [src]="persona.foto" [alt]="persona.nombre" class="autor-img" />
+              } @else {
+                <div class="placeholder-img">
+                  <i class="fas fa-user"></i>
+                </div>
+              }
+              <div class="autor-info">
+                <h3 class="autor-name">{{ persona.nombre }}</h3>
+                <p class="autor-role">{{ persona.cargo }}</p>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <p class="empty-msg">Sin personal registrado para {{ selectedYear }}.</p>
+      }
     </div>
 
-    <!-- Tarjeta 2 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 2</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Jesús Castillo Leyva</h3>
-        <p class="autor-role">Coordinador Académico</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 3 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 3</div>
-      <div class="autor-info">
-        <h3 class="autor-name">José Espinoza Chacon</h3>
-        <p class="autor-role">Secretario Académico</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 4 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 4</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Pamela Sevillanos Grajeda</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 5 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 5</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Yanet Gonzales G.</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 6 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 6</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Sonia Villa Huarcaya</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 7 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 7</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Luis Vargas León</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 8 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 8</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Killmair Medina Palacio</h3>
-        <p class="autor-role">Docente Senior</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 9 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 9</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Yovana Tumile Uscca</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 10 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 10</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Nilo Escalante Puente de la Vega</h3>
-        <p class="autor-role">Docente</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 11 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 11</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Luis Terzi Arias</h3>
-        <p class="autor-role">Soporte Administrativo</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 12 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 12</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Yhosselyn Corimanya Arosquipa</h3>
-        <p class="autor-role">Soporte Psicopedagógico</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 13 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 13</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Yaxmin Quispe Ledezma</h3>
-        <p class="autor-role">Dinamizador EVA</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 14 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 14</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Carlota Cruz Puma</h3>
-        <p class="autor-role">Soporte Medico</p>
-      </div>
-    </div>
-
-    <!-- Tarjeta 15 -->
-    <div class="autor-card autor-placeholder">
-      <div class="placeholder-img">FOTO 15</div>
-      <div class="autor-info">
-        <h3 class="autor-name">Analy Azucena Mamani Quispe</h3>
-        <p class="autor-role">Servicio Social</p>
-      </div>
-    </div>
   </div>
 </section>
