@@ -32,16 +32,6 @@
   margin: 0 auto;
 }
 
-.servicios-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #323f7c;
-  text-align: center;
-  margin-bottom: 36px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
 /* ===========================
    GRID DE TARJETAS
    =========================== */
@@ -58,8 +48,11 @@
   text-align: center;
   text-decoration: none;
   border: 1px solid #e8ecf4;
-  box-shadow: 0 2px 10px rgba(50,63,124,0.06);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  box-shadow: 0 2px 10px rgba(50, 63, 124, 0.06);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,28 +83,62 @@
 .servicio-card:hover {
   transform: translateY(-5px);
   border-color: #f28c1b;
-  box-shadow: 0 12px 28px rgba(50,63,124,0.13);
+  box-shadow: 0 12px 28px rgba(50, 63, 124, 0.13);
 }
 
 .servicio-card:hover i {
   color: #f28c1b;
 }
 
-/* ===========================
-   RESPONSIVE
-   =========================== */
+/* --- RESPONSIVE DESIGN */
 @media (max-width: 768px) {
+  .hero-component {
+    padding: 60px 15px !important;
+  }
+
   .hero-content h1 {
-    font-size: 2rem;
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+  }
+
+  .hero-content p {
+    font-size: 0.9rem !important;
+  }
+
+  .servicios-section {
+    padding: 35px 15px 45px !important;
   }
 
   .servicios-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+  }
+
+  .servicio-card {
+    padding: 20px 12px !important;
+  }
+
+  .servicio-card i {
+    font-size: 2rem !important;
+  }
+
+  .servicio-card h3 {
+    font-size: 0.9rem !important;
   }
 }
 
 @media (max-width: 480px) {
+  .hero-content h1 {
+    font-size: 1.8rem !important;
+  }
+
   .servicios-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  .servicio-card p {
+    display: none;
   }
 }

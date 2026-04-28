@@ -18,42 +18,26 @@
 <section class="buttons-section">
   <button id="btn-mision" class="floating-btn" (click)="showContent('mision')">
     <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M13 10V3L4 14h7v7l9-11h-7z"
-      ></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
     </svg>
     <span class="btn-text">Misión</span>
   </button>
 
   <button id="btn-vision" class="floating-btn" (click)="showContent('vision')">
     <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-      ></path>
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-      ></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+      </path>
     </svg>
     <span class="btn-text">Visión</span>
   </button>
 
   <button id="btn-valores" class="floating-btn" (click)="showContent('valores')">
     <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-      ></path>
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+      </path>
     </svg>
     <span class="btn-text">Valores</span>
   </button>
@@ -79,45 +63,37 @@
   </div>
 </section>
 
+<app-organigrama></app-organigrama>
+
 <!-- Historia -->
 <section class="historia-section">
   <div class="historia-container">
     <h2 class="section-title">Historia</h2>
-    <div class="historia-layout">
-      <p class="historia-text">{{ career()?.history || 'Cargando...' }}</p>
-      <img src="/images/sede-cusco-edu.jpeg" alt="Sede Cusco" class="historia-img" />
-    </div>
+    <p class="historia-text">{{ career()?.history || 'Cargando...' }}</p>
+  </div>
+  <div class="historia-image">
+    <img src="images/sede-cusco-edu.jpeg" alt="" />
   </div>
 </section>
 
 <!-- Organigrama Institucional -->
-<section class="organigrama-section">
-  <div class="organigrama-container">
-    <h2 class="section-title">Organigrama Institucional</h2>
-    <div class="organigrama-img-wrapper">
-      <img src="/images/organigrama-institucional.png" alt="Organigrama Institucional" class="organigrama-img" />
-    </div>
-  </div>
-</section>
+
 
 <!-- Autoridades y docentes -->
 <section class="autoridades-section" id="docentes">
-  
   <h2 class="section-title">Autoridades y docentes</h2>
 
   <div class="autoridades-grid">
     <!-- Tarjeta 1 -->
     <div class="autor-card">
-      <img
-        src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
-        alt="Director General"
-        class="autor-img"
-      />
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80"
+        alt="Director General" class="autor-img" />
       <div class="autor-info">
         <h3 class="autor-name">José García Ccahuata</h3>
         <p class="autor-role">Director General</p>
       </div>
     </div>
+
     <!-- Tarjeta 2 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 2</div>
@@ -126,7 +102,8 @@
         <p class="autor-role">Coordinador Académico</p>
       </div>
     </div>
-    <!-- Tarjeta 3 (placeholder) -->
+
+    <!-- Tarjeta 3 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 3</div>
       <div class="autor-info">
@@ -134,7 +111,8 @@
         <p class="autor-role">Secretario Académico</p>
       </div>
     </div>
-    <!-- Tarjeta 4 (placeholder) -->
+
+    <!-- Tarjeta 4 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 4</div>
       <div class="autor-info">
@@ -142,7 +120,8 @@
         <p class="autor-role">Docente</p>
       </div>
     </div>
-    <!-- Tarjeta 5 (placeholder) -->
+
+    <!-- Tarjeta 5 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 5</div>
       <div class="autor-info">
@@ -150,26 +129,26 @@
         <p class="autor-role">Docente</p>
       </div>
     </div>
-  </div>
 
-  <div class="autoridades-grid">
-    <!-- Tarjeta 1 -->
-    <div class="autor-card">
+    <!-- Tarjeta 6 -->
+    <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 6</div>
       <div class="autor-info">
         <h3 class="autor-name">Sonia Villa Huarcaya</h3>
         <p class="autor-role">Docente</p>
       </div>
     </div>
-    <!-- Tarjeta 2 -->
-    <div class="autor-card">
+
+    <!-- Tarjeta 7 -->
+    <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 7</div>
       <div class="autor-info">
         <h3 class="autor-name">Luis Vargas León</h3>
         <p class="autor-role">Docente</p>
       </div>
     </div>
-    <!-- Tarjeta 3 (placeholder) -->
+
+    <!-- Tarjeta 8 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 8</div>
       <div class="autor-info">
@@ -177,7 +156,8 @@
         <p class="autor-role">Docente Senior</p>
       </div>
     </div>
-    <!-- Tarjeta 4 (placeholder) -->
+
+    <!-- Tarjeta 9 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 9</div>
       <div class="autor-info">
@@ -185,7 +165,8 @@
         <p class="autor-role">Docente</p>
       </div>
     </div>
-    <!-- Tarjeta 5 (placeholder) -->
+
+    <!-- Tarjeta 10 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 10</div>
       <div class="autor-info">
@@ -193,26 +174,26 @@
         <p class="autor-role">Docente</p>
       </div>
     </div>
-  </div>
 
-  <div class="autoridades-grid">
-    <!-- Tarjeta 1 -->
-    <div class="autor-card">
+    <!-- Tarjeta 11 -->
+    <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 11</div>
       <div class="autor-info">
         <h3 class="autor-name">Luis Terzi Arias</h3>
         <p class="autor-role">Soporte Administrativo</p>
       </div>
     </div>
-    <!-- Tarjeta 2 -->
-    <div class="autor-card">
+
+    <!-- Tarjeta 12 -->
+    <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 12</div>
       <div class="autor-info">
         <h3 class="autor-name">Yhosselyn Corimanya Arosquipa</h3>
         <p class="autor-role">Soporte Psicopedagógico</p>
       </div>
     </div>
-    <!-- Tarjeta 3 (placeholder) -->
+
+    <!-- Tarjeta 13 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 13</div>
       <div class="autor-info">
@@ -220,7 +201,8 @@
         <p class="autor-role">Dinamizador EVA</p>
       </div>
     </div>
-    <!-- Tarjeta 4 (placeholder) -->
+
+    <!-- Tarjeta 14 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 14</div>
       <div class="autor-info">
@@ -228,7 +210,8 @@
         <p class="autor-role">Soporte Medico</p>
       </div>
     </div>
-    <!-- Tarjeta 5 (placeholder) -->
+
+    <!-- Tarjeta 15 -->
     <div class="autor-card autor-placeholder">
       <div class="placeholder-img">FOTO 15</div>
       <div class="autor-info">
@@ -236,5 +219,5 @@
         <p class="autor-role">Servicio Social</p>
       </div>
     </div>
-  </div>  
+  </div>
 </section>

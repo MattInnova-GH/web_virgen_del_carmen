@@ -138,7 +138,6 @@
 .licencia {
   position: relative;
   overflow: visible;
-  /* 🔥 IMPORTANTE */
 }
 
 /* POPUP (OCULTO) */
@@ -152,9 +151,7 @@
   border-radius: 10px;
   overflow: hidden;
 
-  background: linear-gradient(135deg,
-      rgba(47, 63, 127, 0.9),
-      rgba(47, 63, 127, 0.4));
+  background: linear-gradient(135deg, rgba(47, 63, 127, 0.9), rgba(47, 63, 127, 0.4));
 
   display: flex;
   align-items: center;
@@ -228,7 +225,6 @@
 
   opacity: 0;
   transform: translateX(20px);
-  /* empieza oculto hacia la derecha */
   transition:
     transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
     opacity 0.3s;
@@ -247,7 +243,7 @@
 
 /* WhatsApp */
 .whatsapp {
-  position: absolute;
+  position: fixed;
   right: 20px;
   bottom: 20px;
   width: 55px;
@@ -257,6 +253,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
+  text-decoration: none;
+  color: white;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp:hover {
+  text-decoration: none;
+  color: white;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 /* Iconos */
@@ -271,16 +277,6 @@
 .whatsapp i {
   color: white;
   font-size: 26px;
-}
-
-.main-content {
-  background: #f5f7fb;
-  padding: 40px 20px;
-}
-
-.container {
-  max-width: 1100px;
-  margin: auto;
 }
 
 .content-grid {
@@ -302,10 +298,164 @@
   color: #1d3557;
 }
 
+@media (max-width: 768px) {
+  .hero {
+    height: 600px;
+    /* más alto para acomodar botones laterales abajo */
+  }
+
+  /* Texto: igual que desktop pero con left más pequeño */
+  .hero-content {
+    top: 120px;
+    left: 24px;
+  }
+
+  .hero-content h1 {
+    font-size: 30px;
+  }
+
+  .hero-content p {
+    font-size: 18px;
+  }
+
+  /* --- BOTONES CARRERAS / LICENCIA --- */
+  .buttons-section {
+    width: auto;
+    padding-left: 24px;
+    bottom: 120px;
+    /* sube para dejar espacio a los laterales */
+  }
+
+  /* --- BOTONES LATERALES → FILA HORIZONTAL ABAJO --- */
+  .side-buttons {
+    position: absolute;
+    right: unset;
+    top: unset;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    padding: 0 16px;
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+
+  .side-item {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Texto siempre visible, debajo del ícono */
+  .side-text {
+    position: static;
+    /* sale del absolute */
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none;
+    font-size: 11px;
+    font-weight: 700;
+    color: white;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  /* Sin animación de entrada/salida en móvil */
+  .side-item:not(:hover) .side-text {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* --- POPUP LICENCIA → HACIA ABAJO --- */
+  .licencia {
+    overflow: visible;
+  }
+
+  .licencia-popup {
+    top: 100%;
+    /* justo debajo del botón */
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px) scale(0.95);
+    width: 130px;
+    height: 150px;
+    margin-top: 8px;
+  }
+
+  .licencia:hover .licencia-popup,
+  .licencia:focus .licencia-popup,
+  .licencia.active .licencia-popup {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+
+  /* WhatsApp se queda esquina inferior derecha */
+  .whatsapp {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+/* ===================================
+   RESPONSIVE - MÓVIL PEQUEÑO (max 480px)
+   =================================== */
+@media (max-width: 480px) {
+  .hero {
+    height: 580px;
+  }
+
+  .hero-content {
+    top: 100px;
+    left: 16px;
+  }
+
+  .hero-content h1 {
+    font-size: 24px;
+  }
+
+  .hero-content p {
+    font-size: 15px;
+  }
+
+  .buttons-section {
+    padding-left: 16px;
+    bottom: 110px;
+  }
+
+  .btn-card {
+    width: 110px;
+    height: 140px;
+  }
+
+  .icon i {
+    font-size: 46px;
+  }
+
+  .side-buttons {
+    gap: 12px;
+    padding: 0 10px;
+  }
+
+  .side-btn {
+    width: 48px;
+    height: 48px;
+  }
+
+  .side-btn img {
+    width: 26px;
+    height: 26px;
+  }
+
+  .side-text {
+    font-size: 10px;
+  }
+}
+
 /* ===== MAIN CONTENT ===== */
 .main-content {
   background: #e8edf5;
-  padding: 40px 20px 60px;
+  padding: 100px 20px 60px;
 }
 
 .container {
@@ -345,7 +495,9 @@
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .news-card:hover {
@@ -386,7 +538,9 @@
   justify-content: space-between;
   align-items: center;
   gap: 15px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .comunicado-item:hover {
@@ -458,7 +612,9 @@
   border-radius: 14px;
   overflow: hidden;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .servicio-card:hover {
@@ -518,7 +674,9 @@
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #e0e6ed;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 
   /* Estilos de enlace */
   text-decoration: none;
@@ -590,4 +748,161 @@
 
 .gestion-card:hover i {
   color: #ff8c00;
+}
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .gestion-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px !important;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr !important;
+    gap: 30px;
+  }
+
+  .comunicado-item {
+    flex-direction: column !important;
+    text-align: center;
+    align-items: center;
+  }
+
+  .comunicado-media img {
+    width: 150px !important;
+    height: auto !important;
+  }
+
+  .servicios-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .main-content {
+    padding-top: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gestion-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .section-title,
+  .news-section h2,
+  .comunicados-section h2,
+  .servicios-section h2 {
+    font-size: 20px !important;
+    text-align: center;
+  }
+
+  .carousel-item {
+    min-width: 220px !important;
+  }
+}
+
+/* --- RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+  .buttons-container {
+    width: 100%;
+    justify-content: center;
+    padding: 0 15px;
+    gap: 15px !important;
+  }
+
+  .btn-card {
+    flex: 1;
+    width: 110px !important;
+    height: 100px !important;
+    max-width: 200px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .btn-card .icon i {
+    font-size: 34px !important;
+  }
+
+  .btn-card span {
+    font-size: 13px !important;
+    font-weight: 600;
+  }
+
+  .licencia-popup {
+    top: 0 !important;
+    left: 108% !important;
+    transform: translateX(-10px) scale(0.9) !important;
+    width: 110px !important;
+    height: 110px !important;
+    z-index: 100;
+  }
+
+  .licencia:hover .licencia-popup {
+    opacity: 1 !important;
+    transform: translateX(0) scale(1) !important;
+  }
+
+  .gestion-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 0 10px;
+  }
+
+  .gestion-card {
+    width: auto !important;
+    padding: 15px 10px !important;
+  }
+
+  .gestion-card i {
+    font-size: 28px !important;
+  }
+
+  .top-grid {
+    grid-template-columns: 1fr !important;
+    padding: 0 10px;
+  }
+
+  .news-card img {
+    height: 180px !important;
+  }
+
+  .comunicado-item {
+    flex-direction: column !important;
+    padding: 15px !important;
+  }
+
+  .servicios-grid {
+    grid-template-columns: 1fr !important;
+    padding: 0 10px;
+  }
+
+  .main-content {
+    padding-top: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .btn-card {
+    height: 105px !important;
+    max-width: 150px;
+  }
+
+  .licencia-popup {
+    width: 95px !important;
+    height: 95px !important;
+    left: 105% !important;
+  }
+
+  .gestion-card h3 {
+    font-size: 13px !important;
+  }
+
+  .gestion-card p {
+    display: none;
+  }
+
+  .whatsapp {
+    width: 50px !important;
+    height: 50px !important;
+    bottom: 20px !important;
+    right: 20px !important;
+  }
 }

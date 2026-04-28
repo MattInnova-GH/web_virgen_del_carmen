@@ -2,10 +2,11 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Organigrama } from './organigrama/organigrama';
 
 @Component({
   selector: 'app-nosotros',
-  imports: [CommonModule],
+  imports: [Organigrama, CommonModule],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
@@ -14,7 +15,7 @@ export class Nosotros implements OnInit {
   private http = inject(HttpClient);
   career = signal<any>(null);
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.http.get<any[]>('http://localhost:3000/api/career/list').subscribe({
@@ -23,8 +24,8 @@ export class Nosotros implements OnInit {
         if (activo) this.career.set({
           ...activo,
           history: this.stripHtml(activo.history),
-          mision:  this.stripHtml(activo.mision),
-          vision:  this.stripHtml(activo.vision),
+          mision: this.stripHtml(activo.mision),
+          vision: this.stripHtml(activo.vision),
         });
       }
     });
@@ -38,7 +39,7 @@ export class Nosotros implements OnInit {
       }
     });
   }
-/**
+  /**
    * Muestra el contenido seleccionado (Misión/Visión/Valores)
    * @param contentType - Tipo de contenido: 'mision', 'vision' o 'valores'
    */
@@ -68,8 +69,8 @@ export class Nosotros implements OnInit {
     const allContentDivs = document.querySelectorAll('.content-text');
     const allButtons = document.querySelectorAll('.floating-btn');
 
-    allContentDivs.forEach(div => div.classList.add('hidden'));
-    allButtons.forEach(btn => btn.classList.remove('floating-btn-active'));
+    allContentDivs.forEach((div) => div.classList.add('hidden'));
+    allButtons.forEach((btn) => btn.classList.remove('floating-btn-active'));
 
     // 4. Lógica de visualización (Toggle)
     if (isAlreadyVisible) {

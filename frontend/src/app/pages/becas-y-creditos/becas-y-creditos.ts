@@ -11,23 +11,23 @@ export class BecasYCreditos {
   becasDocs = [
     {
       id: '1',
-      label: 'PROTOCOLO DE ADMISIÓN 2026-I',
-      pdfUrl: 'assets/pdfs/PROTOCOLO-DE-ADMISION-2026.pdf',
+      label: 'BECAS 1ROS Y 2DOS PUESTOS 2021',
+      pdfUrl: '',
     },
     {
       id: '2',
-      label: 'REGLAMENTO DE ADMISIÓN 2026-I',
-      pdfUrl: 'assets/pdfs/REGLAMENTO-DE-ADMISION-2026-1.pdf',
+      label: 'BECAS 1ROS Y 2DOS PUESTOS 2022',
+      pdfUrl: '',
     },
     {
       id: '3',
-      label: 'PROSPECTO',
-      pdfUrl: 'assets/pdfs/PROSPECTO-DE-ADMISION-2026.pdf',
+      label: 'BECAS 1ROS Y 2DOS PUESTOS 2023',
+      pdfUrl: '',
     },
     {
       id: '4',
-      label: 'CRONOGRAMA DE ADMISIÓN 2026-I',
-      pdfUrl: 'assets/pdfs/641637179_122187032042471870_4663264574361598806_n.pdf',
+      label: 'CREDITOS EDUCATIVOS',
+      pdfUrl: '',
     },
   ];
 }

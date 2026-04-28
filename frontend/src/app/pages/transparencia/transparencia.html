@@ -42,7 +42,12 @@
       </div>
     </a>
 
-    <a [routerLink]="['/nosotros']" fragment="docentes" class="sidebar-item" data-tooltip="Docentes">
+    <a
+      [routerLink]="['/nosotros']"
+      fragment="docentes"
+      class="sidebar-item"
+      data-tooltip="Docentes"
+    >
       <div class="sidebar-item-content">
         <i class="fas fa-users"></i>
         <span>Docentes</span>
@@ -136,12 +141,12 @@
   </div>
 
   <div class="right-panel">
-    <button class="btn-estadisticas" data-section="Estadísticas">
+    <button routerLink="/estadisticas" class="btn-estadisticas" data-section="Estadísticas">
       <i class="fas fa-chart-line"></i>
       <span>ESTADISTICAS</span>
     </button>
 
-    <div class="banner-licencia-moderno">
+    <div routerLink="/licenciamiento" class="banner-licencia-moderno">
       <div class="award-badge award-badge-top-left award-badge-small">
         <i class="fas fa-award"></i>
       </div>

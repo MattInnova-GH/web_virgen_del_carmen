@@ -1,12 +1,7 @@
 <section class="hero">
   <div class="hero-slides">
-    <img
-      *ngFor="let img of heroImages; let i = index"
-      [src]="img.src"
-      [alt]="img.alt"
-      class="hero-bg"
-      [class.active]="i === currentHeroIndex"
-    />
+    <img *ngFor="let img of heroImages; let i = index" [src]="img.src" [alt]="img.alt" class="hero-bg"
+      [class.active]="i === currentHeroIndex" />
   </div>
 
   <div class="overlay"></div>
@@ -29,7 +24,8 @@
       </a>
 
       <!-- Licencia -->
-      <a routerLink="/licenciamiento" class="btn-card licencia">
+      <a routerLink="/licenciamiento" class="btn-card licencia" [class.active]="licenciaActiva"
+        (click)="toggleLicencia($event)">
         <div id="licenciaBtn">
           <!-- CONTENIDO NORMAL -->
           <div class="front">
@@ -57,11 +53,7 @@
       <span class="side-text">Plataforma EVA</span>
     </div>
 
-    <a
-      target="_blank"
-      href="https://www.microsoft.com/es-es/microsoft-teams/log-in"
-      class="side-item"
-    >
+    <a target="_blank" href="https://www.microsoft.com/es-es/microsoft-teams/log-in" class="side-item">
       <div class="side-btn">
         <img src="icons/icon_aula.png" alt="aula virtual" />
       </div>
@@ -140,17 +132,13 @@
       <h2>Otros Servicios</h2>
       <div class="servicios-grid">
         <div class="servicio-card">
-          <img
-            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=360&fit=crop"
-            alt="Curso de idiomas"
-          />
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&h=360&fit=crop"
+            alt="Curso de idiomas" />
           <div class="servicio-label">Curso de idiomas</div>
         </div>
         <div class="servicio-card">
-          <img
-            src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=360&fit=crop"
-            alt="Curso de Capacitación"
-          />
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=600&h=360&fit=crop"
+            alt="Curso de Capacitación" />
           <div class="servicio-label">Curso de Capacitación</div>
         </div>
       </div>
@@ -203,13 +191,9 @@
     <!-- Carousel -->
     <div class="carousel" #carousel>
       <div class="carousel-track" #track>
-        <a
-          class="carousel-item"
-          *ngFor="let item of items"
-          [href]="item.url"
+        <a class="carousel-item" *ngFor="let item of items" [href]="item.url"
           [attr.target]="item.url.startsWith('http') ? '_blank' : '_self'"
-          [attr.rel]="item.url.startsWith('http') ? 'noopener noreferrer' : null"
-        >
+          [attr.rel]="item.url.startsWith('http') ? 'noopener noreferrer' : null">
           <img [src]="item.image" [alt]="item.alt" />
         </a>
       </div>
