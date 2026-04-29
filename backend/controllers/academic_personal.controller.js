@@ -3,7 +3,7 @@ const buildAcademicPersonalQuery = require('../helpers/academic_personal.query')
 
 exports.createAcademicPersonal = async (req, res) => {
     try {
-        const {type, names, last_names, grade, img_url, year, description } = req.body;
+        const {type, names, last_names, grade, img_url, year, institucional_email, description } = req.body;
 
         if (!type || !names || !last_names || !grade || !year) {
             return res.status(400).json({
@@ -17,6 +17,7 @@ exports.createAcademicPersonal = async (req, res) => {
             grade,
             img_url,
             year,
+            institucional_email,
             description
         });
         return res.status(201).json(newAcademicPersonal);
@@ -65,7 +66,7 @@ exports.deleteAcademicPersonal = async (req, res) => {
 
 exports.updateAcademicPersonal = async (req, res) => {
     const {id} = req.params;
-    const {type, names, last_names, grade, description, img_url, year } = req.body;
+    const {type, names, last_names, grade, description, img_url, year, institucional_email } = req.body;
     try {
         const academicPersonal =  await db.AcademicPersonal.findByPk(id);
         if(!academicPersonal)
@@ -75,6 +76,7 @@ exports.updateAcademicPersonal = async (req, res) => {
         academicPersonal.names = names;
         academicPersonal.last_names = last_names;
         academicPersonal.grade = grade;
+        academicPersonal.institucional_email = institucional_email;
         academicPersonal.img_url = img_url;
         academicPersonal.year = year;
         academicPersonal.description = description;

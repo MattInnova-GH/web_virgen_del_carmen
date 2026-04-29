@@ -110,7 +110,7 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
       next: data => this.latestNoticias.set(data.filter(n => n.status).slice(0, 3))
     });
     this.http.get<any[]>(`${this.api}/press_releases/list`).subscribe({
-      next: data => this.latestComunicados.set(data.filter(n => n.status).slice(0, 2))
+      next: data => this.latestComunicados.set(data.filter(n => n.status).slice(0, 3))
     });
   }
 

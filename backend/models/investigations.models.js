@@ -12,11 +12,19 @@ const Investigations = sequelize.define('Investigations', {
         type: DataTypes.TEXT,
         allowNull: false
     },
-    investigation: {
+    author: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+    },
+    content: {
         type: DataTypes.TEXT,
         allowNull: true
     },
-    img_url: {
+    publication_date: {
+        type: DataTypes.DATEONLY,
+        allowNull: true
+    },
+    pdf_url: {
         type: DataTypes.TEXT,
         allowNull: true
     },

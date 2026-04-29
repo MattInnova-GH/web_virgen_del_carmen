@@ -32,6 +32,10 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    institucional_email: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
     description: {
         type: DataTypes.TEXT,
         allowNull: true

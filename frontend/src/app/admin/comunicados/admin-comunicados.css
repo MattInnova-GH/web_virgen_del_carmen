@@ -1,32 +1,6 @@
 @import '../admin-shared.css';
 
-/* =========================
-   TABLA
-========================= */
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-table th {
-  text-align: left;
-  padding: 12px;
-  color: #9ca3af;
-  font-size: 13px;
-}
-
-.admin-table td {
-  padding: 14px 12px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-}
-
-.td-title {
-  font-weight: 500;
-}
-
-/* =========================
-   BADGES (reutilizados)
-========================= */
+/* BADGES (reutilizados) */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -186,7 +160,8 @@ input, textarea {
 }
 
 .btn-save {
-  background: #4cafef;
+  background: #3b82f6;
+  color: white;
   border: none;
   padding: 10px 15px;
   border-radius: 8px;

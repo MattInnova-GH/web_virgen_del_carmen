@@ -119,11 +119,11 @@ export class AdminTrayectoria implements OnInit {
   // =========================
   quillConfig = {
     toolbar: [
-      ['bold', 'italic', 'underline'],
+      ['bold', 'italic', 'underline', 'strike'],
       [{ header: [1, 2, 3, false] }],
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ align: [] }],
-      ['link'],
+      ['link', 'image'],
       ['clean']
     ]
   };

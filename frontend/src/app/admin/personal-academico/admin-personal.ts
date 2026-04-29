@@ -24,7 +24,7 @@ export class AdminPersonal implements OnInit {
     type: 'Docente',
     names: '',
     last_names: '',
-    email: '', // ← preparado
+    institucional_email: '',
     grade: '',
     year: '',
     img_url: '',
@@ -35,9 +35,7 @@ export class AdminPersonal implements OnInit {
     this.loadData();
   }
 
-  // =========================
   // DATA
-  // =========================
   loadData() {
     this.http.get<any[]>(`${this.apiUrl}/list`).subscribe({
       next: (data) => {
@@ -47,7 +45,7 @@ export class AdminPersonal implements OnInit {
             names: item.names,
             last_names: item.last_names,
             full_name: `${item.names} ${item.last_names}`,
-            email: item.email ?? '', // ← preparado
+            institucional_email: item.institucional_email ?? '', // ← preparado
             type: item.type,
             grade: item.grade,
             year: item.year,
@@ -60,9 +58,7 @@ export class AdminPersonal implements OnInit {
     });
   }
 
-  // =========================
   // MODAL
-  // =========================
   openCreateModal() {
     this.isEditMode.set(false);
     this.resetForm();
@@ -77,7 +73,7 @@ export class AdminPersonal implements OnInit {
       type: p.type,
       names: p.names,
       last_names: p.last_names,
-      email: p.email,
+      institucional_email: p.institucional_email,
       grade: p.grade,
       year: p.year,
       img_url: p.img_url,
@@ -97,7 +93,7 @@ export class AdminPersonal implements OnInit {
       type: 'Docente',
       names: '',
       last_names: '',
-      email: '',
+      institucional_email: '',
       grade: '',
       year: '',
       img_url: '',
@@ -105,9 +101,7 @@ export class AdminPersonal implements OnInit {
     };
   }
 
-  // =========================
   // CRUD
-  // =========================
   save() {
     this.isEditMode() ? this.update() : this.create();
   }

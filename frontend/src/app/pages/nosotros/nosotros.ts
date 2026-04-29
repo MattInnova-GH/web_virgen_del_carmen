@@ -2,13 +2,14 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { Organigrama } from './organigrama/organigrama';
 
 interface Personal {
   nombre: string;
   cargo: string;
   foto: string;
 }
+
+type ContentType = 'mision' | 'vision' | 'valores' | 'organigrama' | null;
 
 interface AcademicPersonalDB {
   id: number;
@@ -24,11 +25,14 @@ interface AcademicPersonalDB {
 
 @Component({
   selector: 'app-nosotros',
-  imports: [CommonModule, Organigrama],
+  imports: [CommonModule],
   templateUrl: './nosotros.html',
   styleUrl: './nosotros.css',
 })
 export class Nosotros implements OnInit {
+
+  expandedHistory = signal(false);
+  activeContent = signal<ContentType>(null);
 
   private http = inject(HttpClient);
   career = signal<any>(null);
@@ -68,7 +72,7 @@ export class Nosotros implements OnInit {
         const activo = data.find(c => c.status);
         if (activo) this.career.set({
           ...activo,
-          history: this.stripHtml(activo.history),
+          history: activo.history,
           mision: this.stripHtml(activo.mision),
           vision: this.stripHtml(activo.vision),
         });
@@ -100,41 +104,43 @@ export class Nosotros implements OnInit {
     return text.replace(/\s+/g, ' ').trim();
   }
 
-  showContent(contentType: string): void {
-    // 1. Obtener referencias principales
-    const displayArea = document.getElementById('content-display-area');
-    const targetContent = document.getElementById(`content-${contentType}`);
-    const targetButton = document.getElementById(`btn-${contentType}`);
+  showContent(type: ContentType) {
+    this.activeContent.update(current => current === type ? null : type);
+  }
 
-    if (!displayArea || !targetContent || !targetButton) {
-      console.warn(`No se encontraron elementos para ${contentType}`);
-      return;
-    }
+  getShortHistory(html: string): string {
+    if (!html) return '';
 
-    // 2. Verificar si el contenido solicitado YA está visible (para alternar/toggle)
-    const isAlreadyVisible = !targetContent.classList.contains('hidden');
+    const text = this.stripHtml(html);
+    const maxLength = 220; // puedes ajustar
 
-    // 3. Ocultar todo el texto de contenido anterior y quitar estados activos
-    const allContentDivs = document.querySelectorAll('.content-text');
-    const allButtons = document.querySelectorAll('.floating-btn');
+    if (text.length <= maxLength) return text;
 
-    allContentDivs.forEach((div) => div.classList.add('hidden'));
-    allButtons.forEach((btn) => btn.classList.remove('floating-btn-active'));
+    return text.substring(0, maxLength) + '...';
+  }
 
-    // 4. Lógica de visualización (Toggle)
-    if (isAlreadyVisible) {
-      // Si ya estaba abierto, ocultamos el área completa
-      displayArea.classList.add('hidden');
-    } else {
-      // Si estaba cerrado o era otro contenido, lo mostramos
-      displayArea.classList.remove('hidden');
-      targetContent.classList.remove('hidden');
-      targetButton.classList.add('floating-btn-active');
+  toggleHistory(): void {
+    this.expandedHistory.update(v => !v);
+  }
 
-      // Desplazamiento suave para mejorar el enfoque visual
-      setTimeout(() => {
-        displayArea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }, 100);
-    }
+  sanitizeHtml(html: string): string {
+    if (!html) return '';
+
+    return html
+      // normaliza espacios
+      .replace(/&nbsp;/g, ' ')
+
+      // elimina párrafos vacíos
+      .replace(/<p>\s*<\/p>/g, '')
+
+      // elimina atributos innecesarios (como clases de Quill)
+      .replace(/ class="[^"]*"/g, '')
+
+      // elimina estilos inline
+      .replace(/ style="[^"]*"/g, '')
+
+      // limpia espacios duplicados
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 }

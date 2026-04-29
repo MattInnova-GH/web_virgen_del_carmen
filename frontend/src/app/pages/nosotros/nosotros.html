@@ -41,47 +41,91 @@
     </svg>
     <span class="btn-text">Valores</span>
   </button>
+
+  <button id="btn-valores" class="floating-btn" [class.floating-btn-active]="activeContent() === 'organigrama'"
+    (click)="showContent('organigrama')">
+    <svg class="btn-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M9 17v-2h6v2m-6-6V9h6v2M5 21h14a2 2 0 002-2V7l-5-5H7a2 2 0 00-2 2v15a2 2 0 002 2z">
+      </path>
+    </svg>
+    <span class="btn-text">Organigrama</span>
+  </button>
 </section>
 
 <!-- Área de contenido dinámico (Misión/Visión/Valores) -->
-<section id="content-display-area" class="content-area hidden">
+<section class="content-area" *ngIf="activeContent() as content">
+
   <div class="content-container">
-    <div id="content-mision" class="content-text hidden">
+
+    @switch (content) {
+
+    @case ('mision') {
+    <div class="content-text">
       <h3 class="content-title">Nuestra Misión</h3>
-      <p class="content-paragraph">{{ career()?.mision || 'Cargando...' }}</p>
+      <p>{{ career()?.mision }}</p>
     </div>
+    }
 
-    <div id="content-vision" class="content-text hidden">
+    @case ('vision') {
+    <div class="content-text">
       <h3 class="content-title">Nuestra Visión</h3>
-      <p class="content-paragraph">{{ career()?.vision || 'Cargando...' }}</p>
+      <p>{{ career()?.vision }}</p>
     </div>
+    }
 
-    <div id="content-valores" class="content-text hidden">
+    @case ('valores') {
+    <div class="content-text">
       <h3 class="content-title">Nuestros Valores</h3>
-      <div class="content-paragraph valores-html" [innerHTML]="career()?.values || 'Cargando...'"></div>
+      <div [innerHTML]="career()?.values"></div>
     </div>
+    }
+
+    @case ('organigrama') {
+    <div class="content-text organigrama-block">
+      <img src="images/organigrama-institucional.png" alt="Organigrama" />
+    </div>
+    }
+
+    }
+
   </div>
+
 </section>
 
-<app-organigrama></app-organigrama>
 
 <!-- Historia -->
 <section class="historia-section">
-  <div class="historia-container">
+  <div class="historia-card">
+
     <h2 class="section-title">Historia</h2>
-    <p class="historia-text">{{ career()?.history || 'Cargando...' }}</p>
-  </div>
-  <div class="historia-image">
-    <img src="images/sede-cusco-edu.jpeg" alt="" />
+
+    <div class="historia-layout">
+
+      <!-- IMAGEN -->
+      <div class="historia-image">
+        <img src="images/sede-cusco-edu.jpeg" alt="" />
+      </div>
+
+      <!-- TEXTO -->
+      <div class="historia-text-wrapper">
+        <div class="historia-text ql-editor" [class.expanded]="expandedHistory()"
+          [innerHTML]="sanitizeHtml(career()?.history)">
+        </div>
+
+        <span class="ver-mas" (click)="toggleHistory()">
+          {{ expandedHistory() ? 'Ver menos' : 'Ver más' }}
+        </span>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
-<!-- Organigrama Institucional -->
-
-
 <!-- Autoridades y docentes -->
 <section class="autoridades-section" id="docentes">
-  <h2 class="section-title">Autoridades y docentes</h2>
+  <h2 class="section-title">Autoridades y Docentes</h2>
 
   <div class="autoridades-layout">
 
@@ -89,36 +133,32 @@
     <aside class="year-sidebar">
       <h3 class="year-sidebar-title">Año</h3>
       @for (year of years; track year) {
-        <button
-          class="year-btn"
-          [class.active]="selectedYear === year"
-          (click)="selectYear(year)"
-        >{{ year }}</button>
+      <button class="year-btn" [class.active]="selectedYear === year" (click)="selectYear(year)">{{ year }}</button>
       }
     </aside>
 
     <!-- Grid de personal -->
     <div class="autoridades-content">
       @if (currentPersonal.length > 0) {
-        <div class="autoridades-grid">
-          @for (persona of currentPersonal; track persona.nombre) {
-            <div class="autor-card" [class.autor-placeholder]="!persona.foto">
-              @if (persona.foto) {
-                <img [src]="persona.foto" [alt]="persona.nombre" class="autor-img" />
-              } @else {
-                <div class="placeholder-img">
-                  <i class="fas fa-user"></i>
-                </div>
-              }
-              <div class="autor-info">
-                <h3 class="autor-name">{{ persona.nombre }}</h3>
-                <p class="autor-role">{{ persona.cargo }}</p>
-              </div>
-            </div>
+      <div class="autoridades-grid">
+        @for (persona of currentPersonal; track persona.nombre) {
+        <div class="autor-card" [class.autor-placeholder]="!persona.foto">
+          @if (persona.foto) {
+          <img [src]="persona.foto" [alt]="persona.nombre" class="autor-img" />
+          } @else {
+          <div class="placeholder-img">
+            <i class="fas fa-user"></i>
+          </div>
           }
+          <div class="autor-info">
+            <h3 class="autor-name">{{ persona.nombre }}</h3>
+            <p class="autor-role">{{ persona.cargo }}</p>
+          </div>
         </div>
+        }
+      </div>
       } @else {
-        <p class="empty-msg">Sin personal registrado para {{ selectedYear }}.</p>
+      <p class="empty-msg">Sin personal registrado para {{ selectedYear }}.</p>
       }
     </div>
 

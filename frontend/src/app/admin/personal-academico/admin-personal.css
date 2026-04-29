@@ -138,8 +138,9 @@ input, select {
 }
 
 .btn-save {
-  background: #4cafef;
+  background: #3b82f6;
   border: none;
+  color: white;
   padding: 10px 15px;
   border-radius: 8px;
   cursor: pointer;

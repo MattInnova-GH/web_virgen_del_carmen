@@ -1,28 +1,6 @@
 @import '../admin-shared.css';
 @import '../comunicados/admin-comunicados.css';
 
-/* TABLA */
-.admin-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.admin-table th {
-  text-align: left;
-  padding: 12px;
-  color: #9ca3af;
-  font-size: 13px;
-}
-
-.admin-table td {
-  padding: 14px 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.td-title {
-  font-weight: 500;
-}
-
 /* BADGES */
 .badge {
   padding: 3px 8px;

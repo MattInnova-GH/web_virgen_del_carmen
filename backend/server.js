@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const morgan = require('morgan');
-const cors = require('cors'); 
+const cors = require('cors');
 const path = require('path');
 
 const sequelize = require('./config/db.config');
@@ -24,7 +24,10 @@ app.use(
         contentSecurityPolicy: {
             directives: {
                 defaultSrc: ["'self'"],
+
                 imgSrc: ["'self'", "data:", "https:"],
+                frameSrc: ["'self'", "http://localhost:3000"],
+                frameAncestors: ["'self'", "http://localhost:4200"]
             },
         },
     })
@@ -40,6 +43,8 @@ app.use('/api', appRoutes.InvestigationsRoutes);
 app.use('/api', appRoutes.NewsRoutes);
 app.use('/api', appRoutes.PressReleasesRoutes);
 app.use('/api', appRoutes.UsersRoutes);
+
+app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 
 sequelize.authenticate()
     .then(() => {

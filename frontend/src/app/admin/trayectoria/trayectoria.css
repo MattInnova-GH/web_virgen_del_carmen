@@ -44,7 +44,7 @@
 .btn-save {
   background: #3b82f6;
   border: none;
-  padding: 10px 14px;
+  padding: 10px 15px;
   border-radius: 8px;
   color: white;
   cursor: pointer;
@@ -53,7 +53,7 @@
 .btn-cancel {
   background: #444;
   border: none;
-  padding: 10px 14px;
+  padding: 10px 15px;
   border-radius: 8px;
   color: white;
   cursor: pointer;

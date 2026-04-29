@@ -1,30 +1,32 @@
 const db = require('../models');
 const buildInvestigationsQuery = require('../helpers/investigations.query');
+const multer = require('multer');
 
 exports.createInvestigation = async (req, res) => {
     try {
-        const { title, investigation, img_url, description } = req.body;
+        const { title, author, content, publication_date, description } = req.body;
 
-        if (!title || !investigation || !img_url) {
-            return res.status(400).json({
-                error: 'El título, la investion o la imgagen url es obligatorio.'
-            });
-        }
+        if (!title || !content)
+            return res.status(400).json({error: 'Complete los campos obligatorios.'});
+
+        let pdf_url = null;
+
+        if (req.file)
+            pdf_url = `/pdf/${req.file.filename}`;
 
         const newInvestigation = await db.Investigations.create({
             title,
-            investigation,
-            img_url,
+            author,
+            content,
+            pdf_url,
+            publication_date,
             description
         });
 
         return res.status(201).json(newInvestigation);
-
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({
-            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
-        });
+        return res.status(500).json({message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'});
     }
 };
 
@@ -32,7 +34,7 @@ exports.getInvestigations = async (req, res) => {
     try {
         const query = buildInvestigationsQuery(
             {},
-            [['createdAt','ASC']]
+            [['createdAt', 'ASC']]
         );
         const investigations = await db.Investigations.findAll(query);
         res.status(200).json(investigations);
@@ -46,15 +48,15 @@ exports.getInvestigations = async (req, res) => {
 
 exports.deleteInvestigations = async (req, res) => {
     try {
-        const {id} = req.params;
+        const { id } = req.params;
         const investigation = await db.Investigations.findOne({
-            where: {id, status: true},
+            where: { id, status: true },
         });
         if (!investigation)
-            return res.status(404).json({message: 'Investigación no encontrado.'});
+            return res.status(404).json({ message: 'Investigación no encontrado.' });
 
-        await investigation.update({status: false});
-        return res.status(200).json({message: 'Investigación desactivada correctamente.'});
+        await investigation.update({ status: false });
+        return res.status(200).json({ message: 'Investigación desactivada correctamente.' });
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({
@@ -63,18 +65,20 @@ exports.deleteInvestigations = async (req, res) => {
     }
 }
 
-exports.updateInvestigation= async (req, res) => {
-    const {id} = req.params;
-    const { title, investigation, img_url, description } = req.body;
+exports.updateInvestigation = async (req, res) => {
+    const { id } = req.params;
+    const { title, author, content, pdf_url, publication_date, description } = req.body;
     try {
         const investigations = await db.Investigations.findByPk(id);
 
-        if(!investigations)
-            return res.status(404).json({message: 'Investigación no encontrada.'});
+        if (!investigations)
+            return res.status(404).json({ message: 'Investigación no encontrada.' });
 
         investigations.title = title;
-        investigations.investigation = investigation;
-        investigations.img_url = img_url;
+        investigations.content = content;
+        investigations.author = author;
+        investigations.pdf_url = pdf_url;
+        investigations.publication_date = publication_date;
         investigations.description = description;
 
         await investigations.save();

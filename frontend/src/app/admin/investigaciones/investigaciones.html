@@ -3,11 +3,170 @@
   <div class="page-header">
     <div>
       <h1 class="page-title">Investigaciones</h1>
-      <p class="page-sub">Gestión de investigaciones de la institución</p>
+      <p class="page-sub">Gestión de investigaciones académicas</p>
     </div>
-    <button class="btn-add">
+
+    <button class="btn-add" (click)="openCreateModal()">
       <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
+
+  <div class="admin-card">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Documento</th>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Fecha</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (i of investigaciones(); track i.id) {
+        <tr>
+
+          <td>{{ i.id }}</td>
+
+          <!-- PDF preview -->
+          <td>
+            <div class="pdf-thumb">
+              @if (i.pdf_url) {
+              <div class="pdf-thumb">
+                @if (i.pdf_url) {
+
+                <iframe [src]="i.pdf_url"></iframe>
+
+                <button class="pdf-zoom-btn" (click)="openPdfViewer($event, i.pdf_url)">
+                  <i class="fas fa-expand"></i>
+                </button>
+
+                } @else {
+                <div class="no-preview">Sin PDF</div>
+                }
+              </div>
+              } @else {
+              <div class="no-preview">Sin PDF</div>
+              }
+            </div>
+          </td>
+
+          <td class="td-title">{{ i.title }}</td>
+          <td>{{ i.author }}</td>
+          <td>{{ i.publication_date }}</td>
+
+          <td>
+            <span class="badge" [class.badge-blue]="i.status" [class.badge-orange]="!i.status">
+              {{ i.status ? 'Activo' : 'Inactivo' }}
+            </span>
+          </td>
+
+          <td class="td-actions">
+            <button class="btn-icon btn-edit" (click)="openEditModal(i)">
+              <i class="fas fa-pen"></i>
+            </button>
+
+            <button class="btn-icon btn-delete" (click)="delete(i.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MODAL -->
+  @if (showModal()) {
+  <div class="modal-backdrop">
+    <div class="modal modal-xl" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>{{ isEditMode() ? 'Editar Investigación' : 'Nueva Investigación' }}</h2>
+        <div class="header-actions">
+          <button class="btn-theme" (click)="toggleEditorTheme()">
+            @if (editorTheme() === 'dark') {
+            <i class="fa-solid fa-sun"></i>
+            } @else {
+            <i class="fa-solid fa-moon"></i>
+            }
+          </button>
+
+          <button class="close-btn" (click)="closeModal()">×</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="form-grid-2">
+
+          <div>
+            <input [(ngModel)]="formData.title" placeholder="Título">
+            <input [(ngModel)]="formData.author" placeholder="Autor">
+            <input type="date" [(ngModel)]="formData.publication_date">
+            <textarea [(ngModel)]="formData.description" placeholder="Descripción"></textarea>
+
+            <!-- FILE -->
+            <div class="file-upload-wrapper">
+              <label for="pdf-upload" class="custom-file-upload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                {{ selectedFile ? selectedFile.name : 'Seleccionar archivo PDF' }}
+              </label>
+              <input id="pdf-upload" type="file" (change)="onFileSelected($event)" />
+            </div>
+          </div>
+
+          <!-- PREVIEW PDF -->
+          <div class="preview">
+            <div class="pdf-preview-frame">
+
+              @if (formData.pdf_url) {
+
+              <iframe [src]="formData.pdf_url"></iframe>
+
+              <button class="pdf-zoom-btn" (click)="openPdfViewer($event, formData.pdf_url)">
+                <i class="fas fa-expand"></i>
+              </button>
+
+              } @else {
+              <div class="no-preview">Vista previa PDF</div>
+              }
+
+            </div>
+          </div>
+
+        </div>
+
+        <div class="editor-section">
+          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
+          </quill-editor>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
+        <button class="btn-save" (click)="save()">
+          {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+  }
+
+  @if (pdfViewer()) {
+  <div class="pdf-viewer" (click)="closePdfViewer()">
+
+    <iframe [src]="pdfViewer()" (click)="$event.stopPropagation()">
+    </iframe>
+
+  </div>
+  }
 
 </div>

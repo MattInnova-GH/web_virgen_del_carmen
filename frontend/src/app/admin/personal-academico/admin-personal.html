@@ -18,9 +18,9 @@
         <tr>
           <th>#</th>
           <th>Nombre</th>
+          <th>Correo Institucional</th>
           <th>Cargo</th>
           <th>Tipo</th>
-          <th>Email</th>
           <th>Año</th>
           <th>Estado</th>
           <th>Acciones</th>
@@ -37,17 +37,19 @@
             {{ p.full_name }}
           </td>
 
-          <td>{{ p.grade }}</td>
-
-          <td>{{ p.type }}</td>
-
           <td>
-            @if (p.email) {
-            {{ p.email }}
+            @if (p.institucional_email) {
+            {{ p.institucional_email }}
             } @else {
             <span style="color:#777">—</span>
             }
           </td>
+
+          <td>{{ p.grade }}</td>
+
+          <td>{{ p.type }}</td>
+
+
 
           <td>{{ p.year }}</td>
 
@@ -94,6 +96,8 @@
             <option value="Docente">Docente</option>
             <option value="Autoridad">Autoridad</option>
           </select>
+
+          <input [(ngModel)]="formData.institucional_email" placeholder="Correo Institucional">
 
           <input [(ngModel)]="formData.grade" placeholder="Cargo">
 

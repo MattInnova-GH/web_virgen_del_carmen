@@ -153,7 +153,10 @@
         <a routerLink="/noticias" class="news-card">
           <img [src]="noticia.img_url" [alt]="noticia.title" />
           <div class="news-body">
-            <p>{{ noticia.title }}</p>
+            <strong><p class="news-title">{{ noticia.title }}</p></strong>
+            <span class="news-date">
+              {{ noticia.createdAt | date:'dd/MM/yyyy' }}
+            </span>
           </div>
         </a>
         }
@@ -169,8 +172,8 @@
         @for (com of latestComunicados(); track com.id) {
         <div class="comunicado-item">
           <div class="comunicado-text">
-            <strong>{{ com.createdAt | date:'dd/MM/yyyy' }}</strong>
-            <p>{{ com.title }}</p>
+            <strong><p>{{ com.title }}</p></strong>
+            <span class="news-date">{{ com.createdAt | date:'dd/MM/yyyy' }}</span>
           </div>
 
           <div class="comunicado-media">

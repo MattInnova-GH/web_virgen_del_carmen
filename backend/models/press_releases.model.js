@@ -18,7 +18,7 @@ const PressReleases = sequelize.define('Press_Release', {
     },
     press_release: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     description: {
         type: DataTypes.TEXT,
