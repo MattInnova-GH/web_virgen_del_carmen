@@ -18,8 +18,12 @@ exports.createNew = async (req, res) => {
 
 exports.getNews = async(req, res) => {
     try {
+        const { id } = req.query;
+        const whereCondition = {};
+        if (id)
+            whereCondition.id = id;
         const query = buildNewsQuery(
-            {},
+            whereCondition,
             [['createdAt', 'DESC']]
         )
         const allNews = await db.News.findAll(query);

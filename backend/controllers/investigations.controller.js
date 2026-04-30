@@ -1,6 +1,7 @@
 const db = require('../models');
 const buildInvestigationsQuery = require('../helpers/investigations.query');
 const multer = require('multer');
+const deleteFile = require('../middlewares/deleteFile');
 
 exports.createInvestigation = async (req, res) => {
     try {
@@ -55,6 +56,8 @@ exports.deleteInvestigations = async (req, res) => {
         if (!investigation)
             return res.status(404).json({ message: 'Investigación no encontrado.' });
 
+        deleteFile(investigation.pdf_url);
+
         await investigation.update({ status: false });
         return res.status(200).json({ message: 'Investigación desactivada correctamente.' });
     } catch (error) {
@@ -74,10 +77,14 @@ exports.updateInvestigation = async (req, res) => {
         if (!investigations)
             return res.status(404).json({ message: 'Investigación no encontrada.' });
 
+        if (req.file){
+            deleteFile(investigations.pdf_url);
+            investigations.pdf_url = `/pdf/${req.file.filename}`;
+        }
+
         investigations.title = title;
         investigations.content = content;
         investigations.author = author;
-        investigations.pdf_url = pdf_url;
         investigations.publication_date = publication_date;
         investigations.description = description;
 

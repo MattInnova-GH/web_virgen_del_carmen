@@ -30,8 +30,12 @@ exports.createPressRelease = async (req, res) => {
 
 exports.getPressRelease = async (req, res) => {
     try {
+        const { id } = req.query;
+        const whereCondition = {};
+        if (id)
+            whereCondition.id = id;
         const query = buildPressReleasesQuery(
-            {},
+            whereCondition,
             [['createdAt','DESC']]
         );
         const pressReleases = await db.PressReleases.findAll(query);

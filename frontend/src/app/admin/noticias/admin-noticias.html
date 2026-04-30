@@ -16,8 +16,8 @@
         <tr>
           <th>#</th>
           <th>Título</th>
-          <th>Estado</th>
           <th>Fecha</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -30,13 +30,13 @@
 
           <td class="td-title">{{ n.title }}</td>
 
+          <td>{{ n.fecha | date:'yyyy-MM-dd' }}</td>
+
           <td>
             <span class="badge" [class.badge-blue]="n.status" [class.badge-orange]="!n.status">
               {{ n.status ? 'Publicado' : 'No Publicado' }}
             </span>
           </td>
-
-          <td>{{ n.fecha | date:'yyyy-MM-dd' }}</td>
 
           <td class="td-actions">
             <button class="btn-icon btn-comments" (click)="openCommentsModal(n.id)">

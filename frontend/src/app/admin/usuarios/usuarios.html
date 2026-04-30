@@ -18,8 +18,8 @@
           <th>#</th>
           <th>Nombres y Apellidos</th>
           <th>Usuario</th>
-          <th>Estado</th>
           <th>Fecha</th>
+          <th>Estado</th>
           <th>Acciones</th>
         </tr>
       </thead>
@@ -36,15 +36,13 @@
 
           <td>{{ u.username }}</td>
 
+          <td>{{ u.fecha | date:'yyyy-MM-dd' }}</td>
+
           <td>
-            <span class="badge"
-              [class.badge-blue]="u.status"
-              [class.badge-orange]="!u.status">
+            <span class="badge" [class.badge-blue]="u.status" [class.badge-orange]="!u.status">
               {{ u.status ? 'Activo' : 'Inactivo' }}
             </span>
           </td>
-
-          <td>{{ u.fecha | date:'yyyy-MM-dd' }}</td>
 
           <td class="td-actions">
             <button class="btn-icon btn-edit" (click)="openEditModal(u)">
