@@ -37,33 +37,68 @@
 </section>
 
 <!-- OTRAS NOTICIAS -->
-  @if (otrasNoticias().length > 0) {
-  <section class="main-container-otras-noticias">
-    <div class="container-principal">
-      <div class="header-noticias">
-        <h2 class="titulo-seccion">Otras Noticias</h2>
-      </div>
-
-      @for (noticia of otrasNoticias(); track noticia.id) {
-      <div class="noticia-fila">
-        <div class="img-container">
-          <img [src]="noticia.img_url" class="img-noticia" [alt]="noticia.title" />
-        </div>
-
-        <div class="noticia-cuerpo">
-          <h4>{{ noticia.title }}</h4>
-          <p class="news-excerpt">{{ noticia.contentPlain }}</p>
-          <div class="noticia-min-meta">
-            <span>{{ noticia.createdAt | date:'dd/MM/yyyy' }}</span>
-          </div>
-        </div>
-
-        <div class="botones">
-          <a [routerLink]="['/noticias', noticia.id]" class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más</a>
-          <button class="btn-naranja"><i class="fa-solid fa-comment-dots"></i> Comentar</button>
-        </div>
-      </div>
-      }
+@if (otrasNoticias().length > 0) {
+<section class="main-container-otras-noticias">
+  <div class="container-principal">
+    <div class="header-noticias">
+      <h2 class="titulo-seccion">Otras Noticias</h2>
     </div>
-  </section>
-  }
+
+    @for (noticia of paginatedNoticias(); track noticia.id) {
+    <div class="noticia-fila">
+      <div class="img-container">
+        <img [src]="noticia.img_url" class="img-noticia" [alt]="noticia.title" />
+      </div>
+
+      <div class="noticia-cuerpo">
+        <h4>{{ noticia.title }}</h4>
+        <p class="news-excerpt">{{ noticia.contentPlain }}</p>
+        <div class="noticia-min-meta">
+          <span>{{ noticia.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+      </div>
+
+      <div class="botones">
+        <a [routerLink]="['/noticias', noticia.id]" class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más</a>
+      </div>
+    </div>
+    }
+
+    <!-- PAGINACIÓN -->
+    @if (totalPages() > 1) {
+    <div class="paginacion">
+      <button
+        class="pag-btn pag-arrow"
+        [class.disabled]="currentPage() === 1"
+        [disabled]="currentPage() === 1"
+        (click)="goToPage(currentPage() - 1)"
+        aria-label="Página anterior"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+
+      @for (page of pages(); track page) {
+        <button
+          class="pag-btn pag-num"
+          [class.active]="currentPage() === page"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+      }
+
+      <button
+        class="pag-btn pag-arrow"
+        [class.disabled]="currentPage() === totalPages()"
+        [disabled]="currentPage() === totalPages()"
+        (click)="goToPage(currentPage() + 1)"
+        aria-label="Página siguiente"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+    }
+
+  </div>
+</section>
+}

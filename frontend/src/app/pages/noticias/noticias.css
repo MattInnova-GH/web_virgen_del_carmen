@@ -69,7 +69,6 @@
 
 .news-card {
   width: 100%;
-
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   overflow: hidden;
@@ -121,9 +120,6 @@
   padding: 7px 14px;
   width: auto;
 }
-.hora {
-  margin-left: 270px;
-}
 
 /* ===== OTRAS NOTICIAS ===== */
 
@@ -172,7 +168,6 @@
   border-bottom: none;
 }
 
-/* Imagen con dimensiones fijas */
 .img-container {
   flex-shrink: 0;
   width: 180px;
@@ -194,7 +189,6 @@
   transform: scale(1.05);
 }
 
-/* Contenido de la noticia */
 .noticia-cuerpo {
   flex: 1;
   min-width: 0;
@@ -209,7 +203,6 @@
   font-size: 1rem;
   line-height: 1.3;
   margin: 0;
-  /* Máximo 2 líneas */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -221,7 +214,6 @@
   font-size: 14px;
   line-height: 1.45;
   margin: 0;
-  /* Máximo 3 líneas */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -242,7 +234,6 @@
   color: #6b7bb0;
 }
 
-/* Botones con ancho fijo */
 .botones {
   flex-shrink: 0;
   display: flex;
@@ -287,6 +278,68 @@
   font-size: 0.9rem;
 }
 
+/* ===== PAGINACIÓN ===== */
+.paginacion {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 30px 0 10px;
+  flex-wrap: wrap;
+}
+
+.pag-btn {
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.pag-num {
+  width: 40px;
+  height: 40px;
+  background: #f0f4ff;
+  color: #323f7c;
+}
+
+.pag-num:hover {
+  background: #d6deff;
+  transform: translateY(-1px);
+}
+
+.pag-num.active {
+  background: #323f7c;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(50, 63, 124, 0.35);
+  transform: translateY(-1px);
+}
+
+.pag-arrow {
+  width: 40px;
+  height: 40px;
+  background: #ff9100;
+  color: white;
+  font-size: 0.85rem;
+}
+
+.pag-arrow:hover:not(:disabled) {
+  background: #e68200;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.35);
+}
+
+.pag-arrow.disabled,
+.pag-arrow:disabled {
+  background: #ddd;
+  color: #aaa;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
 /* --- RESPONSIVE DESIGN */
 @media (max-width: 768px) {
   .hero-component {
@@ -313,12 +366,6 @@
 
   .image-wrapper img {
     height: 200px !important;
-  }
-
-  .hora {
-    margin-left: 0 !important;
-    width: 100%;
-    text-align: right;
   }
 
   .noticia-fila {
@@ -376,5 +423,12 @@
   .btn-naranja {
     width: 100% !important;
     max-width: none !important;
+  }
+
+  .pag-num,
+  .pag-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
   }
 }
