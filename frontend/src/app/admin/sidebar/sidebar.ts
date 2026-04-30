@@ -30,6 +30,21 @@ export class Sidebar {
       route: '/admin/personal-academico',
     },
     {
+      label: 'Investigaciones',
+      icon: 'fa-solid fa-book-bookmark',
+      route: '/admin/investigaciones',
+    },
+    {
+      label: 'Documentos',
+      icon: 'fa-solid fa-file-circle-plus',
+      route: '/admin/documentos',
+    },
+    {
+      label: 'Usuarios',
+      icon: 'fa-solid fa-users-gear',
+      route: '/admin/usuarios',
+    },
+    {
       label: 'Trayectoria',
       icon: 'fa-solid fa-briefcase',
       route: '/admin/trayectoria',
@@ -38,16 +53,6 @@ export class Sidebar {
       label: 'Contactos',
       icon: 'fa-solid fa-address-book',
       route: '/admin/contactos',
-    },
-    {
-      label: 'Investigaciones',
-      icon: 'fa-solid fa-book-bookmark',
-      route: '/admin/investigaciones',
-    },
-    {
-      label: 'Usuarios',
-      icon: 'fa-solid fa-users-gear',
-      route: '/admin/usuarios',
     },
   ];
 }

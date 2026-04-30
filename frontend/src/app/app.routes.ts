@@ -7,6 +7,7 @@ import { AdminPersonal } from './admin/personal-academico/admin-personal';
 import { AdminTrayectoria } from './admin/trayectoria/trayectoria';
 import { AdminContactos } from './admin/contactos/contactos';
 import { AdminUsuarios } from './admin/usuarios/usuarios';
+import { AdminDocumentos } from './admin/documentos/documentos';
 import { Inicio } from './pages/inicio/inicio';
 import { Nosotros } from './pages/nosotros/nosotros';
 import { Noticias } from './pages/noticias/noticias';
@@ -42,7 +43,8 @@ export const routes: Routes = [
       { path: 'trayectoria', component: AdminTrayectoria, title: 'Admin - Trayectoria' },
       { path: 'contactos', component: AdminContactos, title: 'Admin - Contactos' },
       { path: 'investigaciones', component: AdminInvestigaciones, title: 'Admin - Investigaciones' },
-      { path: 'usuarios', component: AdminUsuarios, title: 'Admin - Usuarios' }
+      { path: 'usuarios', component: AdminUsuarios, title: 'Admin - Usuarios' },
+      { path: 'documentos', component: AdminDocumentos, title: 'Admin - Documentos' }
     ],
   },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
