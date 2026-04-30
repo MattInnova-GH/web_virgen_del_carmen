@@ -95,6 +95,33 @@ body {
   color: #f28c1b;
 }
 
+.menu li a.nav-active {
+  color: #f28c1b;
+  font-weight: 700;
+}
+
+@media (min-width: 992px) {
+  .menu li a.nav-active {
+    position: relative;
+  }
+
+  .menu li a.nav-active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #f28c1b;
+    border-radius: 2px;
+  }
+}
+
+.btn-transparencia.btn-transparencia-active {
+  background-color: #323f7c;
+  box-shadow: 0 0 0 3px rgba(50, 63, 124, 0.25);
+}
+
 /* Botón */
 .btn-transparencia {
   margin-top: 20px;

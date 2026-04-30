@@ -21,6 +21,9 @@
           <p class="news-excerpt">{{ noticia.contentPlain }}</p>
           <div class="news-footer">
             <span>{{ noticia.createdAt | date:'dd/MM/yyyy' }}</span>
+            <a [routerLink]="['/noticias', noticia.id]" class="btn-naranja btn-ver-mas">
+              <i class="fa-solid fa-plus"></i> Ver Más
+            </a>
           </div>
         </div>
       </div>
@@ -56,7 +59,7 @@
         </div>
 
         <div class="botones">
-          <button class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más...</button>
+          <a [routerLink]="['/noticias', noticia.id]" class="btn-naranja"><i class="fa-solid fa-plus"></i> Ver Más</a>
           <button class="btn-naranja"><i class="fa-solid fa-comment-dots"></i> Comentar</button>
         </div>
       </div>

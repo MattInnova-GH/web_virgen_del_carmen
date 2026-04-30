@@ -178,9 +178,7 @@
 
           <div class="comunicado-media">
             <img [src]="com.img_url" [alt]="com.title" />
-            @if (com.press_release) {
-            <a [href]="com.press_release" target="_blank" class="ver-mas">Ver más</a>
-            }
+            <a [routerLink]="['/comunicado', com.id]" class="ver-mas">Ver más</a>
           </div>
         </div>
         }

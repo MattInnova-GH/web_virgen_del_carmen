@@ -1,10 +1,11 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-noticias',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './noticias.html',
   styleUrl: './noticias.css',
 })

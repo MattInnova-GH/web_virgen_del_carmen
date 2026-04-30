@@ -1,0 +1,105 @@
+<div class="detalle-wrapper">
+
+  @if (loading()) {
+  <div class="loader-container">
+    <div class="loader-spinner"></div>
+    <p>Cargando...</p>
+  </div>
+  }
+
+  @if (!loading() && error()) {
+  <div class="error-container">
+    <i class="fa-solid fa-triangle-exclamation"></i>
+    <h2>Contenido no encontrado</h2>
+    <p>El contenido que buscas no existe o fue eliminado.</p>
+    <a [routerLink]="config.volverLink" class="btn-back-error">
+      <i class="fa-solid fa-arrow-left"></i> {{ config.volverLabel }}
+    </a>
+  </div>
+  }
+
+  @if (!loading() && !error() && noticia()) {
+
+  <div class="breadcrumb-bar">
+    <a [routerLink]="config.volverLink" class="btn-volver">
+      <i class="fa-solid fa-arrow-left"></i> {{ config.volverLabel }}
+    </a>
+  </div>
+
+  <div class="hero-section">
+    <img [src]="noticia().img_url" [alt]="noticia().title" class="hero-img" />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="contenido-outer">
+    <div class="contenido-card">
+
+      <div class="meta-info">
+        <span class="fecha">
+          <i class="fa-regular fa-calendar"></i>
+          {{ noticia().createdAt | date:'dd/MM/yyyy' }}
+        </span>
+        @if (noticia().description) {
+        <span class="categoria-badge">{{ noticia().description }}</span>
+        }
+      </div>
+
+      <h1 class="noticia-titulo">{{ noticia().title }}</h1>
+      <div class="title-accent"></div>
+
+      <div class="noticia-contenido" [innerHTML]="getContent()"></div>
+
+      <div class="share-section">
+        <span class="share-label">
+          <i class="fa-solid fa-share-nodes"></i> Compartir:
+        </span>
+        <div class="share-icons">
+          <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl"
+             target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook">
+            <i class="fa-brands fa-facebook-f"></i>
+          </a>
+          <a [href]="'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + noticia().title"
+             target="_blank" rel="noopener" class="share-btn twitter" title="Compartir en X">
+            <i class="fa-brands fa-x-twitter"></i>
+          </a>
+          <a [href]="'https://wa.me/?text=' + noticia().title + '%20' + currentUrl"
+             target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  @if (otrasNoticias().length > 0) {
+  <section class="otras-noticias">
+    <div class="otras-container">
+      <h2 class="otras-titulo">{{ config.otrasLabel }}</h2>
+      <div class="otras-grid">
+        @for (otra of otrasNoticias(); track otra.id) {
+        <a [routerLink]="[config.detalleBase, otra.id]" class="otra-card">
+          <div class="otra-img-wrap">
+            <img [src]="otra.img_url" [alt]="otra.title" />
+          </div>
+          <div class="otra-info">
+            <span class="otra-fecha">
+              <i class="fa-regular fa-calendar"></i>
+              {{ otra.createdAt | date:'dd/MM/yyyy' }}
+            </span>
+            <h4>{{ otra.title }}</h4>
+            <p>{{ otra.contentPlain }}</p>
+          </div>
+          <div class="otra-footer">
+            <span class="leer-mas">Leer más <i class="fa-solid fa-arrow-right"></i></span>
+          </div>
+        </a>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  }
+
+</div>

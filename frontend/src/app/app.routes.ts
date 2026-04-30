@@ -27,6 +27,7 @@ import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 import { Servicios } from './pages/servicios/servicios';
 import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 import { Estadisticas } from './pages/estadisticas/estadisticas';
+import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
 
 export const routes: Routes = [
   {
@@ -48,6 +49,8 @@ export const routes: Routes = [
   { path: 'inicio', component: Inicio, title: 'Inicio' },
   { path: 'nosotros', component: Nosotros, title: 'Nosotros' },
   { path: 'noticias', component: Noticias, title: 'Noticias' },
+  { path: 'noticias/:id', component: NoticiaDetalle, title: 'Detalle Noticia', data: { tipo: 'noticias' } },
+  { path: 'comunicado/:id', component: NoticiaDetalle, title: 'Detalle Comunicado', data: { tipo: 'comunicado' } },
   { path: 'programas', component: Programas, title: 'Programas' },
   { path: 'admision', component: Admision, title: 'Admision' },
   { path: 'transparencia', component: Transparencia, title: 'Transparencia' },

@@ -20,26 +20,27 @@
   <div class="nav-content" [class.active]="isMenuOpen">
     <ul class="menu">
       <li>
-        <a routerLink="/inicio" (click)="closeMenu()">INICIO</a>
+        <a routerLink="/inicio" routerLinkActive="nav-active" (click)="closeMenu()">INICIO</a>
       </li>
       <li>
-        <a routerLink="/nosotros" (click)="closeMenu()">NOSOTROS</a>
+        <a routerLink="/nosotros" routerLinkActive="nav-active" (click)="closeMenu()">NOSOTROS</a>
       </li>
       <li>
-        <a routerLink="/programas" (click)="closeMenu()">PROGRAMAS</a>
+        <a routerLink="/programas" routerLinkActive="nav-active" (click)="closeMenu()">PROGRAMAS</a>
       </li>
       <li>
-        <a routerLink="/admision" (click)="closeMenu()">ADMISIÓN</a>
+        <a routerLink="/admision" routerLinkActive="nav-active" (click)="closeMenu()">ADMISIÓN</a>
       </li>
       <li>
-        <a routerLink="/noticias" (click)="closeMenu()">NOTICIAS</a>
+        <a routerLink="/noticias" routerLinkActive="nav-active" (click)="closeMenu()">NOTICIAS</a>
       </li>
       <li>
-        <a routerLink="/servicios" (click)="closeMenu()">SERVICIOS</a>
+        <a routerLink="/servicios" routerLinkActive="nav-active" (click)="closeMenu()">SERVICIOS</a>
       </li>
     </ul>
 
-    <a routerLink="/transparencia" class="btn-transparencia" (click)="closeMenu()">
+    <a routerLink="/transparencia" routerLinkActive="btn-transparencia-active"
+       class="btn-transparencia" (click)="closeMenu()">
       TRANSPARENCIA
     </a>
   </div>

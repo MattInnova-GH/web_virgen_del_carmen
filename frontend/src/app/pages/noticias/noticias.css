@@ -109,8 +109,17 @@
 .news-footer {
   color: #3e4a89;
   display: flex;
-  align-items: start;
+  align-items: center;
+  justify-content: space-between;
   margin-top: auto;
+  width: 100%;
+}
+
+.btn-ver-mas {
+  text-decoration: none;
+  font-size: 0.8rem;
+  padding: 7px 14px;
+  width: auto;
 }
 .hora {
   margin-left: 270px;
@@ -256,6 +265,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  text-decoration: none;
   transition:
     background-color 0.2s ease,
     transform 0.15s ease,
