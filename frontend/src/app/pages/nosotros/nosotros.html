@@ -63,27 +63,33 @@
     @case ('mision') {
     <div class="content-text">
       <h3 class="content-title">Nuestra Misión</h3>
-      <p>{{ career()?.mision }}</p>
+      <div class="rich-content ql-editor" [innerHTML]="sanitizeHtml(career()?.mision)">
+      </div>
     </div>
     }
 
     @case ('vision') {
     <div class="content-text">
-      <h3 class="content-title">Nuestra Visión</h3>
-      <p>{{ career()?.vision }}</p>
+      <h3 class="content-title">Nuestra Visón</h3>
+      <div class="rich-content ql-editor" [innerHTML]="sanitizeHtml(career()?.vision)">
+      </div>
     </div>
     }
 
     @case ('valores') {
     <div class="content-text">
       <h3 class="content-title">Nuestros Valores</h3>
-      <div [innerHTML]="career()?.values"></div>
+      <div class="rich-content ql-editor" [innerHTML]="sanitizeHtml(career()?.values)">
+      </div>
     </div>
     }
 
     @case ('organigrama') {
     <div class="content-text organigrama-block">
       <img src="images/organigrama-institucional-ii.png" alt="Organigrama" />
+      <button class="preview-zoom-btn" (click)="openImageViewer($event)">
+        <i class="fas fa-expand"></i>
+      </button>
     </div>
     }
 
@@ -164,3 +170,9 @@
 
   </div>
 </section>
+
+@if (imageViewer()) {
+<div class="image-viewer" (click)="closeImageViewer()">
+  <img src="images/organigrama-institucional-ii.png" (click)="$event.stopPropagation()">
+</div>
+}

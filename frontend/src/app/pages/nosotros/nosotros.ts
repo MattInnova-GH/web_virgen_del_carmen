@@ -30,7 +30,7 @@ interface AcademicPersonalDB {
   styleUrl: './nosotros.css',
 })
 export class Nosotros implements OnInit {
-
+  imageViewer = signal(false);
   expandedHistory = signal(false);
   activeContent = signal<ContentType>(null);
 
@@ -73,8 +73,8 @@ export class Nosotros implements OnInit {
         if (activo) this.career.set({
           ...activo,
           history: activo.history,
-          mision: this.stripHtml(activo.mision),
-          vision: this.stripHtml(activo.vision),
+          mision: activo.mision,
+          vision: activo.vision,
         });
       }
     });
@@ -127,20 +127,20 @@ export class Nosotros implements OnInit {
     if (!html) return '';
 
     return html
-      // normaliza espacios
       .replace(/&nbsp;/g, ' ')
-
-      // elimina párrafos vacíos
       .replace(/<p>\s*<\/p>/g, '')
-
-      // elimina atributos innecesarios (como clases de Quill)
-      .replace(/ class="[^"]*"/g, '')
-
-      // elimina estilos inline
-      .replace(/ style="[^"]*"/g, '')
-
-      // limpia espacios duplicados
+      .replace(/ style="[^"]*"/g, '') // quita estilos inline
       .replace(/\s+/g, ' ')
       .trim();
   }
+
+  openImageViewer(event: Event) {
+    event.stopPropagation();
+    this.imageViewer.set(true);
+  }
+
+  closeImageViewer() {
+    this.imageViewer.set(false);
+  }
 }
+

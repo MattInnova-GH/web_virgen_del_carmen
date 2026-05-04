@@ -2,13 +2,26 @@
 
   <!-- Welcome Banner -->
   <div class="dash-banner">
+
+    <!-- Fondo animado -->
+    <div class="banner-bg">
+      <div class="main_spinner">
+        <div class="center_mass"></div>
+        <div class="dot dot_1"></div>
+        <div class="dot dot_2"></div>
+      </div>
+    </div>
+
+    <!-- Contenido -->
     <div class="banner-text">
       <h1 class="banner-title">¡Bienvenido, Administrador!</h1>
       <p class="banner-sub">Panel de gestión — IESPP Virgen del Carmen</p>
     </div>
+
     <div class="banner-icon">
       <i class="fas fa-graduation-cap"></i>
     </div>
+
   </div>
 
   <!-- Stat Cards -->
@@ -84,7 +97,8 @@
       <div class="activity-item">
         <div class="activity-dot dot-green"></div>
         <div class="activity-body">
-          <span class="activity-text">{{ item.type }} <strong>{{ item.names }} {{ item.last_names }}</strong> registrado/a</span>
+          <span class="activity-text">{{ item.type }} <strong>{{ item.names }} {{ item.last_names }}</strong>
+            registrado/a</span>
           <span class="activity-time">{{ item.createdAt | date:'dd MMM yyyy' }}</span>
         </div>
       </div>
