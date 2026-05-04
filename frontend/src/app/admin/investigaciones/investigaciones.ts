@@ -12,8 +12,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   styleUrl: './investigaciones.css',
 })
 export class AdminInvestigaciones implements OnInit {
-  editorTheme = signal<'dark' | 'light'>('dark');
-  
   private sanitizer = inject(DomSanitizer);
   private http = inject(HttpClient);
   private API = 'http://localhost:3000/api/investigations';
@@ -188,9 +186,9 @@ export class AdminInvestigaciones implements OnInit {
     });
   }
 
-  // =========================
   // QUILL
-  // =========================
+  editorTheme = signal<'dark' | 'light'>('dark');
+
   quillConfig = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],

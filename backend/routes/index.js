@@ -3,9 +3,9 @@ const AcademicPersonalRoutes = require('./academic_personal.routes');
 const CareerRoutes = require('./career.routes');
 const ContactsRoutes = require('./contacts.routes');
 const PressReleasesRoutes = require('./press_releases.routes');
-const CommentsRoutes = require('./comments.routes');
 const UsersRoutes = require('./users.routes');
 const InvestigationsRoutes = require('./investigations.routes');
+const AcademicPapersRoutes = require('./academic_papers.routes');
 
 module.exports = {
     NewsRoutes,
@@ -13,7 +13,7 @@ module.exports = {
     CareerRoutes,
     ContactsRoutes,
     PressReleasesRoutes,
-    CommentsRoutes,
     UsersRoutes,
     InvestigationsRoutes,
+    AcademicPapersRoutes
 }

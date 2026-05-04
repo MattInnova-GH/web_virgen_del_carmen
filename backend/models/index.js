@@ -6,9 +6,9 @@ const Contacts = require('./contacts.model');
 const Investigations = require('./investigations.models');
 const Users = require('./users.model');
 const PressReleases = require('./press_releases.model');
-const Comments = require('./comments.model');
 const AcademicPersonal = require('./academic_personal.model');
 const Career = require('./career.model');
+const AcademicPapers = require('./academic_papers.model');
 
 module.exports = {
     sequelize,
@@ -18,7 +18,7 @@ module.exports = {
     Investigations,
     Users,
     PressReleases,
-    Comments,
     AcademicPersonal,
-    Career
+    Career,
+    AcademicPapers
 }

@@ -5,10 +5,13 @@ const path = require('path');
 const deleteFile = (fileUrl) => {
     if (!fileUrl) return;
 
-    const filePath = path.join(__dirname, '..', 'public', fileUrl);
+    const cleanPath = fileUrl.replace(/^\/+/, '');
+
+    const filePath = path.join(__dirname, '..', 'public', cleanPath);
 
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
+        console.log('Archivo eliminado:', filePath);
     }
 };
 

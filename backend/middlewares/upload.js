@@ -12,19 +12,37 @@ const slugify = (text) => {
         .replace(/^_+|_+$/g, '')             // trim _
 };
 
+const normalizeType = (text) => {
+    return text
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '');
+};
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'public/pdf');
+        const type = req.body.type || 'otros';
+        const folder = normalizeType(type);
+
+        const dir = path.join(__dirname, '..', 'public', 'pdf', 'documents', folder);
+
+        // crear carpeta si no existe
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        cb(null, dir);
     },
+
     filename: (req, file, cb) => {
         const ext = file.originalname.split('.').pop();
-
         const baseName = file.originalname.replace(/\.[^/.]+$/, '');
         const safeName = slugify(baseName);
 
-        const uniqueName = `${Date.now()}-${safeName}.${ext}`;
-
-        cb(null, uniqueName);
+        cb(null, `${Date.now()}-${safeName}.${ext}`);
     }
 });
 

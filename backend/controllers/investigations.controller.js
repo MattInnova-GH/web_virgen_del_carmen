@@ -1,6 +1,5 @@
 const db = require('../models');
 const buildInvestigationsQuery = require('../helpers/investigations.query');
-const multer = require('multer');
 const deleteFile = require('../middlewares/deleteFile');
 
 exports.createInvestigation = async (req, res) => {
@@ -54,7 +53,7 @@ exports.deleteInvestigations = async (req, res) => {
             where: { id, status: true },
         });
         if (!investigation)
-            return res.status(404).json({ message: 'Investigación no encontrado.' });
+            return res.status(404).json({ message: 'Investigación no encontrada.' });
 
         deleteFile(investigation.pdf_url);
 

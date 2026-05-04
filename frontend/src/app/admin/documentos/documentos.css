@@ -1,2 +1,10 @@
 @import '../admin-shared.css';
-@import '../comunicados/admin-comunicados.css';
+@import '../investigaciones/investigaciones.css';
+
+input, select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background: #2a2a3d;
+  color: #fff;
+}

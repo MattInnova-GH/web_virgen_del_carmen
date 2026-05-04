@@ -37,12 +37,12 @@ app.use(morgan('dev'));
 
 app.use('/api', appRoutes.AcademicPersonalRoutes);
 app.use('/api', appRoutes.CareerRoutes);
-app.use('/api', appRoutes.CommentsRoutes);
 app.use('/api', appRoutes.ContactsRoutes);
 app.use('/api', appRoutes.InvestigationsRoutes);
 app.use('/api', appRoutes.NewsRoutes);
 app.use('/api', appRoutes.PressReleasesRoutes);
 app.use('/api', appRoutes.UsersRoutes);
+app.use('/api', appRoutes.AcademicPapersRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 

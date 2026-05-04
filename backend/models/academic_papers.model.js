@@ -1,28 +1,27 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/db.config');
-const News = require('./news.models');
 
-const Comments = sequelize.define('Comments', {
+const AcademicPapers = sequelize.define('AcademicPapers', {
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
-    new_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: News,
-            key: 'id'
-        }
+    type: {
+        type: DataTypes.ENUM('Programas', 'Admisión', 'Horarios', 'Costos', 'Estadísticas', 'Reglamentos', 'Inversiones', 'Procedimientos', 'Becas y Créditos'),
+        allowNull: false
     },
-    nickname: {
+    title: {
         type: DataTypes.STRING(255),
-        allowNull: true
+        allowNull: false
     },
-    comment: {
+    pdf_url: {
         type: DataTypes.TEXT,
+        allowNull: true,
+    },
+    year: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     description: {
@@ -34,15 +33,8 @@ const Comments = sequelize.define('Comments', {
         defaultValue: true
     }
 }, {
-    tableName: 'comments',
+    tableName: 'academic_papers',
     timestamps: true
 });
 
-Comments.belongsTo(News, {
-    foreignKey: 'new_id',
-    as: 'news',
-    onDelete: 'RESTRICT',
-    onUpdate: 'CASCADE'
-})
-
-module.exports = Comments;
+module.exports = AcademicPapers;
