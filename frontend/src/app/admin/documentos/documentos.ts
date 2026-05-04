@@ -1,4 +1,4 @@
-import { Component, OnInit, Type, inject, signal } from '@angular/core';
+import { Component, OnInit, Type, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
@@ -33,13 +33,36 @@ export class AdminDocumentos implements OnInit {
     pdf_url: ''
   };
 
+  // ===== SECCIONES DESPLEGABLES =====
+  readonly sectionTypes = [
+    'Admisión', 'Becas y Créditos', 'Costos', 'Horarios',
+    'Reglamentos', 'Inversiones', 'Procedimientos', 'Programas'
+  ];
+
+  openSections = signal<Record<string, boolean>>({});
+
+  toggleSection(type: string) {
+    this.openSections.update(prev => ({ ...prev, [type]: !prev[type] }));
+  }
+
+  isSectionOpen(type: string): boolean {
+    return !!this.openSections()[type];
+  }
+
+  groupedDocs = computed(() => {
+    const all = this.investigaciones();
+    const result: Record<string, any[]> = {};
+    for (const type of this.sectionTypes) {
+      result[type] = all.filter(i => i.type === type);
+    }
+    return result;
+  });
+  // ==================================
+
   ngOnInit() {
     this.loadData();
   }
 
-  // =========================
-  // DATA
-  // =========================
   loadData() {
     this.http.get<any[]>(`${this.API}/list`).subscribe({
       next: (data) => {
@@ -61,24 +84,15 @@ export class AdminDocumentos implements OnInit {
     });
   }
 
-  // =========================
-  // FILE
-  // =========================
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-
     this.selectedFile = file;
-
-    // preview local
     this.formData.pdf_url = this.sanitizer.bypassSecurityTrustResourceUrl(
       URL.createObjectURL(file)
     );
   }
 
-  // =========================
-  // MODAL
-  // =========================
   openCreateModal() {
     this.isEditMode.set(false);
     this.resetForm();
@@ -87,7 +101,6 @@ export class AdminDocumentos implements OnInit {
 
   openEditModal(i: any) {
     this.isEditMode.set(true);
-
     this.formData = {
       id: i.id,
       title: i.title,
@@ -96,9 +109,7 @@ export class AdminDocumentos implements OnInit {
       description: i.description,
       pdf_url: i.pdf_url
     };
-
     this.selectedFile = null;
-
     this.showModal.set(true);
   }
 
@@ -110,7 +121,7 @@ export class AdminDocumentos implements OnInit {
     this.formData = {
       id: null,
       title: '',
-      type:'',
+      type: '',
       year: '',
       description: '',
       pdf_url: ''
@@ -118,9 +129,6 @@ export class AdminDocumentos implements OnInit {
     this.selectedFile = null;
   }
 
-  // =========================
-  // CRUD
-  // =========================
   save() {
     if (this.isEditMode()) {
       this.update();
@@ -131,58 +139,36 @@ export class AdminDocumentos implements OnInit {
 
   create() {
     const fd = new FormData();
-
     Object.keys(this.formData).forEach(key => {
-      if (key !== 'pdf_url') {
-        fd.append(key, this.formData[key] || '');
-      }
+      if (key !== 'pdf_url') fd.append(key, this.formData[key] || '');
     });
-
-    if (this.selectedFile) {
-      fd.append('file', this.selectedFile);
-    }
-
+    if (this.selectedFile) fd.append('file', this.selectedFile);
     this.http.post(`${this.API}/create`, fd).subscribe({
-      next: () => {
-        this.loadData();
-        this.closeModal();
-      },
+      next: () => { this.loadData(); this.closeModal(); },
       error: err => console.error(err)
     });
   }
 
   update() {
     const fd = new FormData();
-
     Object.keys(this.formData).forEach(key => {
-      if (key !== 'pdf_url') {
-        fd.append(key, this.formData[key] || '');
-      }
+      if (key !== 'pdf_url') fd.append(key, this.formData[key] || '');
     });
-
-    if (this.selectedFile) {
-      fd.append('file', this.selectedFile);
-    }
-
+    if (this.selectedFile) fd.append('file', this.selectedFile);
     this.http.put(`${this.API}/update/${this.formData.id}`, fd).subscribe({
-      next: () => {
-        this.loadData();
-        this.closeModal();
-      },
+      next: () => { this.loadData(); this.closeModal(); },
       error: err => console.error(err)
     });
   }
 
   delete(id: number) {
     if (!confirm('¿Desactivar documento?')) return;
-
     this.http.delete(`${this.API}/delete/${id}`).subscribe({
       next: () => this.loadData(),
       error: err => console.error(err)
     });
   }
 
-  // QUILL
   editorTheme = signal<'dark' | 'light'>('dark');
 
   quillConfig = {
@@ -208,8 +194,6 @@ export class AdminDocumentos implements OnInit {
   }
 
   toggleEditorTheme() {
-    this.editorTheme.set(
-      this.editorTheme() === 'dark' ? 'light' : 'dark'
-    );
+    this.editorTheme.set(this.editorTheme() === 'dark' ? 'light' : 'dark');
   }
 }
