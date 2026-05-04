@@ -35,7 +35,7 @@ export class AdminDocumentos implements OnInit {
 
   // ===== SECCIONES DESPLEGABLES =====
   readonly sectionTypes = [
-    'Admisión', 'Becas y Créditos', 'Costos', 'Horarios',
+    'Admisión', 'Becas y Créditos', 'Costos','Estadisticas', 'Horarios',
     'Reglamentos', 'Inversiones', 'Procedimientos', 'Programas'
   ];
 

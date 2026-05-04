@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
 
 @Component({
@@ -7,17 +8,26 @@ import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
   templateUrl: './reglamentos.html',
   styleUrl: './reglamentos.css',
 })
-export class Reglamentos {
-  reglamentosDocs = [
-    {
-      id: '1',
-      label: 'REGLAMENTO INSTITUCIONAL',
-      pdfUrl: 'assets/pdfs/reglamentos/PEI_2022-2027-JAE.pdf',
-    },
-    {
-      id: '2',
-      label: 'REGLAMENTO DE ORGANIZACIÓN Y FUNCIONES',
-      pdfUrl: 'assets/pdfs/reglamentos/PEI_2022-2027-JAE.pdf',
-    },
-  ];
+export class Reglamentos implements OnInit {
+
+  private http = inject(HttpClient);
+  private API = 'http://localhost:3000/api/academic_papers';
+  private BASE = 'http://localhost:3000';
+
+  reglamentosDocs = signal<any[]>([]);
+
+  ngOnInit() {
+    this.http.get<any[]>(`${this.API}/list`).subscribe({
+      next: data => {
+        const reglamentos = data
+          .filter(d => d.status && d.type === 'Reglamentos')
+          .map(d => ({
+            id: String(d.id),
+            label: d.title.toUpperCase(),
+            pdfUrl: d.pdf_url ? `${this.BASE}${d.pdf_url}` : ''
+          }));
+        this.reglamentosDocs.set(reglamentos);
+      }
+    });
+  }
 }

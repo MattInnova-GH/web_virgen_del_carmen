@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
 
 @Component({
@@ -8,33 +8,26 @@ import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
   templateUrl: './programas.html',
   styleUrl: './programas.css',
 })
-export class Programas {
-  docs = [
-    {
-      id: '1',
-      label: 'PLAN DE ESTUDIOS',
-      pdfUrl: 'assets/pdfs/programas/plan_de_estudios.pdf',
-    },
-    {
-      id: '2',
-      label: 'PERFIL DE EGRESO',
-      pdfUrl: 'assets/pdfs/programas/perfil_de_egreso.pdf',
-    },
-    {
-      id: '3',
-      label: 'DISEÑO CURRICULAR - DCBN',
-      pdfUrl:
-        'assets/pdfs/programas/diseno_curricular_basico_nacional_de_la_formacion_inicial_docente.pdf',
-    },
-    {
-      id: '4',
-      label: 'SECCIONES - ESTUDIANTES',
-      pdfUrl: 'assets/pdfs/programas/secciones_estudiantes.pdf',
-    },
-    {
-      id: '5',
-      label: 'PROCESO DE MATRICULA',
-      pdfUrl: '',
-    },
-  ];
+export class Programas implements OnInit {
+
+  private http = inject(HttpClient);
+  private API = 'http://localhost:3000/api/academic_papers';
+  private BASE = 'http://localhost:3000';
+
+  docs = signal<any[]>([]);
+
+  ngOnInit() {
+    this.http.get<any[]>(`${this.API}/list`).subscribe({
+      next: data => {
+        const programas = data
+          .filter(d => d.status && d.type === 'Programas')
+          .map(d => ({
+            id: String(d.id),
+            label: d.title.toUpperCase(),
+            pdfUrl: d.pdf_url ? `${this.BASE}${d.pdf_url}` : ''
+          }));
+        this.docs.set(programas);
+      }
+    });
+  }
 }

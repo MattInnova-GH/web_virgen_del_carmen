@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
 
 @Component({
@@ -7,27 +8,26 @@ import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
   templateUrl: './inversiones.html',
   styleUrl: './inversiones.css',
 })
-export class Inversiones {
-  inversionesDocs = [
-    {
-      id: '1',
-      label: 'INVERSIONES',
-      pdfUrl: '',
-    },
-    {
-      id: '2',
-      label: 'REINVERSIONES',
-      pdfUrl: '',
-    },
-    {
-      id: '3',
-      label: 'DONACIONES',
-      pdfUrl: '',
-    },
-    {
-      id: '4',
-      label: 'INFRAESTRUCTURA',
-      pdfUrl: '',
-    },
-  ];
+export class Inversiones implements OnInit {
+
+  private http = inject(HttpClient);
+  private API = 'http://localhost:3000/api/academic_papers';
+  private BASE = 'http://localhost:3000';
+
+  inversionesDocs = signal<any[]>([]);
+
+  ngOnInit() {
+    this.http.get<any[]>(`${this.API}/list`).subscribe({
+      next: data => {
+        const inversiones = data
+          .filter(d => d.status && d.type === 'Inversiones')
+          .map(d => ({
+            id: String(d.id),
+            label: d.title.toUpperCase(),
+            pdfUrl: d.pdf_url ? `${this.BASE}${d.pdf_url}` : ''
+          }));
+        this.inversionesDocs.set(inversiones);
+      }
+    });
+  }
 }
