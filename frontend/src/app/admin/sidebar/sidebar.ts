@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,6 +9,17 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './sidebar.css',
 })
 export class Sidebar {
+  private router = inject(Router);
+
+  logout() {
+
+    sessionStorage.removeItem('token');
+
+    this.router.navigate([
+      '/admin/login'
+    ]);
+  }
+  
   menuItems = [
     {
       label: 'Dashboard',

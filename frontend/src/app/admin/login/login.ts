@@ -6,6 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-admin-login',
@@ -21,14 +22,34 @@ export class AdminLogin implements AfterViewInit {
   username = signal('');
   password = signal('');
 
+  private auth = inject(AuthService);
+
   login() {
-    sessionStorage.setItem('admin', 'true');
-    this.router.navigate(['/admin/dashboard']);
+
+    this.auth.login(
+      this.username(),
+      this.password()
+    ).subscribe({
+
+      next: (res) => {
+
+        this.auth.saveToken(res.token);
+
+        this.router.navigate([
+          '/admin/dashboard'
+        ]);
+      },
+
+      error: (err) => {
+
+        console.error(err);
+
+        alert('Usuario o contraseña incorrectos');
+      }
+    });
   }
 
-  /* =========================
-     ANIMACIÓN CANVAS
-     ========================= */
+  /* ANIMACIÓN CANVAS */
 
   ngAfterViewInit() {
     this.startAnimation();

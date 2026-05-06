@@ -19,15 +19,11 @@
   <!-- Navigation -->
   <nav class="sidebar-nav">
     @for (item of menuItems; track item.route) {
-      <a
-        class="sidebar-item"
-        [routerLink]="item.route"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: item.route === '/admin/dashboard' }"
-      >
-        <i [class]="item.icon" class="sidebar-icon"></i>
-        <span class="sidebar-label">{{ item.label }}</span>
-      </a>
+    <a class="sidebar-item" [routerLink]="item.route" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: item.route === '/admin/dashboard' }">
+      <i [class]="item.icon" class="sidebar-icon"></i>
+      <span class="sidebar-label">{{ item.label }}</span>
+    </a>
     }
   </nav>
 
@@ -38,9 +34,9 @@
   <div class="sidebar-divider"></div>
 
   <!-- Footer -->
-  <div class="sidebar-footer">
-    <i class="fas fa-circle-user sidebar-icon"></i>
-    <span class="sidebar-label">Administrador</span>
-  </div>
+  <button class="logout-btn" (click)="logout()">
+    <i class="fas fa-right-from-bracket sidebar-icon"></i>
+    <span class="sidebar-label">Cerrar sesión</span>
+  </button>
 
 </aside>

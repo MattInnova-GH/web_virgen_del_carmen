@@ -43,6 +43,7 @@ app.use('/api', appRoutes.NewsRoutes);
 app.use('/api', appRoutes.PressReleasesRoutes);
 app.use('/api', appRoutes.UsersRoutes);
 app.use('/api', appRoutes.AcademicPapersRoutes);
+app.use('/api', appRoutes.AuthRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 

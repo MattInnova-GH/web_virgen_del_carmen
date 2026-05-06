@@ -5,11 +5,8 @@ exports.createPressRelease = async (req, res) => {
     try {
         const { title, img_url, press_release, description } = req.body;
 
-        if (!title || !img_url) {
-            return res.status(400).json({
-                error: 'Completo todos los campos.'
-            });
-        }
+        if (!title || !img_url)
+            return res.status(400).json({error: 'Completo todos los campos.'});
 
         const newPressRelease = await db.PressReleases.create({
             title,

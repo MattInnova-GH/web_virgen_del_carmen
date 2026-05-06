@@ -6,6 +6,7 @@ const PressReleasesRoutes = require('./press_releases.routes');
 const UsersRoutes = require('./users.routes');
 const InvestigationsRoutes = require('./investigations.routes');
 const AcademicPapersRoutes = require('./academic_papers.routes');
+const AuthRoutes = require('./auth.routes');
 
 module.exports = {
     NewsRoutes,
@@ -15,5 +16,6 @@ module.exports = {
     PressReleasesRoutes,
     UsersRoutes,
     InvestigationsRoutes,
-    AcademicPapersRoutes
+    AcademicPapersRoutes,
+    AuthRoutes
 }

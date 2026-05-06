@@ -30,7 +30,7 @@ import { Servicios } from './pages/servicios/servicios';
 import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 import { Estadisticas } from './pages/estadisticas/estadisticas';
 import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
-import { authGuard } from './guards/auth.guard';
+import { authGuard } from './core/auth/auth.guard';
 
 export const routes: Routes = [
   { path: 'admin/login', component: AdminLogin, title: 'Admin — Login' },
