@@ -1,0 +1,512 @@
+/* ===========================
+   HERO
+   =========================== */
+.repo-hero {
+  background-image: url('/images/banner-hero-nosotros.png');
+  background-size: cover;
+  background-position: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.repo-hero__content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.repo-hero__content p {
+  font-size: 0.95rem;
+  color: #323f7c;
+}
+
+/* ===========================
+   CONTENEDOR PRINCIPAL
+   =========================== */
+.repo-main {
+  background: #f5f7fb;
+  padding: 52px 20px 72px;
+  min-height: 60vh;
+}
+
+.repo-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ===========================
+   LOADING / EMPTY
+   =========================== */
+.repo-loading,
+.repo-empty {
+  text-align: center;
+  padding: 80px 0;
+  color: #6c757d;
+}
+
+.repo-spinner {
+  width: 42px;
+  height: 42px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #323f7c;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.repo-empty i {
+  font-size: 3rem;
+  color: #c4cfe0;
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* ===========================
+   TARJETAS DESTACADAS
+   Grid 2 columnas, cada tarjeta:
+   - fecha arriba a la derecha
+   - fila: [logo cuadrado izq] [contenido der]
+   =========================== */
+.repo-featured-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 36px;
+}
+
+.repo-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 2px 10px rgba(50, 63, 124, 0.07);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  padding: 0;
+}
+
+.repo-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(50, 63, 124, 0.13);
+}
+
+/* Fecha arriba a la derecha */
+.repo-card__date {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 16px 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #8e9bb5;
+  letter-spacing: 0.3px;
+}
+
+/* Fila: logo izq + contenido der */
+.repo-card__row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  flex: 1;
+  padding: 14px 18px 20px;
+}
+
+/* Logo cuadrado izquierda */
+.repo-card__logo {
+  width: 102px;
+  min-width: 92px;
+  height: 92px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 18px;
+  border-radius: 6px;
+  padding: 6px;
+}
+
+.repo-card__logo img {
+  width: auto;
+  height: auto;
+  max-width: 200%;
+  max-height: 200%;
+  display: block;
+}
+
+/* Contenido derecha */
+.repo-card__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.repo-card__title {
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #1a2560;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.repo-card__author {
+  font-size: 0.8rem;
+  color: #f28c1b;
+  font-weight: 600;
+  margin: 0;
+}
+
+.repo-card__excerpt {
+  font-size: 0.83rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 2px 0 8px;
+}
+
+/* ===========================
+   DIVISOR
+   =========================== */
+.repo-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 4px 0 24px;
+}
+
+.repo-divider::before,
+.repo-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #d1dae8;
+}
+
+.repo-divider span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #323f7c;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+/* ===========================
+   LISTA DE PUBLICACIONES
+   Cada ítem: [cuerpo izq flex-1] [fecha derecha]
+   =========================== */
+.repo-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.repo-list__item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  transition: background 0.18s ease;
+}
+
+.repo-list__item:first-child {
+  border-top: 1px solid #e2e8f0;
+  border-radius: 10px 10px 0 0;
+}
+
+.repo-list__item:last-child {
+  border-radius: 0 0 10px 10px;
+}
+
+.repo-list__item:only-child {
+  border-radius: 10px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.repo-list__item:hover {
+  background: #f8faff;
+}
+
+/* Izquierda: título + autor + resumen */
+.repo-list__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.repo-list__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a2560;
+  line-height: 1.45;
+  margin: 0;
+}
+
+.repo-list__author {
+  font-size: 0.8rem;
+  color: #f28c1b;
+  font-weight: 600;
+  margin: 0;
+}
+
+.repo-list__excerpt {
+  font-size: 0.82rem;
+  color: #4a5568;
+  line-height: 1.55;
+  margin: 2px 0 8px;
+}
+
+/* Derecha: fecha */
+.repo-list__date {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #8e9bb5;
+  white-space: nowrap;
+  padding-top: 2px;
+  letter-spacing: 0.3px;
+}
+
+/* ===========================
+   GRUPOS DE BOTONES
+   =========================== */
+.repo-card__actions,
+.repo-list__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* Botón Ver más (detalle) */
+.btn-detalle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: #323f7c;
+  border: 2px solid #323f7c;
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-detalle:hover {
+  background: #323f7c;
+  color: #ffffff;
+}
+
+.btn-detalle--sm {
+  padding: 5px 12px;
+  font-size: 0.76rem;
+}
+
+/* ===========================
+   PAGINACIÓN
+   =========================== */
+.repo-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.page-btn {
+  min-width: 38px;
+  height: 38px;
+  padding: 0 10px;
+  border: 2px solid #d1dae8;
+  background: #ffffff;
+  color: #323f7c;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-btn:hover:not(:disabled) {
+  border-color: #323f7c;
+  background: #eef1fb;
+}
+
+.page-btn--active {
+  background: #323f7c;
+  color: #ffffff;
+  border-color: #323f7c;
+}
+
+.page-btn--active:hover {
+  background: #f28c1b;
+  border-color: #f28c1b;
+}
+
+.page-btn--nav {
+  font-size: 0.78rem;
+}
+
+.page-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+/* ===========================
+   BOTONES PDF
+   =========================== */
+.btn-pdf {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #323f7c;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  align-self: flex-start;
+}
+
+.btn-pdf:hover {
+  background: #f28c1b;
+  transform: translateY(-1px);
+}
+
+.btn-pdf--sm {
+  padding: 5px 12px;
+  font-size: 0.76rem;
+}
+
+/* ===========================
+   VISOR PDF (OVERLAY)
+   =========================== */
+.pdf-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 44, 0.75);
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(3px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.pdf-modal {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 880px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(10, 15, 44, 0.35);
+}
+
+.pdf-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: #323f7c;
+  color: #ffffff;
+  gap: 12px;
+}
+
+.pdf-modal__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pdf-modal__close {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #ffffff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.pdf-modal__close:hover {
+  background: #f28c1b;
+}
+
+.pdf-modal__iframe {
+  flex: 1;
+  width: 100%;
+  border: none;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .repo-hero { padding: 60px 15px; }
+  .repo-hero__content h1 { font-size: 2.2rem; }
+
+  .repo-featured-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .repo-list__item {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .repo-list__date {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 480px) {
+  .repo-hero__content h1 { font-size: 1.8rem; }
+
+  .repo-card__logo {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    padding: 6px;
+  }
+}

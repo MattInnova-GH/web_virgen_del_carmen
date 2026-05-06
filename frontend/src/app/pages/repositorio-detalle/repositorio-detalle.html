@@ -1,0 +1,91 @@
+<!-- Loading -->
+@if (loading()) {
+  <div class="det-loading">
+    <div class="det-spinner"></div>
+    <p>Cargando documento...</p>
+  </div>
+}
+
+<!-- No encontrado -->
+@if (!loading() && notFound()) {
+  <div class="det-notfound">
+    <i class="fas fa-file-excel"></i>
+    <h2>Documento no encontrado</h2>
+    <a routerLink="/repositorio" class="btn-back">
+      <i class="fas fa-arrow-left"></i> Volver al Repositorio
+    </a>
+  </div>
+}
+
+<!-- Contenido -->
+@if (!loading() && investigacion()) {
+  <div class="det-wrap">
+
+    <!-- Encabezado / portada -->
+    <header class="det-header">
+      <div class="det-header__inner">
+
+        <div class="det-header__logo">
+          <img src="/images/Logo.png" alt="Logo IESPP" />
+        </div>
+
+        <div class="det-header__meta">
+          <span class="det-badge">Investigación</span>
+          <h1 class="det-header__title">{{ investigacion().title }}</h1>
+
+          <div class="det-header__info">
+            @if (investigacion().author) {
+              <span><i class="fas fa-user-circle"></i> {{ investigacion().author }}</span>
+            }
+            @if (investigacion().publication_date) {
+              <span><i class="fas fa-calendar-alt"></i> {{ investigacion().publication_date | date:'dd/MM/yyyy' }}</span>
+            }
+          </div>
+
+          @if (investigacion().description) {
+            <p class="det-header__desc">{{ investigacion().description }}</p>
+          }
+        </div>
+
+      </div>
+
+      <a routerLink="/repositorio" class="btn-back-link">
+        <i class="fas fa-arrow-left"></i> Volver al Repositorio
+      </a>
+    </header>
+
+    <!-- Cuerpo -->
+    <main class="det-body">
+      <div class="det-body__inner">
+
+        <!-- Columna izquierda: contenido -->
+        <section class="det-content">
+          <h2 class="det-section-title">
+            <i class="fas fa-align-left"></i> Resumen / Contenido
+          </h2>
+          @if (safeContent()) {
+            <div class="det-content__html" [innerHTML]="safeContent()"></div>
+          } @else {
+            <p class="det-content__empty">Sin contenido disponible.</p>
+          }
+        </section>
+
+        <!-- Columna derecha: PDF -->
+        @if (safePdfUrl()) {
+          <aside class="det-pdf">
+            <h2 class="det-section-title">
+              <i class="fas fa-file-pdf"></i> Documento PDF
+            </h2>
+            <iframe
+              class="det-pdf__iframe"
+              [src]="safePdfUrl()"
+              frameborder="0"
+            ></iframe>
+          </aside>
+        }
+
+      </div>
+    </main>
+
+  </div>
+}

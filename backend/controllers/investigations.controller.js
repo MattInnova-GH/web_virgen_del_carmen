@@ -11,8 +11,10 @@ exports.createInvestigation = async (req, res) => {
 
         let pdf_url = null;
 
-        if (req.file)
-            pdf_url = `/pdf/${req.file.filename}`;
+        if (req.file) {
+            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
+            pdf_url = `${relDir}/${req.file.filename}`;
+        }
 
         const newInvestigation = await db.Investigations.create({
             title,
@@ -46,6 +48,19 @@ exports.getInvestigations = async (req, res) => {
     }
 }
 
+exports.getInvestigationById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const investigation = await db.Investigations.findOne({ where: { id, status: true } });
+        if (!investigation)
+            return res.status(404).json({ message: 'Investigación no encontrada.' });
+        return res.status(200).json(investigation);
+    } catch (error) {
+        console.error(error.message);
+        return res.status(500).json({ message: 'Error interno del servidor.' });
+    }
+};
+
 exports.deleteInvestigations = async (req, res) => {
     try {
         const { id } = req.params;
@@ -76,9 +91,10 @@ exports.updateInvestigation = async (req, res) => {
         if (!investigations)
             return res.status(404).json({ message: 'Investigación no encontrada.' });
 
-        if (req.file){
+        if (req.file) {
             deleteFile(investigations.pdf_url);
-            investigations.pdf_url = `/pdf/${req.file.filename}`;
+            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
+            investigations.pdf_url = `${relDir}/${req.file.filename}`;
         }
 
         investigations.title = title;

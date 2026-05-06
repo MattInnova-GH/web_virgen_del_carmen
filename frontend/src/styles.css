@@ -1,5 +1,17 @@
 @import 'quill/dist/quill.snow.css';
 
+/* === Override estilos inline de Quill en la vista pública === */
+.det-content__html * {
+  color: #2d3748 !important;
+  background-color: transparent !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+}
+
+.det-content__html p {
+  margin-bottom: 12px;
+}
+
 * {
   margin: 0;
   padding: 0;
