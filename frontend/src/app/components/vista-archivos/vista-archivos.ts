@@ -1,4 +1,4 @@
-import { Component, signal, input, inject } from '@angular/core';
+import { Component, signal, input, inject, effect } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { PdfDocument } from '../models/pdf-document';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -18,8 +18,9 @@ export class VistaArchivos {
   private sanitizer = inject(DomSanitizer);
 
   constructor() {
-    setTimeout(() => {
+    effect(() => {
       const docs = this.documents();
+
       if (docs.length) {
         this.activeId.set(docs[0].id);
       }

@@ -20,9 +20,8 @@
         <span class="seccion-titulo">{{ type }}</span>
         <span class="seccion-badge">{{ groupedDocs()[type].length }}</span>
       </div>
-      <i class="fas seccion-chevron"
-         [class.fa-chevron-down]="!isSectionOpen(type)"
-         [class.fa-chevron-up]="isSectionOpen(type)">
+      <i class="fas seccion-chevron" [class.fa-chevron-down]="!isSectionOpen(type)"
+        [class.fa-chevron-up]="isSectionOpen(type)">
       </i>
     </button>
 
@@ -154,9 +153,8 @@
         </div>
 
         <div class="editor-section">
-          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow"
-            class="full-editor" [class.editor-dark]="editorTheme() === 'dark'"
-            [class.editor-light]="editorTheme() === 'light'">
+          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
           </quill-editor>
         </div>
       </div>

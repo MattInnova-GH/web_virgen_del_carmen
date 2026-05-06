@@ -36,15 +36,25 @@ exports.getNews = async(req, res) => {
 
 exports.deleteNews = async (req, res) => {
     try {
-        const {id} = req.params;
+        const {id, del} = req.params;
+        let fmessage = '';
         const news = await db.News.findOne({
-            where: {id, status: true},
+            where: {id}
         });
         if (!news)
             return res.status(404).json({message: 'Noticia no encontrada.'});
 
-        await news.update({status: false});
-        return res.status(200).json({message: 'Noticia desactivada correctamente.'});
+        if (del === '0') {
+            await news.update({ status: false });
+            fmessage = 'Noticia archivada/desactivada correctamente.'
+        } else if (del === '1') {
+            await news.destroy();
+            fmessage = 'Noticia eliminada correctamente.'
+        } else {
+            return res.status(400).json({ message: 'Tipo de eliminación no válido.' });
+        }
+
+        return res.status(200).json({message: fmessage});
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({

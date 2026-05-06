@@ -40,7 +40,7 @@
               <i class="fas fa-pen"></i>
             </button>
 
-            <button class="btn-icon btn-delete" (click)="delete(com.id)">
+            <button class="btn-icon btn-delete" (click)="openDeleteModal(com.id)">
               <i class="fas fa-trash"></i>
             </button>
           </td>
@@ -127,6 +127,49 @@
   @if (imageViewer()) {
   <div class="image-viewer" (click)="closeImageViewer()">
     <img [src]="formData.img_url" (click)="$event.stopPropagation()">
+  </div>
+  }
+
+  @if (deleteModal()) {
+  <div class="modal-backdrop" (click)="closeDeleteModal()">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+
+      <div class="modal-header">
+        <h2>Eliminar Comunicado</h2>
+
+        <div class="header-actions">
+          <button class="btn-help" (click)="showTooltip()">
+            ?
+          </button>
+
+          <button class="close-btn" (click)="closeDeleteModal()">×</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <p>¿Qué deseas hacer con este comunicado?</p>
+
+        @if (tooltipVisible()) {
+        <div class="tooltip-box">
+          Desactivar: Los datos no serán visibles en el portal público, pero aún se conservan.<br>
+          Eliminar: Los datos se borran definitivamente.
+        </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeDeleteModal()">Cancelar</button>
+
+        <button class="btn-warning" (click)="deleteAction('0')">
+          Desactivar
+        </button>
+
+        <button class="btn-danger" (click)="deleteAction('1')">
+          Eliminar
+        </button>
+      </div>
+
+    </div>
   </div>
   }
 

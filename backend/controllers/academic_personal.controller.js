@@ -47,15 +47,26 @@ exports.getAcademicPersonal = async (req, res) => {
 
 exports.deleteAcademicPersonal = async (req, res) => {
     try {
-        const {id} = req.params;
+        const {id, del} = req.params;
+        let fmessage = '';
         const academicPersonal = await db.AcademicPersonal.findOne({
-            where: {id, status: true},
+            where: {id}
         });
+        
         if (!academicPersonal)
             return res.status(404).json({message: 'Personal académico no encontrado.'});
 
-        await academicPersonal.update({status: false});
-        return res.status(200).json({message: 'Datos de personal académico desactivados correctamente.'});
+        if (del === '0') {
+            await academicPersonal.update({ status: false });
+            fmessage = 'Personal académico archivado/desactivado correctamente.'
+        } else if (del === '1') {
+            await academicPersonal.destroy();
+            fmessage = 'Personal académico eliminado correctamente.'
+        } else {
+            return res.status(400).json({ message: 'Tipo de eliminación no válido.' });
+        }
+
+        return res.status(200).json({message: fmessage});
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({

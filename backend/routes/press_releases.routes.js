@@ -5,6 +5,6 @@ const PressReleasesControllers = require('../controllers/press_releases.controll
 router.post('/press_releases/create', PressReleasesControllers.createPressRelease);
 router.get('/press_releases/list', PressReleasesControllers.getPressRelease);
 router.put('/press_releases/update/:id', PressReleasesControllers.updatePressRelease);
-router.delete('/press_releases/delete/:id', PressReleasesControllers.deletePressReleases);
+router.delete('/press_releases/delete/:id/:del', PressReleasesControllers.deletePressReleases);
 
 module.exports = router;

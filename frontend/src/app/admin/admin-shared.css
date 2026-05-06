@@ -194,3 +194,54 @@
   display: flex;
   gap: 8px;
 }
+
+/*---Modal de eliminación---*/
+.confirm-modal {
+  width: 400px;
+  max-width: 90%;
+}
+
+/* botones */
+.btn-warning {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* help button */
+.btn-help {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+
+  background: #3b82f6;
+  color: white;
+  font-weight: bold;
+}
+
+/* tooltip */
+.tooltip-box {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 12px;
+
+  background: rgba(0,0,0,0.8);
+  color: white;
+
+  animation: fadeIn 0.2s ease;
+}

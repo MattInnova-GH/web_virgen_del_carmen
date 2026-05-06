@@ -19,6 +19,10 @@ export class AdminComunicados implements OnInit {
 
   comunicados = signal<any[]>([]);
 
+  deleteModal = signal(false);
+  deleteTargetId = signal<number | null>(null);
+  tooltipVisible = signal(false);
+
   showModal = signal(false);
   isEditMode = signal(false);
 
@@ -34,9 +38,7 @@ export class AdminComunicados implements OnInit {
     this.loadData();
   }
 
-  // =========================
-  // DATA
-  // =========================
+  // Datos
   loadData() {
     this.http.get<any[]>(`${this.apiUrl}/list`).subscribe({
       next: (data) => {
@@ -55,9 +57,7 @@ export class AdminComunicados implements OnInit {
     });
   }
 
-  // =========================
-  // MODAL
-  // =========================
+  // Modal Creación/Actualización
   openCreateModal() {
     this.isEditMode.set(false);
     this.resetForm();
@@ -92,9 +92,7 @@ export class AdminComunicados implements OnInit {
     };
   }
 
-  // =========================
-  // CRUD
-  // =========================
+  // Creación, Lectura y Actualización
   save() {
     if (this.isEditMode()) {
       this.update();
@@ -123,15 +121,7 @@ export class AdminComunicados implements OnInit {
     });
   }
 
-  delete(id: number) {
-    if (!confirm('¿Eliminar comunicado?')) return;
-
-    this.http.delete(`${this.apiUrl}/delete/${id}`).subscribe({
-      next: () => this.loadData(),
-      error: err => console.error(err)
-    });
-  }
-
+  // Visualizador de Imagen
   imageViewer = signal(false);
 
   openImageViewer(event: Event) {
@@ -143,6 +133,7 @@ export class AdminComunicados implements OnInit {
     this.imageViewer.set(false);
   }
 
+  // Editor Quill
   editorTheme = signal<'dark' | 'light'>('dark');
 
   toggleEditorTheme() {
@@ -161,5 +152,38 @@ export class AdminComunicados implements OnInit {
       ['clean']
     ]
   };
+
+  // Modal de Eliminación
+  openDeleteModal(id: number) {
+    this.deleteTargetId.set(id);
+    this.deleteModal.set(true);
+  }
+
+  deleteAction(del: '0' | '1') {
+    const id = this.deleteTargetId();
+
+    if (!id) return;
+
+    this.http.delete(`${this.apiUrl}/delete/${id}/${del}`).subscribe({
+      next: () => {
+        this.loadData();
+        this.closeDeleteModal();
+      },
+      error: err => console.error(err)
+    });
+  }
+
+  closeDeleteModal() {
+    this.deleteModal.set(false);
+    this.deleteTargetId.set(null);
+  }
+
+  showTooltip() {
+    this.tooltipVisible.set(true);
+
+    setTimeout(() => {
+      this.tooltipVisible.set(false);
+    }, 3000);
+  }
 
 }

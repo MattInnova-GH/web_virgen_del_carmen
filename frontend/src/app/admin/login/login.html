@@ -1,0 +1,28 @@
+<div class="login-container">
+
+  <!-- Fondo animado -->
+  <canvas id="particle-canvas" class="bg-canvas"></canvas>
+
+  <!-- Capa de contenido -->
+  <div class="login-content">
+
+    <div class="login-box">
+      <h2>Administrador</h2>
+
+      <div class="input-group">
+        <input [(ngModel)]="username" placeholder="Usuario">
+      </div>
+
+      <div class="input-group">
+        <input [(ngModel)]="password" type="password" placeholder="Contraseña">
+      </div>
+
+      <button (click)="login()">
+        Iniciar sesión
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

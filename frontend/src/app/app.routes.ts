@@ -8,6 +8,7 @@ import { AdminTrayectoria } from './admin/trayectoria/trayectoria';
 import { AdminContactos } from './admin/contactos/contactos';
 import { AdminUsuarios } from './admin/usuarios/usuarios';
 import { AdminDocumentos } from './admin/documentos/documentos';
+import { AdminLogin } from './admin/login/login';
 import { Inicio } from './pages/inicio/inicio';
 import { Nosotros } from './pages/nosotros/nosotros';
 import { Noticias } from './pages/noticias/noticias';
@@ -29,11 +30,14 @@ import { Servicios } from './pages/servicios/servicios';
 import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 import { Estadisticas } from './pages/estadisticas/estadisticas';
 import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
+  { path: 'admin/login', component: AdminLogin, title: 'Admin — Login' },
   {
     path: 'admin',
     component: AdminLayout,
+    canActivate: [authGuard],
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: Dashboard, title: 'Admin — Dashboard' },
