@@ -31,6 +31,7 @@ import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 import { Estadisticas } from './pages/estadisticas/estadisticas';
 import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
 import { authGuard } from './core/auth/auth.guard';
+import { PublicLayout } from './layout/public-layout/public-layout';
 
 export const routes: Routes = [
   { path: 'admin/login', component: AdminLogin, title: 'Admin — Login' },
@@ -51,26 +52,32 @@ export const routes: Routes = [
       { path: 'documentos', component: AdminDocumentos, title: 'Admin - Documentos' }
     ],
   },
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
-  { path: 'inicio', component: Inicio, title: 'Inicio' },
-  { path: 'nosotros', component: Nosotros, title: 'Nosotros' },
-  { path: 'noticias', component: Noticias, title: 'Noticias' },
-  { path: 'noticias/:id', component: NoticiaDetalle, title: 'Detalle Noticia', data: { tipo: 'noticias' } },
-  { path: 'comunicado/:id', component: NoticiaDetalle, title: 'Detalle Comunicado', data: { tipo: 'comunicado' } },
-  { path: 'programas', component: Programas, title: 'Programas' },
-  { path: 'admision', component: Admision, title: 'Admision' },
-  { path: 'transparencia', component: Transparencia, title: 'Transparencia' },
-  { path: 'becas', component: BecasYCreditos, title: 'Becas y Créditos' },
-  { path: 'costos', component: Costos, title: 'Costos' },
-  { path: 'reglamentos', component: Reglamentos, title: 'Reglamentos' },
-  { path: 'inversiones', component: Inversiones, title: 'Inversiones' },
-  { path: 'procedimientos', component: Procedimientos, title: 'Procedimientos' },
-  { path: 'horarios', component: Horarios, title: 'Horarios' },
-  { path: 'psicopedagogico', component: Psicopedagogico, title: 'Soporte Psicopedagógico' },
-  { path: 'servicios', component: Servicios, title: 'Servicios' },
-  { path: 'soporte-medico', component: SoporteMedico, title: 'Soporte Médico' },
-  { path: 'servicio-social', component: ServicioSocial, title: 'Servicio Social' },
-  { path: 'mesa-de-partes', component: MesaDePartes, title: 'Mesa de Partes Virtual' },
-  { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento' },
-  { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
+  {
+    path: '',
+    component: PublicLayout,
+    children: [
+      { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+      { path: 'inicio', component: Inicio, title: 'Inicio' },
+      { path: 'nosotros', component: Nosotros, title: 'Nosotros' },
+      { path: 'noticias', component: Noticias, title: 'Noticias' },
+      { path: 'noticias/:id', component: NoticiaDetalle, title: 'Detalle Noticia', data: { tipo: 'noticias' } },
+      { path: 'comunicado/:id', component: NoticiaDetalle, title: 'Detalle Comunicado', data: { tipo: 'comunicado' } },
+      { path: 'programas', component: Programas, title: 'Programas' },
+      { path: 'admision', component: Admision, title: 'Admision' },
+      { path: 'transparencia', component: Transparencia, title: 'Transparencia' },
+      { path: 'becas', component: BecasYCreditos, title: 'Becas y Créditos' },
+      { path: 'costos', component: Costos, title: 'Costos' },
+      { path: 'reglamentos', component: Reglamentos, title: 'Reglamentos' },
+      { path: 'inversiones', component: Inversiones, title: 'Inversiones' },
+      { path: 'procedimientos', component: Procedimientos, title: 'Procedimientos' },
+      { path: 'horarios', component: Horarios, title: 'Horarios' },
+      { path: 'psicopedagogico', component: Psicopedagogico, title: 'Soporte Psicopedagógico' },
+      { path: 'servicios', component: Servicios, title: 'Servicios' },
+      { path: 'soporte-medico', component: SoporteMedico, title: 'Soporte Médico' },
+      { path: 'servicio-social', component: ServicioSocial, title: 'Servicio Social' },
+      { path: 'mesa-de-partes', component: MesaDePartes, title: 'Mesa de Partes Virtual' },
+      { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento' },
+      { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
+    ]
+  }
 ];

@@ -89,17 +89,25 @@ exports.updateAcademicPaper = async (req, res) => {
 
 exports.deleteAcademicPaper = async (req, res) => {
     try {
-        const { id } = req.params;
-        const academicPaper = await db.AcademicPapers.findOne({
-            where: { id, status: true },
-        });
+        const { id, del } = req.params;
+        let fmessage = '';
+        const academicPaper = await db.AcademicPapers.findOne({ where: { id } });
         if (!academicPaper)
             return res.status(404).json({ message: 'Documento no encontrado.' });
 
         deleteFile(academicPaper.pdf_url);
 
-        await academicPaper.update({ status: false });
-        return res.status(200).json({ message: 'Documento desactivado correctamente.' });
+        if (del === '0') {
+            await academicPaper.update({ status: false });
+            fmessage = 'Documento archivado/desactivado correctamente.'
+        } else if (del === '1') {
+            await academicPaper.destroy();
+            fmessage = 'Documento eliminado correctamente.'
+        } else {
+            return res.status(400).json({ message: 'Tipo de eliminación no válido.' });
+        }
+
+        return res.status(200).json({ message: fmessage });
     } catch (e) {
         console.error(e.message);
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });

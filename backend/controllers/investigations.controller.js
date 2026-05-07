@@ -7,7 +7,7 @@ exports.createInvestigation = async (req, res) => {
         const { title, author, content, publication_date, description } = req.body;
 
         if (!title || !content)
-            return res.status(400).json({error: 'Complete los campos obligatorios.'});
+            return res.status(400).json({ error: 'Complete los campos obligatorios.' });
 
         let pdf_url = null;
 
@@ -26,7 +26,7 @@ exports.createInvestigation = async (req, res) => {
         return res.status(201).json(newInvestigation);
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'});
+        return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
 };
 
@@ -48,17 +48,26 @@ exports.getInvestigations = async (req, res) => {
 
 exports.deleteInvestigations = async (req, res) => {
     try {
-        const { id } = req.params;
-        const investigation = await db.Investigations.findOne({
-            where: { id, status: true },
-        });
+        const { id, del } = req.params;
+        let fmessage = '';
+
+        const investigation = await db.Investigations.findOne({ where: { id } });
         if (!investigation)
             return res.status(404).json({ message: 'Investigación no encontrada.' });
 
         deleteFile(investigation.pdf_url);
 
-        await investigation.update({ status: false });
-        return res.status(200).json({ message: 'Investigación desactivada correctamente.' });
+        if (del === '0') {
+            await investigation.update({ status: false });
+            fmessage = 'Investigación archivada/desactivada correctamente.'
+        } else if (del === '1') {
+            await investigation.destroy();
+            fmessage = 'Investigación eliminada correctamente.'
+        } else {
+            return res.status(400).json({ message: 'Tipo de eliminación no válido.' });
+        }
+        
+        return res.status(200).json({ message: fmessage });
     } catch (error) {
         console.error(error.message);
         return res.status(500).json({
@@ -76,7 +85,7 @@ exports.updateInvestigation = async (req, res) => {
         if (!investigations)
             return res.status(404).json({ message: 'Investigación no encontrada.' });
 
-        if (req.file){
+        if (req.file) {
             deleteFile(investigations.pdf_url);
             investigations.pdf_url = `/pdf/${req.file.filename}`;
         }

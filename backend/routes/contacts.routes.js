@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const ContactsControllers = require('../controllers/contacts.controller');
+const auth = require('../middlewares/auth');
 
-router.post('/contacts/create', ContactsControllers.createContact);
+router.post('/contacts/create', auth, ContactsControllers.createContact);
 router.get('/contacts/list', ContactsControllers.getContacts);
-router.put('/contacts/update/:id', ContactsControllers.updateContacts);
-router.delete('/contacts/delete/:id',ContactsControllers.deleteContacts);
+router.put('/contacts/update/:id', auth, ContactsControllers.updateContacts);
+router.delete('/contacts/delete/:id', auth, ContactsControllers.deleteContacts);
 
 module.exports = router;

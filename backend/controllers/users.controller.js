@@ -39,9 +39,7 @@ exports.deleteUser = async (req, res) => {
         const { id, del } = req.params;
         let fmessage = '';
 
-        const user = await db.Users.findOne({
-            where: { id },
-        });
+        const user = await db.Users.findOne({ where: { id } });
 
         if (!user)
             return res.status(404).json({ message: 'Usuario no encontrado.' });
