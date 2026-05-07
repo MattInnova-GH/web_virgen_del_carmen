@@ -37,9 +37,11 @@ export class RepositorioDetalle implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (!id) { this.notFound.set(true); this.loading.set(false); return; }
 
-    this.http.get<any>(`${this.BASE}/api/investigations/list?id=${id}`).subscribe({
+    this.http.get<any[]>(`${this.BASE}/api/investigations/list?id=${id}`).subscribe({
       next: (data) => {
-        this.investigacion.set(data);
+        const item = Array.isArray(data) ? data[0] : data;
+        if (!item) { this.notFound.set(true); }
+        else { this.investigacion.set(item); }
         this.loading.set(false);
       },
       error: () => {
