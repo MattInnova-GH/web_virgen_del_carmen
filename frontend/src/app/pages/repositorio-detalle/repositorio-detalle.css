@@ -1,0 +1,331 @@
+/* ===========================
+   LOADING / NOT FOUND
+   =========================== */
+.det-loading,
+.det-notfound {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #6c757d;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.det-spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid #e2e8f0;
+  border-top-color: #323f7c;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.det-notfound i {
+  font-size: 3.5rem;
+  color: #c4cfe0;
+}
+
+.det-notfound h2 {
+  font-size: 1.3rem;
+  color: #1a2560;
+}
+
+/* ===========================
+   WRAPPER
+   =========================== */
+.det-wrap {
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* ===========================
+   HEADER / PORTADA
+   =========================== */
+.det-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 32px 20px 24px;
+}
+
+.det-header > .btn-back-link {
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.det-header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 28px;
+}
+
+.det-header__logo {
+  width: 90px;
+  min-width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.det-header__logo img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+}
+
+.det-header__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.det-badge {
+  display: inline-block;
+  background: #f28c1b;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 3px 10px;
+  border-radius: 4px;
+  align-self: flex-start;
+}
+
+.det-header__title {
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: #1a2560;
+  line-height: 1.35;
+  margin: 0;
+}
+
+.det-header__info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.det-header__info span {
+  font-size: 0.84rem;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.det-header__info i {
+  color: #f28c1b;
+  font-size: 0.78rem;
+}
+
+.det-header__desc {
+  font-size: 0.88rem;
+  color: #4a5568;
+  line-height: 1.6;
+  margin: 4px 0 0;
+  padding: 12px 16px;
+  background: #f8faff;
+  border-left: 3px solid #323f7c;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Botón volver (en header) — enlace de texto */
+.btn-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 20px 0 0;
+  color: #323f7c;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  background: transparent;
+  border: none;
+  padding: 0;
+  width: auto;
+}
+
+.btn-back-link:hover { color: #f28c1b; }
+
+/* Botón volver (not found) — botón sólido */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #323f7c;
+  color: #ffffff;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 20px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: auto;
+}
+
+.btn-back:hover { background: #f28c1b; }
+
+/* ===========================
+   CUERPO (contenido + pdf)
+   =========================== */
+.det-body {
+  padding: 36px 20px 60px;
+}
+
+.det-body__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 520px;
+  gap: 28px;
+  align-items: start;
+}
+
+/* ===========================
+   SECCIÓN TÍTULO
+   =========================== */
+.det-section-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #323f7c;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.det-section-title i { color: #f28c1b; }
+
+/* ===========================
+   CONTENIDO HTML (Quill)
+   =========================== */
+.det-content {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 28px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.det-content__html {
+  font-size: 0.92rem;
+  color: #2d3748;
+  line-height: 1.75;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* Forzar colores legibles sobre fondo claro (anula estilos inline de Quill) */
+.det-content__html *,
+.det-content__html p,
+.det-content__html span,
+.det-content__html strong,
+.det-content__html em,
+.det-content__html li {
+  color: #2d3748 !important;
+  background-color: transparent !important;
+  white-space: normal !important;
+  word-wrap: break-word !important;
+  max-width: 100% !important;
+}
+
+.det-content__html p { margin-bottom: 12px; }
+.det-content__html h1,
+.det-content__html h2,
+.det-content__html h3 {
+  color: #1a2560 !important;
+  margin: 20px 0 8px;
+}
+.det-content__html ul,
+.det-content__html ol {
+  padding-left: 24px;
+  margin-bottom: 12px;
+}
+
+.det-content__empty {
+  font-size: 0.88rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* ===========================
+   PDF ASIDE
+   =========================== */
+.det-pdf {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  position: sticky;
+  top: 20px;
+}
+
+.det-pdf__iframe {
+  width: 100%;
+  height: 680px;
+  border: none;
+  border-radius: 6px;
+  background: #f0f4fa;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 900px) {
+  .det-body__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .det-pdf {
+    position: static;
+  }
+
+  .det-pdf__iframe {
+    height: 500px;
+  }
+}
+
+@media (max-width: 600px) {
+  .det-header__inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .det-header__info {
+    justify-content: center;
+  }
+
+  .det-badge { align-self: center; }
+
+  .det-header__title { font-size: 1.25rem; }
+
+  .det-pdf__iframe { height: 380px; }
+}

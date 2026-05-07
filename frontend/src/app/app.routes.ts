@@ -29,6 +29,8 @@ import { Licenciamiento } from './pages/licenciamiento/licenciamiento';
 import { Servicios } from './pages/servicios/servicios';
 import { AdminInvestigaciones } from './admin/investigaciones/investigaciones';
 import { Estadisticas } from './pages/estadisticas/estadisticas';
+import { Repositorio } from './pages/repositorio/repositorio';
+import { RepositorioDetalle } from './pages/repositorio-detalle/repositorio-detalle';
 import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
 import { authGuard } from './core/auth/auth.guard';
 import { PublicLayout } from './layout/public-layout/public-layout';
@@ -78,6 +80,8 @@ export const routes: Routes = [
       { path: 'mesa-de-partes', component: MesaDePartes, title: 'Mesa de Partes Virtual' },
       { path: 'licenciamiento', component: Licenciamiento, title: 'Licenciamiento' },
       { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
+      { path: 'repositorio', component: Repositorio, title: 'Repositorio Institucional' },
+      { path: 'repositorio/:id', component: RepositorioDetalle, title: 'Detalle — Repositorio' },
     ]
   }
 ];

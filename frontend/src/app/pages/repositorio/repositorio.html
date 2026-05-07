@@ -1,0 +1,167 @@
+<!-- Hero -->
+<section class="repo-hero">
+  <div class="repo-hero__content">
+    <h1>Repositorio Institucional</h1>
+    <p>Instituto de Educación Superior Pedagógico Público Virgen del Carmen</p>
+  </div>
+</section>
+
+<!-- Cuerpo principal -->
+<main class="repo-main">
+  <div class="repo-container">
+
+    <!-- Estado de carga -->
+    @if (loading()) {
+      <div class="repo-loading">
+        <div class="repo-spinner"></div>
+        <p>Cargando publicaciones...</p>
+      </div>
+    }
+
+    <!-- Sin resultados -->
+    @if (!loading() && investigaciones().length === 0) {
+      <div class="repo-empty">
+        <i class="fas fa-database"></i>
+        <p>No hay publicaciones disponibles aún.</p>
+      </div>
+    }
+
+    <!-- ============================
+         TARJETAS DESTACADAS (2)
+         Logo izq | Contenido der | Fecha arriba derecha
+         ============================ -->
+    @if (destacados().length > 0) {
+      <div class="repo-featured-grid">
+        @for (inv of destacados(); track inv.id) {
+          <article class="repo-card">
+
+            <!-- Fecha arriba a la derecha -->
+            @if (inv.publication_date) {
+              <div class="repo-card__date">
+                {{ inv.publication_date | date:'yyyy-MM-dd' }}
+              </div>
+            }
+
+            <!-- Fila: logo + contenido -->
+            <div class="repo-card__row">
+
+              <!-- Logo cuadrado izquierda -->
+              <div class="repo-card__logo">
+                <img src="/images/Logo.png" alt="Logo IESPP Virgen del Carmen" />
+              </div>
+
+              <!-- Contenido derecha -->
+              <div class="repo-card__content">
+                <h2 class="repo-card__title">{{ inv.title }}</h2>
+                <p class="repo-card__author">{{ inv.author }}</p>
+                <p class="repo-card__excerpt">{{ excerpt(inv.content, 220) }}</p>
+
+                <div class="repo-card__actions">
+                  @if (inv.pdf_url) {
+                    <button class="btn-pdf" (click)="openPdf(inv, $event)">
+                      <i class="fas fa-file-pdf"></i> Ver PDF
+                    </button>
+                  }
+                  <a [routerLink]="['/repositorio', inv.id]" class="btn-detalle">
+                    <i class="fas fa-eye"></i> Ver más
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </article>
+        }
+      </div>
+    }
+
+    <!-- Divisor -->
+    @if (lista().length > 0) {
+      <div class="repo-divider">
+        <span>Todas las publicaciones</span>
+      </div>
+    }
+
+    <!-- ============================
+         LISTA DE PUBLICACIONES
+         Título izq | Fecha derecha
+         ============================ -->
+    @if (lista().length > 0) {
+      <ul class="repo-list">
+        @for (inv of lista(); track inv.id) {
+          <li class="repo-list__item">
+
+            <!-- Izquierda: título + autor + resumen -->
+            <div class="repo-list__body">
+              <h3 class="repo-list__title">{{ inv.title }}</h3>
+              <p class="repo-list__author">{{ inv.author }}</p>
+              <p class="repo-list__excerpt">{{ excerpt(inv.content, 160) }}</p>
+              <div class="repo-list__actions">
+                @if (inv.pdf_url) {
+                  <button class="btn-pdf btn-pdf--sm" (click)="openPdf(inv, $event)">
+                    <i class="fas fa-file-pdf"></i> Ver PDF
+                  </button>
+                }
+                <a [routerLink]="['/repositorio', inv.id]" class="btn-detalle btn-detalle--sm">
+                  <i class="fas fa-eye"></i> Ver más
+                </a>
+              </div>
+            </div>
+
+            <!-- Derecha: fecha -->
+            @if (inv.publication_date) {
+              <div class="repo-list__date">
+                {{ inv.publication_date | date:'yyyy-MM-dd' }}
+              </div>
+            }
+
+          </li>
+        }
+      </ul>
+
+      <!-- Paginación -->
+      @if (totalPages() > 1) {
+        <nav class="repo-pagination">
+          <button class="page-btn page-btn--nav"
+            [disabled]="currentPage() === 1"
+            (click)="goToPage(currentPage() - 1)">
+            <i class="fas fa-chevron-left"></i>
+          </button>
+
+          @for (p of pages(); track p) {
+            <button class="page-btn"
+              [class.page-btn--active]="p === currentPage()"
+              (click)="goToPage(p)">
+              {{ p }}
+            </button>
+          }
+
+          <button class="page-btn page-btn--nav"
+            [disabled]="currentPage() === totalPages()"
+            (click)="goToPage(currentPage() + 1)">
+            <i class="fas fa-chevron-right"></i>
+          </button>
+        </nav>
+      }
+    }
+
+  </div>
+</main>
+
+<!-- Visor PDF (lightbox) -->
+@if (pdfViewer()) {
+  <div class="pdf-overlay" (click)="closePdf()">
+    <div class="pdf-modal" (click)="$event.stopPropagation()">
+      <div class="pdf-modal__header">
+        <span class="pdf-modal__title">{{ pdfTitle() }}</span>
+        <button class="pdf-modal__close" (click)="closePdf()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <iframe
+        class="pdf-modal__iframe"
+        [src]="pdfViewer()"
+        frameborder="0"
+      ></iframe>
+    </div>
+  </div>
+}
