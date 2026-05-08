@@ -14,7 +14,7 @@ const News = sequelize.define('News', {
     },
     content: {
         type: DataTypes.TEXT,
-        allowNull: false
+        allowNull: true
     },
     img_url: {
         type: DataTypes.TEXT,

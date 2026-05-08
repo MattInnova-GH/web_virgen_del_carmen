@@ -17,7 +17,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Nombre</th>
+          <th>Nombres y Apellidos</th>
           <th>Correo Institucional</th>
           <th>Cargo</th>
           <th>Tipo</th>
@@ -45,11 +45,9 @@
             }
           </td>
 
-          <td>{{ p.grade }}</td>
+          <td>{{ p.position }}</td>
 
           <td>{{ p.type }}</td>
-
-
 
           <td>{{ p.year }}</td>
 
@@ -96,11 +94,14 @@
             <option value="Autoridad">Autoridad</option>
             <option value="Docente">Docente</option>
             <option value="Administrativo">Administrativo</option>
+            <option value="Complementario">Complementario</option>
           </select>
 
           <input [(ngModel)]="formData.institucional_email" placeholder="Correo Institucional">
 
-          <input [(ngModel)]="formData.grade" placeholder="Cargo">
+          <input [(ngModel)]="formData.position" placeholder="Cargo">
+
+          <input [(ngModel)]="formData.grade" placeholder="Grado (Abreviatura)">
 
           <input [(ngModel)]="formData.year" placeholder="Año">
 
