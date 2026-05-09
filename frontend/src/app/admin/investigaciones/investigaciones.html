@@ -5,10 +5,43 @@
       <h1 class="page-title">Investigaciones</h1>
       <p class="page-sub">Gestión de investigaciones académicas</p>
     </div>
-
     <button class="btn-add" (click)="openCreateModal()">
       <i class="fas fa-plus"></i> Agregar
     </button>
+  </div>
+
+  <!-- FILTROS -->
+  <div class="filtros-bar">
+
+    <select class="filtro-select"
+            [ngModel]="selectedYear()"
+            (ngModelChange)="selectedYear.set($event); onYearChange()">
+      <option value="">Todos los años</option>
+      @for (year of availableYears(); track year) {
+        <option [value]="year">{{ year }}</option>
+      }
+    </select>
+
+    <select class="filtro-select"
+            [disabled]="!selectedYear()"
+            [ngModel]="selectedMonth()"
+            (ngModelChange)="selectedMonth.set($event)">
+      <option value="">Todos los meses</option>
+      @for (month of availableMonths(); track month) {
+        <option [value]="month">{{ mesesNombre[month] }}</option>
+      }
+    </select>
+
+    <div class="filtro-search">
+      <i class="fas fa-search filtro-search-icon"></i>
+      <input
+        type="text"
+        placeholder="Buscar por título o autor..."
+        [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)"
+      />
+    </div>
+
   </div>
 
   <div class="admin-card">
@@ -26,28 +59,17 @@
       </thead>
 
       <tbody>
-        @for (i of investigaciones(); track i.id) {
+        @for (i of filteredInvestigaciones(); track i.id) {
         <tr>
-
           <td>{{ i.id }}</td>
 
-          <!-- PDF preview -->
           <td>
             <div class="pdf-thumb">
               @if (i.pdf_url) {
-              <div class="pdf-thumb">
-                @if (i.pdf_url) {
-
-                <iframe [src]="i.pdf_url"></iframe>
-
-                <button class="pdf-zoom-btn" (click)="openPdfViewer($event, i.pdf_url)">
-                  <i class="fas fa-expand"></i>
-                </button>
-
-                } @else {
-                <div class="no-preview">Sin PDF</div>
-                }
-              </div>
+              <iframe [src]="i.pdf_url"></iframe>
+              <button class="pdf-zoom-btn" (click)="openPdfViewer($event, i.pdf_url)">
+                <i class="fas fa-expand"></i>
+              </button>
               } @else {
               <div class="no-preview">Sin PDF</div>
               }
@@ -68,12 +90,18 @@
             <button class="btn-icon btn-edit" (click)="openEditModal(i)">
               <i class="fas fa-pen"></i>
             </button>
-
             <button class="btn-icon btn-delete" (click)="openDeleteModal(i.id)">
               <i class="fas fa-trash"></i>
             </button>
           </td>
+        </tr>
+        }
 
+        @if (filteredInvestigaciones().length === 0) {
+        <tr>
+          <td colspan="7" style="text-align:center; padding: 30px; color: #999;">
+            No se encontraron resultados.
+          </td>
         </tr>
         }
       </tbody>
@@ -84,7 +112,6 @@
   @if (showModal()) {
   <div class="modal-backdrop">
     <div class="modal modal-xl" (click)="$event.stopPropagation()">
-
       <div class="modal-header">
         <h2>{{ isEditMode() ? 'Editar Investigación' : 'Agregar Investigación' }}</h2>
         <div class="header-actions">
@@ -95,22 +122,17 @@
             <i class="fa-solid fa-moon"></i>
             }
           </button>
-
           <button class="close-btn" (click)="closeModal()">×</button>
         </div>
       </div>
 
       <div class="modal-body">
-
         <div class="form-grid-2">
-
           <div>
             <input [(ngModel)]="formData.title" placeholder="Título">
             <input [(ngModel)]="formData.author" placeholder="Autor">
             <input type="date" [(ngModel)]="formData.publication_date">
             <textarea [(ngModel)]="formData.description" placeholder="Descripción"></textarea>
-
-            <!-- FILE -->
             <div class="file-upload-wrapper">
               <label for="pdf-upload" class="custom-file-upload">
                 <i class="fas fa-cloud-upload-alt"></i>
@@ -120,33 +142,26 @@
             </div>
           </div>
 
-          <!-- PREVIEW PDF -->
           <div class="preview">
             <div class="pdf-preview-frame">
-
               @if (formData.pdf_url) {
-
               <iframe [src]="formData.pdf_url"></iframe>
-
               <button class="pdf-zoom-btn" (click)="openPdfViewer($event, formData.pdf_url)">
                 <i class="fas fa-expand"></i>
               </button>
-
               } @else {
               <div class="no-preview">Vista previa PDF</div>
               }
-
             </div>
           </div>
-
         </div>
 
         <div class="editor-section">
-          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
-            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
+          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow"
+            class="full-editor" [class.editor-dark]="editorTheme() === 'dark'"
+            [class.editor-light]="editorTheme() === 'light'">
           </quill-editor>
         </div>
-
       </div>
 
       <div class="modal-footer">
@@ -155,42 +170,32 @@
           {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
         </button>
       </div>
-
     </div>
   </div>
   }
 
   @if (pdfViewer()) {
   <div class="pdf-viewer" (click)="closePdfViewer()">
-
-    <iframe [src]="pdfViewer()" (click)="$event.stopPropagation()">
-    </iframe>
-
+    <iframe [src]="pdfViewer()" (click)="$event.stopPropagation()"></iframe>
   </div>
   }
 
   @if (deleteModal()) {
   <div class="modal-backdrop" (click)="closeDeleteModal()">
     <div class="modal confirm-modal" (click)="$event.stopPropagation()">
-
       <div class="modal-header">
-        <h2>Eliminar Comunicado</h2>
-
+        <h2>Eliminar Investigación</h2>
         <div class="header-actions">
-          <button class="btn-help" (click)="showTooltip()">
-            ?
-          </button>
-
+          <button class="btn-help" (click)="showTooltip()">?</button>
           <button class="close-btn" (click)="closeDeleteModal()">×</button>
         </div>
       </div>
 
       <div class="modal-body">
-        <p>¿Qué deseas hacer con este comunicado?</p>
-
+        <p>¿Qué deseas hacer con esta investigación?</p>
         @if (tooltipVisible()) {
         <div class="tooltip-box">
-          Advertencia: El archivo será elimanado en ambos casos, asegurese de hacer una copia de seguridad.<br>
+          Advertencia: El archivo será eliminado en ambos casos, asegúrese de hacer una copia de seguridad.<br>
           Desactivar: Los datos no serán visibles en el portal público, pero aún se conservan.<br>
           Eliminar: Los datos se borran definitivamente.
         </div>
@@ -199,16 +204,9 @@
 
       <div class="modal-footer">
         <button class="btn-cancel" (click)="closeDeleteModal()">Cancelar</button>
-
-        <button class="btn-warning" (click)="deleteAction('0')">
-          Desactivar
-        </button>
-
-        <button class="btn-danger" (click)="deleteAction('1')">
-          Eliminar
-        </button>
+        <button class="btn-warning" (click)="deleteAction('0')">Desactivar</button>
+        <button class="btn-danger" (click)="deleteAction('1')">Eliminar</button>
       </div>
-
     </div>
   </div>
   }

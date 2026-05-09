@@ -1,115 +1,123 @@
-<div class="admin-page">
+ <div class="admin-page">
 
   <div class="page-header">
     <div>
       <h1 class="page-title">Personal Académico</h1>
       <p class="page-sub">Gestión de autoridades y docentes</p>
     </div>
-
     <button class="btn-add" (click)="openCreateModal()">
       <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
-  <!-- TABLA -->
-  <div class="admin-card">
-    <table class="admin-table">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Nombres y Apellidos</th>
-          <th>Correo Institucional</th>
-          <th>Cargo</th>
-          <th>Tipo</th>
-          <th>Año</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
+  <!-- SECCIONES DESPLEGABLES -->
+  @for (type of sectionTypes; track type) {
+  <div class="seccion-card">
 
-      <tbody>
-        @for (p of personal(); track p.id) {
-        <tr>
+    <button class="seccion-header" (click)="toggleSection(type)">
+      <div class="seccion-header-left">
+        <i class="fas fa-users seccion-icon"></i>
+        <span class="seccion-titulo">{{ type }}</span>
+        <span class="seccion-badge">{{ groupedPersonal()[type].length }}</span>
+      </div>
+      <i class="fas seccion-chevron"
+         [class.fa-chevron-down]="!isSectionOpen(type)"
+         [class.fa-chevron-up]="isSectionOpen(type)">
+      </i>
+    </button>
 
-          <td>{{ p.id }}</td>
+    @if (isSectionOpen(type)) {
+    <div class="seccion-body">
 
-          <td class="td-title">
-            {{ p.full_name }}
-          </td>
+      @if (groupedPersonal()[type].length === 0) {
+      <p class="seccion-vacia">No hay personal en esta sección.</p>
+      } @else {
+      <div class="admin-card">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nombres y Apellidos</th>
+              <th>Correo Institucional</th>
+              <th>Cargo</th>
+              <th>Tipo</th>
+              <th>Año</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of groupedPersonal()[type]; track p.id) {
+            <tr>
+              <td>{{ p.id }}</td>
 
-          <td>
-            @if (p.institucional_email) {
-            {{ p.institucional_email }}
-            } @else {
-            <span style="color:#777">—</span>
+              <td class="td-title">{{ p.full_name }}</td>
+
+              <td>
+                @if (p.institucional_email) {
+                {{ p.institucional_email }}
+                } @else {
+                <span style="color:#777">—</span>
+                }
+              </td>
+
+              <td>{{ p.position }}</td>
+              <td>{{ p.type }}</td>
+              <td>{{ p.year }}</td>
+
+              <td>
+                <span class="badge" [class.badge-blue]="p.status" [class.badge-orange]="!p.status">
+                  {{ p.status ? 'Activo' : 'Inactivo' }}
+                </span>
+              </td>
+
+              <td class="td-actions">
+                <button class="btn-icon btn-edit" (click)="openEditModal(p)">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button class="btn-icon btn-delete" (click)="openDeleteModal(p.id)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            </tr>
             }
-          </td>
+          </tbody>
+        </table>
+      </div>
+      }
 
-          <td>{{ p.position }}</td>
+    </div>
+    }
 
-          <td>{{ p.type }}</td>
-
-          <td>{{ p.year }}</td>
-
-          <td>
-            <span class="badge" [class.badge-blue]="p.status" [class.badge-orange]="!p.status">
-              {{ p.status ? 'Activo' : 'Inactivo' }}
-            </span>
-          </td>
-
-          <td class="td-actions">
-            <button class="btn-icon btn-edit" (click)="openEditModal(p)">
-              <i class="fas fa-pen"></i>
-            </button>
-
-            <button class="btn-icon btn-delete" (click)="openDeleteModal(p.id)">
-              <i class="fas fa-trash"></i>
-            </button>
-          </td>
-
-        </tr>
-        }
-      </tbody>
-    </table>
   </div>
+  }
 
+  <!-- MODAL (sin cambios) -->
   @if (showModal()) {
   <div class="modal-backdrop">
     <div class="modal">
-
       <div class="modal-header">
         <h2>{{ isEditMode() ? 'Editar Personal Académico' : 'Agregar Personal Académico' }}</h2>
         <button class="close-btn" (click)="closeModal()">×</button>
       </div>
 
       <div class="modal-body">
-
         <div class="form-grid">
-
           <input [(ngModel)]="formData.names" placeholder="Nombres">
-
           <input [(ngModel)]="formData.last_names" placeholder="Apellidos">
-
           <select [(ngModel)]="formData.type">
             <option value="Autoridad">Autoridad</option>
             <option value="Docente">Docente</option>
             <option value="Administrativo">Administrativo</option>
             <option value="Complementario">Complementario</option>
           </select>
-
           <input [(ngModel)]="formData.institucional_email" placeholder="Correo Institucional">
-
           <input [(ngModel)]="formData.position" placeholder="Cargo">
-
           <input [(ngModel)]="formData.grade" placeholder="Grado (Abreviatura)">
-
           <input [(ngModel)]="formData.year" placeholder="Año">
-
           <input [(ngModel)]="formData.img_url" placeholder="URL de imagen">
-
         </div>
 
-        <!-- preview -->
         <div class="preview">
           <div class="preview-frame">
             @if (formData.img_url) {
@@ -122,7 +130,6 @@
             }
           </div>
         </div>
-
       </div>
 
       <div class="modal-footer">
@@ -131,30 +138,24 @@
           {{ isEditMode() ? 'Actualizar' : 'Guardar' }}
         </button>
       </div>
-
     </div>
   </div>
   }
 
+  <!-- MODAL ELIMINAR (sin cambios) -->
   @if (deleteModal()) {
   <div class="modal-backdrop" (click)="closeDeleteModal()">
     <div class="modal confirm-modal" (click)="$event.stopPropagation()">
-
       <div class="modal-header">
-        <h2>Eliminar Comunicado</h2>
-
+        <h2>Eliminar Personal</h2>
         <div class="header-actions">
-          <button class="btn-help" (click)="showTooltip()">
-            ?
-          </button>
-
+          <button class="btn-help" (click)="showTooltip()">?</button>
           <button class="close-btn" (click)="closeDeleteModal()">×</button>
         </div>
       </div>
 
       <div class="modal-body">
-        <p>¿Qué deseas hacer con este comunicado?</p>
-
+        <p>¿Qué deseas hacer con este registro?</p>
         @if (tooltipVisible()) {
         <div class="tooltip-box">
           Desactivar: Los datos no serán visibles en el portal público, pero aún se conservan.<br>
@@ -165,16 +166,9 @@
 
       <div class="modal-footer">
         <button class="btn-cancel" (click)="closeDeleteModal()">Cancelar</button>
-
-        <button class="btn-warning" (click)="deleteAction('0')">
-          Desactivar
-        </button>
-
-        <button class="btn-danger" (click)="deleteAction('1')">
-          Eliminar
-        </button>
+        <button class="btn-warning" (click)="deleteAction('0')">Desactivar</button>
+        <button class="btn-danger" (click)="deleteAction('1')">Eliminar</button>
       </div>
-
     </div>
   </div>
   }

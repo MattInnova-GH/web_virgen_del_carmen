@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -15,7 +15,28 @@ export class AdminPersonal implements OnInit {
   apiUrl = 'http://localhost:3000/api/academic_personal';
 
   personal = signal<any[]>([]);
+// ===== SECCIONES DESPLEGABLES =====
+readonly sectionTypes = ['Autoridad', 'Docente', 'Administrativo', 'Complementario'];
 
+openSections = signal<Record<string, boolean>>({});
+
+toggleSection(type: string) {
+  this.openSections.update(prev => ({ ...prev, [type]: !prev[type] }));
+}
+
+isSectionOpen(type: string): boolean {
+  return !!this.openSections()[type];
+}
+
+groupedPersonal = computed(() => {
+  const all = this.personal();
+  const result: Record<string, any[]> = {};
+  for (const type of this.sectionTypes) {
+    result[type] = all.filter(p => p.type === type);
+  }
+  return result;
+});
+// ==================================
   showModal = signal(false);
   isEditMode = signal(false);
 

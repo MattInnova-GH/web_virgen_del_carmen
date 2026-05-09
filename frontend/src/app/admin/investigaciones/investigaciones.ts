@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
@@ -19,9 +19,57 @@ export class AdminInvestigaciones implements OnInit {
 
   investigaciones = signal<any[]>([]);
 
+  // ===== FILTROS =====
+  selectedYear  = signal<string>('');
+  selectedMonth = signal<string>('');
+  searchQuery   = signal<string>('');
+
+  readonly mesesNombre: Record<string, string> = {
+    '01': 'Enero', '02': 'Febrero', '03': 'Marzo',
+    '04': 'Abril', '05': 'Mayo', '06': 'Junio',
+    '07': 'Julio', '08': 'Agosto', '09': 'Septiembre',
+    '10': 'Octubre', '11': 'Noviembre', '12': 'Diciembre'
+  };
+
+  availableYears = computed(() => {
+    const years = this.investigaciones()
+      .map(i => i.publication_date?.substring(0, 4))
+      .filter(Boolean);
+    return [...new Set(years)].sort((a, b) => b.localeCompare(a));
+  });
+
+  availableMonths = computed(() => {
+    const year = this.selectedYear();
+    if (!year) return [];
+    const months = this.investigaciones()
+      .filter(i => i.publication_date?.startsWith(year))
+      .map(i => i.publication_date?.substring(5, 7))
+      .filter(Boolean);
+    return [...new Set(months)].sort();
+  });
+
+  filteredInvestigaciones = computed(() => {
+    const year   = this.selectedYear();
+    const month  = this.selectedMonth();
+    const query  = this.searchQuery().toLowerCase().trim();
+
+    return this.investigaciones().filter(i => {
+      const matchYear  = !year  || i.publication_date?.startsWith(year);
+      const matchMonth = !month || i.publication_date?.substring(5, 7) === month;
+      const matchQuery = !query ||
+        i.title?.toLowerCase().includes(query) ||
+        i.author?.toLowerCase().includes(query);
+      return matchYear && matchMonth && matchQuery;
+    });
+  });
+
+  onYearChange() {
+    this.selectedMonth.set('');
+  }
+  // ===================
+
   showModal = signal(false);
   isEditMode = signal(false);
-
   selectedFile: File | null = null;
 
   formData: any = {
@@ -38,9 +86,6 @@ export class AdminInvestigaciones implements OnInit {
     this.loadData();
   }
 
-  // =========================
-  // DATA
-  // =========================
   loadData() {
     this.http.get<any[]>(`${this.API}/list`).subscribe({
       next: (data) => {
@@ -63,24 +108,15 @@ export class AdminInvestigaciones implements OnInit {
     });
   }
 
-  // =========================
-  // FILE
-  // =========================
   onFileSelected(event: any) {
     const file = event.target.files[0];
     if (!file) return;
-
     this.selectedFile = file;
-
-    // preview local
     this.formData.pdf_url = this.sanitizer.bypassSecurityTrustResourceUrl(
       URL.createObjectURL(file)
     );
   }
 
-  // =========================
-  // MODAL
-  // =========================
   openCreateModal() {
     this.isEditMode.set(false);
     this.resetForm();
@@ -89,7 +125,6 @@ export class AdminInvestigaciones implements OnInit {
 
   openEditModal(i: any) {
     this.isEditMode.set(true);
-
     this.formData = {
       id: i.id,
       title: i.title,
@@ -99,9 +134,7 @@ export class AdminInvestigaciones implements OnInit {
       description: i.description,
       pdf_url: i.pdf_url
     };
-
     this.selectedFile = null;
-
     this.showModal.set(true);
   }
 
@@ -111,82 +144,48 @@ export class AdminInvestigaciones implements OnInit {
 
   resetForm() {
     this.formData = {
-      id: null,
-      title: '',
-      author: '',
-      content: '',
-      publication_date: '',
-      description: '',
-      pdf_url: ''
+      id: null, title: '', author: '', content: '',
+      publication_date: '', description: '', pdf_url: ''
     };
     this.selectedFile = null;
   }
 
-  // =========================
-  // CRUD
-  // =========================
   save() {
-    if (this.isEditMode()) {
-      this.update();
-    } else {
-      this.create();
-    }
+    this.isEditMode() ? this.update() : this.create();
   }
 
   create() {
     const fd = new FormData();
-
     Object.keys(this.formData).forEach(key => {
-      if (key !== 'pdf_url') {
-        fd.append(key, this.formData[key] || '');
-      }
+      if (key !== 'pdf_url') fd.append(key, this.formData[key] || '');
     });
-
-    if (this.selectedFile) {
-      fd.append('file', this.selectedFile);
-    }
-
+    if (this.selectedFile) fd.append('file', this.selectedFile);
     this.http.post(`${this.API}/create`, fd).subscribe({
-      next: () => {
-        this.loadData();
-        this.closeModal();
-      },
+      next: () => { this.loadData(); this.closeModal(); },
       error: err => console.error(err)
     });
   }
 
   update() {
     const fd = new FormData();
-
     Object.keys(this.formData).forEach(key => {
-      if (key !== 'pdf_url') {
-        fd.append(key, this.formData[key] || '');
-      }
+      if (key !== 'pdf_url') fd.append(key, this.formData[key] || '');
     });
-
-    if (this.selectedFile) {
-      fd.append('file', this.selectedFile);
-    }
-
+    if (this.selectedFile) fd.append('file', this.selectedFile);
     this.http.put(`${this.API}/update/${this.formData.id}`, fd).subscribe({
-      next: () => {
-        this.loadData();
-        this.closeModal();
-      },
+      next: () => { this.loadData(); this.closeModal(); },
       error: err => console.error(err)
     });
   }
 
   delete(id: number) {
     if (!confirm('¿Desactivar investigación?')) return;
-
     this.http.delete(`${this.API}/delete/${id}`).subscribe({
       next: () => this.loadData(),
       error: err => console.error(err)
     });
   }
 
-  // QUILL
   editorTheme = signal<'dark' | 'light'>('dark');
 
   quillConfig = {
@@ -212,12 +211,10 @@ export class AdminInvestigaciones implements OnInit {
   }
 
   toggleEditorTheme() {
-    this.editorTheme.set(
-      this.editorTheme() === 'dark' ? 'light' : 'dark'
-    );
+    this.editorTheme.set(this.editorTheme() === 'dark' ? 'light' : 'dark');
   }
 
-  deleteModal = signal(false);
+  deleteModal    = signal(false);
   deleteTargetId = signal<number | null>(null);
   tooltipVisible = signal(false);
 
@@ -228,14 +225,9 @@ export class AdminInvestigaciones implements OnInit {
 
   deleteAction(del: '0' | '1') {
     const id = this.deleteTargetId();
-
     if (!id) return;
-
     this.http.delete(`${this.API}/delete/${id}/${del}`).subscribe({
-      next: () => {
-        this.loadData();
-        this.closeDeleteModal();
-      },
+      next: () => { this.loadData(); this.closeDeleteModal(); },
       error: err => console.error(err)
     });
   }
@@ -247,9 +239,6 @@ export class AdminInvestigaciones implements OnInit {
 
   showTooltip() {
     this.tooltipVisible.set(true);
-
-    setTimeout(() => {
-      this.tooltipVisible.set(false);
-    }, 3000);
+    setTimeout(() => this.tooltipVisible.set(false), 3000);
   }
 }
