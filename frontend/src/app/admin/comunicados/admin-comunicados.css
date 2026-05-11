@@ -354,3 +354,15 @@ input, textarea, select {
 ::ng-deep .ql-container {
   border: none;
 }
+/* Limitar texto del asunto */
+.td-title {
+  max-width: 600px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Fecha en una sola línea */
+.td-fecha {
+  white-space: nowrap;
+}

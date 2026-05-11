@@ -205,3 +205,75 @@ input, select {
   color: #f97316;
   border: 1px solid rgba(249,115,22,0.3);
 }
+/* ===== SECCIONES DESPLEGABLES ===== */
+.seccion-card {
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.seccion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.seccion-header:hover {
+  background: #f5f7ff;
+}
+
+.seccion-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.seccion-icon {
+  color: #ff9100;
+  font-size: 1.1rem;
+}
+
+.seccion-titulo {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #323f7c;
+}
+
+.seccion-badge {
+  background: #eef0fb;
+  color: #323f7c;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.seccion-chevron {
+  color: #323f7c;
+  font-size: 0.9rem;
+}
+
+.seccion-body {
+  padding: 0 20px 20px;
+  animation: slideDown 0.2s ease;
+}
+
+.seccion-vacia {
+  color: #999;
+  font-size: 0.9rem;
+  padding: 12px 0;
+  text-align: center;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
