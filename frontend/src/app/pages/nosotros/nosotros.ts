@@ -17,6 +17,7 @@ interface AcademicPersonalDB {
   names: string;
   last_names: string;
   grade: string;
+  position: string;
   img_url: string;
   year: number;
   description: string;
@@ -38,24 +39,24 @@ export class Nosotros implements OnInit {
   career = signal<any>(null);
 
   selectedYear = 2026;
-  readonly years = [2026, 2025, 2024, 2023, 2022];
+  readonly years = [2026, 2025, 2024, 2023, 2022, 2021];
 
   private allPersonal = signal<AcademicPersonalDB[]>([]);
 
-  private abbreviateName(names: string, lastNames: string): string {
+  private abbreviateName(grade: string, names: string, lastNames: string): string {
     const parts = (names ?? '').trim().split(/\s+/);
     if (parts.length >= 2) {
-      return `${parts[0]} ${parts[1][0]}. ${lastNames}`;
+      return `${grade} ${parts[0]} ${parts[1][0]}. ${lastNames}`;
     }
-    return `${names} ${lastNames}`;
+    return `${grade} ${names} ${lastNames}`;
   }
 
   get currentPersonal(): Personal[] {
     return this.allPersonal()
       .filter(p => p.status && p.year === this.selectedYear)
       .map(p => ({
-        nombre: this.abbreviateName(p.names, p.last_names),
-        cargo: p.grade,
+        nombre: this.abbreviateName(p.grade, p.names, p.last_names),
+        cargo: p.position,
         foto: p.img_url ?? '',
       }));
   }
@@ -129,7 +130,7 @@ export class Nosotros implements OnInit {
     return html
       .replace(/&nbsp;/g, ' ')
       .replace(/<p>\s*<\/p>/g, '')
-      .replace(/ style="[^"]*"/g, '') // quita estilos inline
+      .replace(/ style="[^"]*"/g, '')
       .replace(/\s+/g, ' ')
       .trim();
   }

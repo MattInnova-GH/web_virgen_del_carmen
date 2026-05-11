@@ -104,4 +104,15 @@ export class NoticiaDetalle implements OnInit {
     tmp.innerHTML = html;
     return tmp.textContent || tmp.innerText || '';
   }
+
+  showImageViewer = signal(false);
+
+  toggleViewer(state: boolean) {
+    this.showImageViewer.set(state);
+    if (state) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }
 }

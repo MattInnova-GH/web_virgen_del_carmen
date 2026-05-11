@@ -157,4 +157,9 @@ export class AdminLogin implements AfterViewInit {
 
     requestAnimationFrame((t) => this.draw(canvas, ctx, t));
   }
+
+  showPassword = signal(false);
+  togglePassword() {
+    this.showPassword.update(v => !v);
+  }
 }

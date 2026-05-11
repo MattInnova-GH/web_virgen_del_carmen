@@ -26,9 +26,15 @@
     </a>
   </div>
 
+  <!-- En la sección hero-section -->
   <div class="hero-section">
     <img [src]="noticia().img_url" [alt]="noticia().title" class="hero-img" />
     <div class="hero-overlay"></div>
+
+    <!-- Botón para expandir -->
+    <button class="expand-btn" (click)="toggleViewer(true)" title="Ver imagen completa">
+      <i class="fa-solid fa-expand"></i>
+    </button>
   </div>
 
   <div class="contenido-outer">
@@ -54,16 +60,16 @@
           <i class="fa-solid fa-share-nodes"></i> Compartir:
         </span>
         <div class="share-icons">
-          <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl"
-             target="_blank" rel="noopener" class="share-btn facebook" title="Compartir en Facebook">
+          <a [href]="'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl" target="_blank" rel="noopener"
+            class="share-btn facebook" title="Compartir en Facebook">
             <i class="fa-brands fa-facebook-f"></i>
           </a>
-          <a [href]="'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + noticia().title"
-             target="_blank" rel="noopener" class="share-btn twitter" title="Compartir en X">
+          <a [href]="'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + noticia().title" target="_blank"
+            rel="noopener" class="share-btn twitter" title="Compartir en X">
             <i class="fa-brands fa-x-twitter"></i>
           </a>
-          <a [href]="'https://wa.me/?text=' + noticia().title + '%20' + currentUrl"
-             target="_blank" rel="noopener" class="share-btn whatsapp" title="Compartir en WhatsApp">
+          <a [href]="'https://wa.me/?text=' + noticia().title + '%20' + currentUrl" target="_blank" rel="noopener"
+            class="share-btn whatsapp" title="Compartir en WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
           </a>
         </div>
@@ -100,6 +106,17 @@
   </section>
   }
 
+  }
+
+  @if (showImageViewer()) {
+  <div class="image-viewer" (click)="toggleViewer(false)">
+    <div class="viewer-content">
+      <img [src]="noticia().img_url" [alt]="noticia().title" (click)="$event.stopPropagation()" />
+      <button class="close-viewer" (click)="toggleViewer(false)">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
   }
 
 </div>

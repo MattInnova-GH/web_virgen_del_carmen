@@ -67,33 +67,19 @@
     <!-- PAGINACIÓN -->
     @if (totalPages() > 1) {
     <div class="paginacion">
-      <button
-        class="pag-btn pag-arrow"
-        [class.disabled]="currentPage() === 1"
-        [disabled]="currentPage() === 1"
-        (click)="goToPage(currentPage() - 1)"
-        aria-label="Página anterior"
-      >
+      <button class="pag-btn pag-arrow" [class.disabled]="currentPage() === 1" [disabled]="currentPage() === 1"
+        (click)="goToPage(currentPage() - 1)" aria-label="Página anterior">
         <i class="fa-solid fa-chevron-left"></i>
       </button>
 
       @for (page of pages(); track page) {
-        <button
-          class="pag-btn pag-num"
-          [class.active]="currentPage() === page"
-          (click)="goToPage(page)"
-        >
-          {{ page }}
-        </button>
+      <button class="pag-btn pag-num" [class.active]="currentPage() === page" (click)="goToPage(page)">
+        {{ page }}
+      </button>
       }
 
-      <button
-        class="pag-btn pag-arrow"
-        [class.disabled]="currentPage() === totalPages()"
-        [disabled]="currentPage() === totalPages()"
-        (click)="goToPage(currentPage() + 1)"
-        aria-label="Página siguiente"
-      >
+      <button class="pag-btn pag-arrow" [class.disabled]="currentPage() === totalPages()"
+        [disabled]="currentPage() === totalPages()" (click)="goToPage(currentPage() + 1)" aria-label="Página siguiente">
         <i class="fa-solid fa-chevron-right"></i>
       </button>
     </div>
