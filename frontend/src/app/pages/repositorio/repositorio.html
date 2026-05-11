@@ -10,6 +10,40 @@
 <main class="repo-main">
   <div class="repo-container">
 
+    <!-- FILTROS -->
+    <div class="repo-filtros">
+
+      <select class="repo-filtro-select"
+              [ngModel]="selectedYear()"
+              (ngModelChange)="selectedYear.set($event); onYearChange()">
+        <option value="">Todos los años</option>
+        @for (year of availableYears(); track year) {
+          <option [value]="year">{{ year }}</option>
+        }
+      </select>
+
+      <select class="repo-filtro-select"
+              [disabled]="!selectedYear()"
+              [ngModel]="selectedMonth()"
+              (ngModelChange)="selectedMonth.set($event)">
+        <option value="">Todos los meses</option>
+        @for (month of availableMonths(); track month) {
+          <option [value]="month">{{ mesesNombre[month] }}</option>
+        }
+      </select>
+
+      <div class="repo-filtro-search">
+        <i class="fas fa-search repo-filtro-search-icon"></i>
+        <input
+          type="text"
+          placeholder="Buscar por título o autor..."
+          [ngModel]="searchQuery()"
+          (ngModelChange)="searchQuery.set($event); currentPage.set(1)"
+        />
+      </div>
+
+    </div>
+
     <!-- Estado de carga -->
     @if (loading()) {
       <div class="repo-loading">
@@ -19,43 +53,31 @@
     }
 
     <!-- Sin resultados -->
-    @if (!loading() && investigaciones().length === 0) {
+    @if (!loading() && sorted().length === 0) {
       <div class="repo-empty">
         <i class="fas fa-database"></i>
         <p>No hay publicaciones disponibles aún.</p>
       </div>
     }
 
-    <!-- ============================
-         TARJETAS DESTACADAS (2)
-         Logo izq | Contenido der | Fecha arriba derecha
-         ============================ -->
+    <!-- TARJETAS DESTACADAS -->
     @if (destacados().length > 0) {
       <div class="repo-featured-grid">
         @for (inv of destacados(); track inv.id) {
           <article class="repo-card">
-
-            <!-- Fecha arriba a la derecha -->
             @if (inv.publication_date) {
               <div class="repo-card__date">
                 {{ inv.publication_date | date:'yyyy-MM-dd' }}
               </div>
             }
-
-            <!-- Fila: logo + contenido -->
             <div class="repo-card__row">
-
-              <!-- Logo cuadrado izquierda -->
               <div class="repo-card__logo">
                 <img src="/images/Logo.png" alt="Logo IESPP Virgen del Carmen" />
               </div>
-
-              <!-- Contenido derecha -->
               <div class="repo-card__content">
                 <h2 class="repo-card__title">{{ inv.title }}</h2>
                 <p class="repo-card__author">{{ inv.author }}</p>
                 <p class="repo-card__excerpt">{{ excerpt(inv.content, 220) }}</p>
-
                 <div class="repo-card__actions">
                   @if (inv.pdf_url) {
                     <button class="btn-pdf" (click)="openPdf(inv, $event)">
@@ -67,7 +89,6 @@
                   </a>
                 </div>
               </div>
-
             </div>
           </article>
         }
@@ -81,16 +102,11 @@
       </div>
     }
 
-    <!-- ============================
-         LISTA DE PUBLICACIONES
-         Título izq | Fecha derecha
-         ============================ -->
+    <!-- LISTA DE PUBLICACIONES -->
     @if (lista().length > 0) {
       <ul class="repo-list">
         @for (inv of lista(); track inv.id) {
           <li class="repo-list__item">
-
-            <!-- Izquierda: título + autor + resumen -->
             <div class="repo-list__body">
               <h3 class="repo-list__title">{{ inv.title }}</h3>
               <p class="repo-list__author">{{ inv.author }}</p>
@@ -106,19 +122,15 @@
                 </a>
               </div>
             </div>
-
-            <!-- Derecha: fecha -->
             @if (inv.publication_date) {
               <div class="repo-list__date">
                 {{ inv.publication_date | date:'yyyy-MM-dd' }}
               </div>
             }
-
           </li>
         }
       </ul>
 
-      <!-- Paginación -->
       @if (totalPages() > 1) {
         <nav class="repo-pagination">
           <button class="page-btn page-btn--nav"
@@ -126,7 +138,6 @@
             (click)="goToPage(currentPage() - 1)">
             <i class="fas fa-chevron-left"></i>
           </button>
-
           @for (p of pages(); track p) {
             <button class="page-btn"
               [class.page-btn--active]="p === currentPage()"
@@ -134,7 +145,6 @@
               {{ p }}
             </button>
           }
-
           <button class="page-btn page-btn--nav"
             [disabled]="currentPage() === totalPages()"
             (click)="goToPage(currentPage() + 1)">
@@ -147,7 +157,7 @@
   </div>
 </main>
 
-<!-- Visor PDF (lightbox) -->
+<!-- Visor PDF -->
 @if (pdfViewer()) {
   <div class="pdf-overlay" (click)="closePdf()">
     <div class="pdf-modal" (click)="$event.stopPropagation()">
@@ -157,11 +167,7 @@
           <i class="fas fa-times"></i>
         </button>
       </div>
-      <iframe
-        class="pdf-modal__iframe"
-        [src]="pdfViewer()"
-        frameborder="0"
-      ></iframe>
+      <iframe class="pdf-modal__iframe" [src]="pdfViewer()" frameborder="0"></iframe>
     </div>
   </div>
 }
