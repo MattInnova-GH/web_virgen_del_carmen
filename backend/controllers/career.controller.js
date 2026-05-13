@@ -11,11 +11,8 @@ exports.createCareer = async (req, res) => {
             description
         } = req.body;
 
-        
         if (!history || !mision || !vision || !values) {
-            return res.status(400).json({
-                error: 'La Historia, la mision, la vision o los valores son obligatorios.'
-            });
+            return res.status(400).json({ error: 'La Historia, la mision, la vision o los valores son obligatorios.' });
         }
 
         const newCareer = await db.Career.create({
@@ -27,12 +24,9 @@ exports.createCareer = async (req, res) => {
         });
 
         return res.status(201).json(newCareer);
-
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({
-            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
-        });
+        return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
 };
 
@@ -46,33 +40,12 @@ exports.getCareer = async (req, res) => {
         res.status(200).json(career);
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({
-            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
-        });
-    }
-}
-
-exports.deleteCareer = async (req, res) => {
-    try {
-        const {id} = req.params;
-        const carreer = await db.Career.findOne({
-            where: {id, status: true},
-        });
-        if (!carreer)
-            return res.status(404).json({message: 'Trayectoria no encontrada.'});
-
-        await carreer.update({status: false});
-        return res.status(200).json({message: 'Datos de trayectoria desactivados correctamente.'});
-    } catch (error) {
-        console.error(error.message);
-        return res.status(500).json({
-            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
-        });
+        return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
 }
 
 exports.updateCareer = async (req, res) => {
-    const {id} = req.params;
+    const { id } = req.params;
     const {
         history,
         mision,
@@ -80,10 +53,11 @@ exports.updateCareer = async (req, res) => {
         values,
         description
     } = req.body;
+
     try {
         const career = await db.Career.findByPk(id);
-        if(!career)
-            return res.status(404).json({message: 'Trayectoria no encontrada.'});
+        if (!career)
+            return res.status(404).json({ message: 'Trayectoria no encontrada.' });
 
         career.history = history;
         career.mision = mision;
@@ -95,9 +69,7 @@ exports.updateCareer = async (req, res) => {
         res.status(200).json(career);
     } catch (error) {
         console.error(error.message);
-        return res.status(500).json({
-            message: 'Error interno del servidor. Inténtelo de nuevo más tarde.'
-        });
+        return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
 }
 

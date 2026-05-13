@@ -6,6 +6,5 @@ const auth = require('../middlewares/auth');
 router.post('/contacts/create', auth, ContactsControllers.createContact);
 router.get('/contacts/list', ContactsControllers.getContacts);
 router.put('/contacts/update/:id', auth, ContactsControllers.updateContacts);
-router.delete('/contacts/delete/:id', auth, ContactsControllers.deleteContacts);
 
 module.exports = router;

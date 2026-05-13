@@ -5,11 +5,11 @@ const path = require('path');
 const slugify = (text) => {
     return text
         .toString()
-        .normalize('NFD')                    // elimina tildes
-        .replace(/[\u0300-\u036f]/g, '')     // diacríticos
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '_')         // espacios y símbolos → _
-        .replace(/^_+|_+$/g, '')             // trim _
+        .replace(/[^a-z0-9]+/g, '_')
+        .replace(/^_+|_+$/g, '')
 };
 
 const normalizeType = (text) => {
@@ -29,7 +29,6 @@ const storage = multer.diskStorage({
 
         const dir = path.join(__dirname, '..', 'public', 'pdf', 'documents', folder);
 
-        // crear carpeta si no existe
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
         }
