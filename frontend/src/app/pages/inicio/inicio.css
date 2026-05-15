@@ -245,7 +245,7 @@
 .whatsapp {
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 90px;
   width: 55px;
   height: 55px;
   background: #25d366;
@@ -392,7 +392,7 @@
 
   /* WhatsApp se queda esquina inferior derecha */
   .whatsapp {
-    bottom: 16px;
+    bottom: 86px;
     right: 16px;
   }
 }
@@ -903,7 +903,7 @@
   .whatsapp {
     width: 50px !important;
     height: 50px !important;
-    bottom: 20px !important;
+    bottom: 86px !important;
     right: 20px !important;
   }
 }
@@ -935,6 +935,7 @@
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }

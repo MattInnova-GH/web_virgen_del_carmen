@@ -1,1 +1,4 @@
 <router-outlet></router-outlet>
+@if (!isAdmin) {
+  <app-chatbot></app-chatbot>
+}
