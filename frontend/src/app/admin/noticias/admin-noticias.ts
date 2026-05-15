@@ -130,9 +130,7 @@ export class AdminNoticias implements OnInit {
     });
   }
 
-  // =========================
-  // IMAGE VIEWER
-  // =========================
+  // Image Viewer
   openImageViewer(event: Event) {
     event.stopPropagation();
     this.imageViewer.set(true);

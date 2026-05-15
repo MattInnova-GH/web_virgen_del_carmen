@@ -20,9 +20,9 @@ export class AdminInvestigaciones implements OnInit {
   investigaciones = signal<any[]>([]);
 
   // ===== FILTROS =====
-  selectedYear  = signal<string>('');
+  selectedYear = signal<string>('');
   selectedMonth = signal<string>('');
-  searchQuery   = signal<string>('');
+  searchQuery = signal<string>('');
 
   readonly mesesNombre: Record<string, string> = {
     '01': 'Enero', '02': 'Febrero', '03': 'Marzo',
@@ -49,12 +49,12 @@ export class AdminInvestigaciones implements OnInit {
   });
 
   filteredInvestigaciones = computed(() => {
-    const year   = this.selectedYear();
-    const month  = this.selectedMonth();
-    const query  = this.searchQuery().toLowerCase().trim();
+    const year = this.selectedYear();
+    const month = this.selectedMonth();
+    const query = this.searchQuery().toLowerCase().trim();
 
     return this.investigaciones().filter(i => {
-      const matchYear  = !year  || i.publication_date?.startsWith(year);
+      const matchYear = !year || i.publication_date?.startsWith(year);
       const matchMonth = !month || i.publication_date?.substring(5, 7) === month;
       const matchQuery = !query ||
         i.title?.toLowerCase().includes(query) ||
@@ -214,7 +214,7 @@ export class AdminInvestigaciones implements OnInit {
     this.editorTheme.set(this.editorTheme() === 'dark' ? 'light' : 'dark');
   }
 
-  deleteModal    = signal(false);
+  deleteModal = signal(false);
   deleteTargetId = signal<number | null>(null);
   tooltipVisible = signal(false);
 

@@ -16,7 +16,6 @@ export class AdminTrayectoria implements OnInit {
   private API = 'http://localhost:3000/api/career';
 
   career = signal<any>(null);
-
   isEditMode = signal(false);
   isNew = signal(false);
 
@@ -33,9 +32,7 @@ export class AdminTrayectoria implements OnInit {
     this.loadCareer();
   }
 
-  // =========================
-  // LOAD
-  // =========================
+  // datos
   loadCareer() {
     this.http.get<any[]>(`${this.API}/list`)
       .subscribe({
@@ -68,9 +65,7 @@ export class AdminTrayectoria implements OnInit {
       });
   }
 
-  // =========================
-  // ACTIONS
-  // =========================
+  // acciones
   enableEdit() {
     this.isEditMode.set(true);
   }
@@ -114,9 +109,7 @@ export class AdminTrayectoria implements OnInit {
       });
   }
 
-  // =========================
-  // QUILL CONFIG
-  // =========================
+  // configuración Quill
   quillConfig = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],

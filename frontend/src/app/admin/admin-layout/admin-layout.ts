@@ -4,15 +4,15 @@ import { filter } from 'rxjs/operators';
 import { Sidebar } from '../sidebar/sidebar';
 
 const ROUTE_TITLES: Record<string, string> = {
-  '/admin/dashboard':         'Dashboard',
-  '/admin/noticias':          'Noticias',
-  '/admin/comunicados':       'Comunicados',
-  '/admin/personal-academico':'Personal Académico',
-  '/admin/trayectoria':       'Trayectoria',
-  '/admin/contactos':         'Contactos',
-  '/admin/investigaciones':   'Investigaciones',
-  '/admin/usuarios':          'Usuarios',
-  '/admin/documentos':        'Documentos'
+  '/admin/dashboard': 'Dashboard',
+  '/admin/noticias': 'Noticias',
+  '/admin/comunicados': 'Comunicados',
+  '/admin/personal-academico': 'Personal Académico',
+  '/admin/trayectoria': 'Trayectoria',
+  '/admin/contactos': 'Contactos',
+  '/admin/investigaciones': 'Investigaciones',
+  '/admin/usuarios': 'Usuarios',
+  '/admin/documentos': 'Documentos'
 };
 
 @Component({

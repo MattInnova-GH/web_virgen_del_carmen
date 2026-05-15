@@ -13,33 +13,25 @@
   <!-- FILTROS -->
   <div class="filtros-bar">
 
-    <select class="filtro-select"
-            [ngModel]="selectedYear()"
-            (ngModelChange)="selectedYear.set($event); onYearChange()">
+    <select class="filtro-select" [ngModel]="selectedYear()" (ngModelChange)="selectedYear.set($event); onYearChange()">
       <option value="">Todos los años</option>
       @for (year of availableYears(); track year) {
-        <option [value]="year">{{ year }}</option>
+      <option [value]="year">{{ year }}</option>
       }
     </select>
 
-    <select class="filtro-select"
-            [disabled]="!selectedYear()"
-            [ngModel]="selectedMonth()"
-            (ngModelChange)="selectedMonth.set($event)">
+    <select class="filtro-select" [disabled]="!selectedYear()" [ngModel]="selectedMonth()"
+      (ngModelChange)="selectedMonth.set($event)">
       <option value="">Todos los meses</option>
       @for (month of availableMonths(); track month) {
-        <option [value]="month">{{ mesesNombre[month] }}</option>
+      <option [value]="month">{{ mesesNombre[month] }}</option>
       }
     </select>
 
     <div class="filtro-search">
       <i class="fas fa-search filtro-search-icon"></i>
-      <input
-        type="text"
-        placeholder="Buscar por título o autor..."
-        [ngModel]="searchQuery()"
-        (ngModelChange)="searchQuery.set($event)"
-      />
+      <input type="text" placeholder="Buscar por título o autor..." [ngModel]="searchQuery()"
+        (ngModelChange)="searchQuery.set($event)" />
     </div>
 
   </div>
@@ -157,9 +149,8 @@
         </div>
 
         <div class="editor-section">
-          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow"
-            class="full-editor" [class.editor-dark]="editorTheme() === 'dark'"
-            [class.editor-light]="editorTheme() === 'light'">
+          <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
+            [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
           </quill-editor>
         </div>
       </div>
