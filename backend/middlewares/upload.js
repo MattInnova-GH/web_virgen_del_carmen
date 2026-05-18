@@ -24,10 +24,21 @@ const normalizeType = (text) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const type = req.body.type || 'otros';
-        const folder = normalizeType(type);
 
-        const dir = path.join(__dirname, '..', 'public', 'pdf', 'documents', folder);
+        let folder = 'investigaciones';
+
+        if (req.originalUrl.includes('academic_papers')) {
+            folder = normalizeType(req.body.type || 'otros');
+        }
+
+        const dir = path.join(
+            __dirname,
+            '..',
+            'public',
+            'pdf',
+            'documents',
+            folder
+        );
 
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
@@ -37,11 +48,12 @@ const storage = multer.diskStorage({
     },
 
     filename: (req, file, cb) => {
-        const ext = file.originalname.split('.').pop();
-        const baseName = file.originalname.replace(/\.[^/.]+$/, '');
+        const ext = path.extname(file.originalname);
+        const baseName = path.basename(file.originalname, ext);
+
         const safeName = slugify(baseName);
 
-        cb(null, `${Date.now()}-${safeName}.${ext}`);
+        cb(null, `${Date.now()}-${safeName}${ext}`);
     }
 });
 

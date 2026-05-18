@@ -1,6 +1,8 @@
 const db = require('../models');
 const buildAcademicPapersQuery = require('../helpers/academic_papers.query');
 const deleteFile = require('../middlewares/deleteFile');
+const fs = require('fs');
+const path = require('path');
 
 const normalizeType = (text) => {
     return text
@@ -16,8 +18,16 @@ exports.createAcademicPaper = async (req, res) => {
     try {
         const { title, type, year, description } = req.body;
 
-        if (!title || !type || !year)
+        if (!title || !type || !year) {
+            if (req.file) {
+                const relDir = req.file.destination
+                    .replace(/\\/g, '/')
+                    .split('/public')[1];
+
+                deleteFile(`${relDir}/${req.file.filename}`);
+            }
             return res.status(400).json({ error: 'Complete los campos obligatorios.' });
+        }
 
         let pdf_url = null;
 
@@ -32,6 +42,14 @@ exports.createAcademicPaper = async (req, res) => {
 
         return res.status(201).json(newAcademicPaper);
     } catch (e) {
+        if (req.file) {
+            const relDir = req.file.destination
+                .replace(/\\/g, '/')
+                .split('/public')[1];
+
+            deleteFile(`${relDir}/${req.file.filename}`);
+        }
+
         console.error(e.message);
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
@@ -59,8 +77,9 @@ exports.getAcademicPapers = async (req, res) => {
 }
 
 exports.updateAcademicPaper = async (req, res) => {
+
     const { id } = req.params;
-    const { title, type, pdf_url, year, description } = req.body;
+    const { title, type, year, description } = req.body;
 
     try {
         const academicPaper = await db.AcademicPapers.findByPk(id);
@@ -68,10 +87,48 @@ exports.updateAcademicPaper = async (req, res) => {
         if (!academicPaper)
             return res.status(404).json({ message: 'Documento no encontrado.' });
 
+        const oldFolder = normalizeType(academicPaper.type);
+        const newFolder = normalizeType(type);
+
         if (req.file) {
             deleteFile(academicPaper.pdf_url);
-            const folder = normalizeType(type);
-            academicPaper.pdf_url = `/pdf/documents/${folder}/${req.file.filename}`;
+
+            academicPaper.pdf_url = `/pdf/documents/${newFolder}/${req.file.filename}`;
+        }
+
+        else if (
+            academicPaper.pdf_url &&
+            oldFolder !== newFolder
+        ) {
+            const oldPath = path.join(
+                __dirname,
+                '..',
+                'public',
+                academicPaper.pdf_url
+            );
+
+            const fileName = path.basename(oldPath);
+
+            const newDir = path.join(
+                __dirname,
+                '..',
+                'public',
+                'pdf',
+                'documents',
+                newFolder
+            );
+
+            if (!fs.existsSync(newDir)) {
+                fs.mkdirSync(newDir, { recursive: true });
+            }
+
+            const newPath = path.join(newDir, fileName);
+
+            if (fs.existsSync(oldPath)) {
+                fs.renameSync(oldPath, newPath);
+            }
+
+            academicPaper.pdf_url = `/pdf/documents/${newFolder}/${fileName}`;
         }
 
         academicPaper.title = title;
@@ -80,12 +137,20 @@ exports.updateAcademicPaper = async (req, res) => {
         academicPaper.description = description;
 
         await academicPaper.save();
-        res.status(200).json(academicPaper);
+        return res.status(200).json(academicPaper);
     } catch (e) {
+        if (req.file) {
+            const relDir = req.file.destination
+                .replace(/\\/g, '/')
+                .split('/public')[1];
+
+            deleteFile(`${relDir}/${req.file.filename}`);
+        }
+
         console.error(e.message);
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
-}
+};
 
 exports.deleteAcademicPaper = async (req, res) => {
     try {

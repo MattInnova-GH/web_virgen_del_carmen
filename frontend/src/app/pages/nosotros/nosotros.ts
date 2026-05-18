@@ -39,8 +39,8 @@ export class Nosotros implements OnInit {
   private http = inject(HttpClient);
   career = signal<any>(null);
 
-  selectedYear = 2026;
-  readonly years = [2026, 2025, 2024, 2023, 2022, 2021];
+  selectedYear = 0;
+  years: number[] = [];
 
   private allPersonal = signal<AcademicPersonalDB[]>([]);
 
@@ -82,7 +82,20 @@ export class Nosotros implements OnInit {
     });
 
     this.http.get<AcademicPersonalDB[]>(`${environment.apiUrl}/academic_personal/list`).subscribe({
-      next: data => this.allPersonal.set(data),
+      next: data => {
+        this.allPersonal.set(data);
+
+        // Obtener años únicos
+        const uniqueYears = [...new Set(data.map(p => p.year))];
+
+        // Ordenar de mayor a menor
+        this.years = uniqueYears.sort((a, b) => b - a);
+
+        // Seleccionar automáticamente el año más reciente
+        if (this.years.length > 0) {
+          this.selectedYear = this.years[0];
+        }
+      },
     });
 
     this.route.fragment.subscribe(fragment => {
