@@ -44,6 +44,7 @@ app.use('/api', appRoutes.PressReleasesRoutes);
 app.use('/api', appRoutes.UsersRoutes);
 app.use('/api', appRoutes.AcademicPapersRoutes);
 app.use('/api', appRoutes.AuthRoutes);
+app.use('/api', appRoutes.DigitalIntakeOfficeRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 
