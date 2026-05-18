@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-usuarios',
@@ -13,7 +14,7 @@ import { DatePipe } from '@angular/common';
 export class AdminUsuarios implements OnInit {
 
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/users';
+  private API = `${environment.apiUrl}/users`;
 
   usuarios = signal<any[]>([]);
 

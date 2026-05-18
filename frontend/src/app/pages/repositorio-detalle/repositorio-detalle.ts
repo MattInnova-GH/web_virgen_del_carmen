@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-repositorio-detalle',
@@ -15,7 +16,7 @@ export class RepositorioDetalle implements OnInit {
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
-  private BASE = 'http://localhost:3000';
+  private BASE = environment.baseUrl;
 
   investigacion = signal<any>(null);
   loading = signal(true);

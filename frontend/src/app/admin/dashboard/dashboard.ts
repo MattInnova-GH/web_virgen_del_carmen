@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +12,7 @@ import { CommonModule } from '@angular/common';
 export class Dashboard implements OnInit {
 
   private http = inject(HttpClient);
-  private api = 'http://localhost:3000/api';
+  private api = environment.apiUrl;
 
   totalNoticias = signal(0);
   totalComunicados = signal(0);

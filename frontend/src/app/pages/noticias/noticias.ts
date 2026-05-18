@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-noticias',
@@ -12,7 +13,7 @@ import { RouterLink } from '@angular/router';
 export class Noticias implements OnInit {
 
   private http = inject(HttpClient);
-  private api = 'http://localhost:3000/api';
+  private api = environment.apiUrl;
 
   featuredNoticias = signal<any[]>([]);
   otrasNoticias = signal<any[]>([]);

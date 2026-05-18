@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-personal',
@@ -12,31 +13,32 @@ import { FormsModule } from '@angular/forms';
 export class AdminPersonal implements OnInit {
 
   private http = inject(HttpClient);
-  apiUrl = 'http://localhost:3000/api/academic_personal';
+  apiUrl = `${environment.apiUrl}/academic_personal`;
 
   personal = signal<any[]>([]);
-// ===== SECCIONES DESPLEGABLES =====
-readonly sectionTypes = ['Autoridad', 'Docente', 'Administrativo', 'Complementario'];
 
-openSections = signal<Record<string, boolean>>({});
+  // ===== SECCIONES DESPLEGABLES =====
+  readonly sectionTypes = ['Autoridad', 'Docente', 'Administrativo', 'Complementario'];
 
-toggleSection(type: string) {
-  this.openSections.update(prev => ({ ...prev, [type]: !prev[type] }));
-}
+  openSections = signal<Record<string, boolean>>({});
 
-isSectionOpen(type: string): boolean {
-  return !!this.openSections()[type];
-}
-
-groupedPersonal = computed(() => {
-  const all = this.personal();
-  const result: Record<string, any[]> = {};
-  for (const type of this.sectionTypes) {
-    result[type] = all.filter(p => p.type === type);
+  toggleSection(type: string) {
+    this.openSections.update(prev => ({ ...prev, [type]: !prev[type] }));
   }
-  return result;
-});
-// ==================================
+
+  isSectionOpen(type: string): boolean {
+    return !!this.openSections()[type];
+  }
+
+  groupedPersonal = computed(() => {
+    const all = this.personal();
+    const result: Record<string, any[]> = {};
+    for (const type of this.sectionTypes) {
+      result[type] = all.filter(p => p.type === type);
+    }
+    return result;
+  });
+  // ==================================
   showModal = signal(false);
   isEditMode = signal(false);
 

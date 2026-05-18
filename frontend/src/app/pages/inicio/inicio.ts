@@ -14,6 +14,7 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-inicio',
@@ -25,14 +26,13 @@ import { RouterLink } from '@angular/router';
 export class Inicio implements OnInit, AfterViewInit, OnDestroy {
 
   private http = inject(HttpClient);
-  private api = 'http://localhost:3000/api';
+  private api = environment.apiUrl;
 
   latestNoticias = signal<any[]>([]);
   latestComunicados = signal<any[]>([]);
   @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('track') track!: ElementRef;
 
-  // Agrega estas propiedades al componente
   heroImages: { src: string; alt: string }[] = [
     {
       src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/3-copia-scaled.jpg',

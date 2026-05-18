@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 interface ArticleConfig {
   apiList: string;
@@ -21,7 +22,7 @@ interface ArticleConfig {
 export class NoticiaDetalle implements OnInit {
   private http = inject(HttpClient);
   private route = inject(ActivatedRoute);
-  private readonly baseApi = 'http://localhost:3000/api';
+  private readonly baseApi = environment.apiUrl;
 
   noticia = signal<any>(null);
   loading = signal(true);

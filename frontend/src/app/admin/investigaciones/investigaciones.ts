@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-investigaciones',
@@ -14,8 +15,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class AdminInvestigaciones implements OnInit {
   private sanitizer = inject(DomSanitizer);
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/investigations';
-  private BASE = 'http://localhost:3000';
+  private API = `${environment.apiUrl}/investigations`;
+  private BASE = environment.baseUrl;
 
   investigaciones = signal<any[]>([]);
 

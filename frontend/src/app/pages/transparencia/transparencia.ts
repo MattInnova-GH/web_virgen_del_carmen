@@ -41,8 +41,6 @@ export class Transparencia implements OnInit, OnDestroy {
     this.resetAutoPlay();
   }
 
-  // 🔁 AUTOPLAY
-
   startAutoPlay() {
     if (this.intervalId) return;
 

@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-inversiones',
@@ -11,8 +12,8 @@ import { VistaArchivos } from '../../components/vista-archivos/vista-archivos';
 export class Inversiones implements OnInit {
 
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/academic_papers';
-  private BASE = 'http://localhost:3000';
+  private API = `${environment.apiUrl}/academic_papers`;
+  private BASE = environment.baseUrl;
 
   inversionesDocs = signal<any[]>([]);
 

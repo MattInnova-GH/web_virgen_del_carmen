@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-comunicados',
@@ -14,8 +15,7 @@ import { DatePipe } from '@angular/common';
 export class AdminComunicados implements OnInit {
 
   private http = inject(HttpClient);
-
-  apiUrl = 'http://localhost:3000/api/press_releases';
+  apiUrl = `${environment.apiUrl}/press_releases`;
 
   comunicados = signal<any[]>([]);
 

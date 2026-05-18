@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 interface Personal {
   nombre: string;
@@ -68,7 +69,7 @@ export class Nosotros implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.http.get<any[]>('http://localhost:3000/api/career/list').subscribe({
+    this.http.get<any[]>(`${environment.apiUrl}/career/list`).subscribe({
       next: data => {
         const activo = data.find(c => c.status);
         if (activo) this.career.set({
@@ -80,7 +81,7 @@ export class Nosotros implements OnInit {
       }
     });
 
-    this.http.get<AcademicPersonalDB[]>('http://localhost:3000/api/academic_personal/list').subscribe({
+    this.http.get<AcademicPersonalDB[]>(`${environment.apiUrl}/academic_personal/list`).subscribe({
       next: data => this.allPersonal.set(data),
     });
 

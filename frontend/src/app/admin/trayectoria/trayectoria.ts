@@ -2,6 +2,7 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { QuillModule } from 'ngx-quill';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-trayectoria',
@@ -13,7 +14,7 @@ import { QuillModule } from 'ngx-quill';
 export class AdminTrayectoria implements OnInit {
 
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/career';
+  private API = `${environment.apiUrl}/career`;
 
   career = signal<any>(null);
   isEditMode = signal(false);

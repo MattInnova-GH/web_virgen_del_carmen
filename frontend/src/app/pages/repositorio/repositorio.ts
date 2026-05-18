@@ -4,6 +4,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 interface Investigacion {
   id: number;
@@ -27,7 +28,7 @@ interface Investigacion {
 export class Repositorio implements OnInit {
   private http = inject(HttpClient);
   private sanitizer = inject(DomSanitizer);
-  private BASE = 'http://localhost:3000';
+  private BASE = environment.baseUrl;
 
   investigaciones = signal<Investigacion[]>([]);
   loading = signal(true);

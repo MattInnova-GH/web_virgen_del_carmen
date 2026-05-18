@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-contactos',
@@ -12,7 +13,7 @@ import { FormsModule } from '@angular/forms';
 export class AdminContactos implements OnInit {
 
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/contacts';
+  private API = `${environment.apiUrl}/contacts`;
 
   contact = signal<any>(null);
 

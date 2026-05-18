@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { DatePipe } from '@angular/common';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-admin-noticias',
@@ -14,7 +15,7 @@ import { DatePipe } from '@angular/common';
 export class AdminNoticias implements OnInit {
 
   private http = inject(HttpClient);
-  private API = 'http://localhost:3000/api/news';
+  private API = `${environment.apiUrl}/news`;
 
   noticias = signal<any[]>([]);
 
