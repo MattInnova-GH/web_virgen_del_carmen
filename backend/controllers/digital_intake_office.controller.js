@@ -166,3 +166,52 @@ exports.getDigitalIntake = async (req, res) => {
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
     }
 }
+// === NUEVA FUNCIÓN PARA ACTUALIZAR EL ESTADO ===
+exports.updateDigitalIntake = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { processing_status } = req.body;
+
+        // Buscamos si existe el trámite
+        const tramite = await db.DigitalIntakeOffice.findByPk(id);
+        if (!tramite) {
+            return res.status(404).json({ message: 'El trámite no existe.' });
+        }
+
+        // Actualizamos la columna correspondiente
+        tramite.processing_status = processing_status;
+        await tramite.save();
+
+        return res.status(200).json({ message: 'Estado actualizado con éxito', tramite });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error interno al actualizar el estado.' });
+    }
+};
+
+// === NUEVA FUNCIÓN PARA ELIMINAR UN TRÁMITE ===
+exports.deleteDigitalIntake = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const tramite = await db.DigitalIntakeOffice.findByPk(id);
+        if (!tramite) {
+            return res.status(404).json({ message: 'El trámite no existe.' });
+        }
+
+        // Si guardó un archivo local físico en el servidor, lo borramos usando tu middleware
+        if (tramite.attached_file_url) {
+            try {
+                deleteFile(tramite.attached_file_url);
+            } catch (err) {
+                console.error('No se pudo borrar el archivo físico:', err.message);
+            }
+        }
+
+        await tramite.destroy();
+        return res.status(200).json({ message: 'Trámite eliminado correctamente de la base de datos.' });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Error interno al eliminar el trámite.' });
+    }
+};
