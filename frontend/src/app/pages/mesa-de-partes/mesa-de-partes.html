@@ -314,13 +314,20 @@
           <input type="text" placeholder="Ingresa tu código de seguimiento" [(ngModel)]="trackingCode"
             name="trackingCode" />
 
-          <button class="btn-consultar">
+          <button class="btn-consultar" (click)="consultar()" [disabled]="!trackingCode.trim() || isConsulting">
 
-            Consultar
+            {{ isConsulting ? 'Consultando...' : 'Consultar' }}
 
           </button>
 
         </div>
+
+        @if (consultaError) {
+        <p class="consulta-error">
+          <i class="fas fa-exclamation-circle"></i>
+          {{ consultaError }}
+        </p>
+        }
 
         }
 
@@ -397,6 +404,155 @@
       su trámite posteriormente.
 
     </p>
+
+  </div>
+
+</div>
+
+}
+
+@if (showConsultaModal && consultaResult) {
+
+<div class="modal-overlay" (click)="closeConsultaModal()">
+
+  <div class="consulta-modal" (click)="$event.stopPropagation()">
+
+    <button class="modal-close" (click)="closeConsultaModal()">
+      ×
+    </button>
+
+    <div class="consulta-header">
+
+      <h2>
+        <i class="fas fa-file-alt"></i>
+        Detalles del Trámite
+      </h2>
+
+      <span [class]="'status-badge ' + getStatusClass(consultaResult.processing_status)">
+        {{ consultaResult.processing_status }}
+      </span>
+
+    </div>
+
+    <div class="consulta-tracking-box">
+      <span class="tracking-label">Código de Seguimiento</span>
+      <strong>{{ consultaResult.tracking_code }}</strong>
+    </div>
+
+    <div class="consulta-grid">
+
+      <div class="consulta-field">
+        <span class="field-label">Nombre Completo</span>
+        <span class="field-value">{{ consultaResult.full_name }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">DNI / RUC</span>
+        <span class="field-value">{{ consultaResult.DNI_RUC }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Correo Electrónico</span>
+        <span class="field-value">{{ consultaResult.email }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Teléfono</span>
+        <span class="field-value">{{ consultaResult.phone_number }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Condición</span>
+        <span class="field-value">{{ consultaResult.c_condition }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Tipo de Documento</span>
+        <span class="field-value">{{ consultaResult.document_type }}</span>
+      </div>
+
+      <div class="consulta-field consulta-field--full">
+        <span class="field-label">Asunto</span>
+        <span class="field-value">{{ consultaResult.v_subject }}</span>
+      </div>
+
+      <div class="consulta-field consulta-field--full">
+        <span class="field-label">Mensaje</span>
+        <span class="field-value consulta-message">{{ consultaResult.v_message }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Cantidad de Folios</span>
+        <span class="field-value">{{ consultaResult.number_of_pages }}</span>
+      </div>
+
+      <div class="consulta-field">
+        <span class="field-label">Fecha de Envío</span>
+        <span class="field-value">{{ formatDate(consultaResult.createdAt) }}</span>
+      </div>
+
+    </div>
+
+    @if (consultaResult.attached_file_url) {
+
+    <div class="consulta-file">
+
+      <div class="consulta-file-info">
+
+        @if (getFileType(consultaResult.attached_file_url) === 'pdf') {
+        <i class="fas fa-file-pdf consulta-file-icon pdf-icon"></i>
+        }
+
+        @if (getFileType(consultaResult.attached_file_url) === 'image') {
+        <img
+          [src]="getFileUrl(consultaResult.attached_file_url)"
+          alt="Vista previa"
+          class="consulta-file-preview"
+        />
+        }
+
+        <span class="consulta-file-name">
+          {{ getFileName(consultaResult.attached_file_url) }}
+        </span>
+
+      </div>
+
+      <button
+        class="btn-ver-archivo"
+        (click)="abrirArchivo(getFileUrl(consultaResult.attached_file_url))"
+      >
+        <i class="fas fa-external-link-alt"></i>
+        Ver Archivo Adjunto
+      </button>
+
+    </div>
+
+    }
+
+    @if (consultaResult.document_url) {
+
+    <div class="consulta-file">
+
+      <div class="consulta-file-info">
+        <i class="fas fa-link consulta-file-icon link-icon"></i>
+        <span class="consulta-file-name">Enlace del Documento</span>
+      </div>
+
+      <button
+        class="btn-ver-archivo btn-ver-link"
+        (click)="abrirArchivo(consultaResult.document_url)"
+      >
+        <i class="fas fa-external-link-alt"></i>
+        Abrir Enlace
+      </button>
+
+    </div>
+
+    }
+
+    <button class="btn-close-consulta" (click)="closeConsultaModal()">
+      Cerrar
+    </button>
 
   </div>
 
