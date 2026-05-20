@@ -9,6 +9,7 @@ import { AdminContactos } from './admin/contactos/contactos';
 import { AdminUsuarios } from './admin/usuarios/usuarios';
 import { AdminDocumentos } from './admin/documentos/documentos';
 import { AdminLogin } from './admin/login/login';
+import { MesaDePartesAdmin } from './admin/mesa-de-partes/mesa-de-partes';
 import { Inicio } from './pages/inicio/inicio';
 import { Nosotros } from './pages/nosotros/nosotros';
 import { Noticias } from './pages/noticias/noticias';
@@ -52,7 +53,10 @@ export const routes: Routes = [
       { path: 'contactos', component: AdminContactos, title: 'Admin - Contactos' },
       { path: 'investigaciones', component: AdminInvestigaciones, title: 'Admin - Investigaciones' },
       { path: 'usuarios', component: AdminUsuarios, title: 'Admin - Usuarios' },
-      { path: 'documentos', component: AdminDocumentos, title: 'Admin - Documentos' }
+      { path: 'documentos', component: AdminDocumentos, title: 'Admin - Documentos' },
+      
+      // === AGREGADO AQUÍ CORRECCIÓN PARA EL ADMINISTRADOR ===
+      { path: 'mesa-de-partes', component: MesaDePartesAdmin, title: 'Admin — Mesa de Partes' }
     ],
   },
   {
