@@ -209,3 +209,37 @@ a.footer-list-item:hover,
     justify-content: center;
   }
 }
+
+.footer-reclamaciones {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+}
+
+.footer-reclamaciones-text {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  margin-bottom: 0.75rem;
+}
+
+.libro-reclamaciones-img {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+}
+
+.footer-list-item {
+  align-items: flex-start;
+}
+
+@media (max-width: 600px) {
+  .footer-reclamaciones {
+    align-items: center;
+  }
+
+  .libro-reclamaciones-img {
+    max-width: 260px;
+  }
+}

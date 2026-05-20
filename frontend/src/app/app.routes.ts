@@ -34,6 +34,7 @@ import { RepositorioDetalle } from './pages/repositorio-detalle/repositorio-deta
 import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
 import { authGuard } from './core/auth/auth.guard';
 import { PublicLayout } from './layout/public-layout/public-layout';
+import { Reclamaciones } from './pages/reclamaciones/reclamaciones';
 
 export const routes: Routes = [
   { path: 'admin/login', component: AdminLogin, title: 'Admin — Login' },
@@ -82,6 +83,7 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
       { path: 'repositorio', component: Repositorio, title: 'Repositorio Institucional' },
       { path: 'repositorio/:id', component: RepositorioDetalle, title: 'Detalle — Repositorio' },
+      { path: 'reclamaciones', component: Reclamaciones, title: 'Reclamaciones'}
     ]
   }
 ];
