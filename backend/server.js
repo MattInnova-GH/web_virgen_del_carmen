@@ -21,9 +21,15 @@ app.use(cors({
 // middleware
 app.use(
     helmet({
+        crossOriginResourcePolicy: { policy: "cross-origin" },
         contentSecurityPolicy: {
             directives: {
-                defaultSrc: ["'self'"],
+                imgSrc: [
+                    "'self'",
+                    "data:",
+                    "https:",
+                    "http://localhost:3000"
+                ],
 
                 imgSrc: ["'self'", "data:", "https:"],
                 frameSrc: ["'self'", "http://localhost:3000"],

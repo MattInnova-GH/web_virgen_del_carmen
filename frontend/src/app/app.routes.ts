@@ -36,6 +36,7 @@ import { NoticiaDetalle } from './pages/noticia-detalle/noticia-detalle';
 import { authGuard } from './core/auth/auth.guard';
 import { PublicLayout } from './layout/public-layout/public-layout';
 import { Reclamaciones } from './pages/reclamaciones/reclamaciones';
+import { AdminReclamaciones } from './admin/admin-reclamaciones/admin-reclamaciones';
 
 export const routes: Routes = [
   { path: 'admin/login', component: AdminLogin, title: 'Admin — Login' },
@@ -54,9 +55,8 @@ export const routes: Routes = [
       { path: 'investigaciones', component: AdminInvestigaciones, title: 'Admin - Investigaciones' },
       { path: 'usuarios', component: AdminUsuarios, title: 'Admin - Usuarios' },
       { path: 'documentos', component: AdminDocumentos, title: 'Admin - Documentos' },
-      
-      // === AGREGADO AQUÍ CORRECCIÓN PARA EL ADMINISTRADOR ===
-      { path: 'mesa-de-partes', component: MesaDePartesAdmin, title: 'Admin — Mesa de Partes' }
+      { path: 'mesa-de-partes', component: MesaDePartesAdmin, title: 'Admin — Mesa de Partes' },
+      { path: 'admin-reclamaciones', component: AdminReclamaciones, title: 'Admin - Reclamaciones' }
     ],
   },
   {
@@ -87,7 +87,7 @@ export const routes: Routes = [
       { path: 'estadisticas', component: Estadisticas, title: 'Estadisticas' },
       { path: 'repositorio', component: Repositorio, title: 'Repositorio Institucional' },
       { path: 'repositorio/:id', component: RepositorioDetalle, title: 'Detalle — Repositorio' },
-      { path: 'reclamaciones', component: Reclamaciones, title: 'Reclamaciones'}
+      { path: 'reclamaciones', component: Reclamaciones, title: 'Reclamaciones' }
     ]
   }
 ];

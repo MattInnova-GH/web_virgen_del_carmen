@@ -57,6 +57,16 @@ export class Sidebar {
       route: '/admin/usuarios',
     },
     {
+      label: 'Mesa de Partes',
+      icon: 'fa-solid fa-address-book',
+      route: '/admin/mesa-de-partes',
+    },
+    {
+      label: 'Reclamos',
+      icon: 'fa-solid fa-book-open',
+      route: '/admin/admin-reclamaciones',
+    },
+    {
       label: 'Trayectoria',
       icon: 'fa-solid fa-briefcase',
       route: '/admin/trayectoria',
@@ -65,11 +75,6 @@ export class Sidebar {
       label: 'Contactos',
       icon: 'fa-solid fa-address-book',
       route: '/admin/contactos',
-    },
-    {
-      label: 'Mesa de Partes',
-      icon: 'fa-solid fa-address-book',
-      route: '/admin/mesa-de-partes',
-    },
+    }
   ];
 }

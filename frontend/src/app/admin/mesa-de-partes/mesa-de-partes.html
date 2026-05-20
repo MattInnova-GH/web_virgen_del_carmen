@@ -1,28 +1,32 @@
-<div class="admin-header">
-  <h2>Mesa de Partes</h2>
-  <p>Gestión y revisión de documentos institucionales recibidos</p>
-</div>
+<div class="admin-page">
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Mesa de Partes</h1>
+      <p class="page-sub">Gestión y revisión de trámites institucionales recibidos</p>
+    </div>
+  </div>
 
-<div class="mdp-admin-card">
-  <div class="table-responsive">
-    <table class="mdp-table">
-      <thead>
-        <tr>
-          <th># IDENTIFICACIÓN</th>
-          <th>NOMBRE</th>
-          <th>FECHA</th>
-          <th>ESTADO</th>
-          <th>CÓDIGO SEGUIMIENTO</th>
-          <th>OBSERVACIÓN</th>
-          <th>ACCIONES</th>
-        </tr>
-      </thead>
+  <div class="mdp-admin-card">
+    <div class="table-responsive">
+      <table class="mdp-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombres y Apellidos</th>
+            <th>Fecha</th>
+            <th>Progreso de Trámite</th>
+            <th>Código de Seguiminento</th>
+            <th>Observación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
 
-      <tbody>
-        @for (tramite of tramites(); track tramite.id) {
+        <tbody>
+          @for (tramite of tramites(); track tramite.id) {
 
           <tr>
-            <td><strong>{{ tramite.id }}</strong></td>
+            <td>{{ tramite.id }}</td>
 
             <td>
               {{ tramite.full_name || tramite.nombre }}
@@ -32,11 +36,8 @@
               {{ tramite.fechaFormateada | date:'dd/MM/yyyy' }}
             </td>
 
-            <!-- ✅ ESTA ES LA ÚNICA PARTE CORREGIDA -->
             <td>
-              <span
-                class="badge"
-                [ngClass]="{
+              <span class="badge" [ngClass]="{
                   'badge-pendiente':
                     (tramite.processing_status || tramite.statusNormalized) === 'Pendiente',
 
@@ -45,11 +46,10 @@
 
                   'badge-rechazado':
                     (tramite.processing_status || tramite.statusNormalized) === 'Rechazado'
-                }"
-              >
+                }">
                 {{
-                  tramite.processing_status ||
-                  tramite.statusNormalized
+                tramite.processing_status ||
+                tramite.statusNormalized
                 }}
               </span>
             </td>
@@ -61,28 +61,26 @@
             </td>
 
             <td>
-              <button
-                class="btn-action btn-view"
-                (click)="abrirEvaluacion(tramite)"
-                title="Ver y Evaluar Documento"
-              >
+              <button class="btn-action btn-view" (click)="abrirEvaluacion(tramite)" title="Ver y Evaluar Documento">
                 <i class="fas fa-eye"></i>
                 Ver detalles
               </button>
             </td>
 
             <td>
-              <button
-                class="btn-action btn-delete"
-                (click)="eliminarTramite(tramite.id)"
-                title="Eliminar Trámite"
-              >
+              <span class="badge" [class.badge-blue]="tramite.status" [class.badge-orange]="!tramite.status">
+                {{ tramite.status ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+
+            <td>
+              <button class="btn-action btn-delete" (click)="openDeleteModal(tramite.id)" title="Eliminar Trámite">
                 <i class="fas fa-trash-alt"></i>
               </button>
             </td>
           </tr>
 
-        } @empty {
+          } @empty {
 
           <tr>
             <td colspan="7" class="text-center py-4">
@@ -90,13 +88,13 @@
             </td>
           </tr>
 
-        }
-      </tbody>
-    </table>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 
-@if (showModal && tramiteSeleccionado) {
+  @if (showModal && tramiteSeleccionado) {
   <div class="modal-overlay-premium">
     <div class="admin-modal-premium">
 
@@ -109,10 +107,7 @@
           <h3>Evaluación y Control de Trámite</h3>
         </div>
 
-        <button
-          class="modal-premium-close"
-          (click)="cerrarModal()"
-        >
+        <button class="modal-premium-close" (click)="cerrarModal()">
           ×
         </button>
       </div>
@@ -201,9 +196,9 @@
 
                 <span class="text-message-box">
                   {{
-                    tramiteSeleccionado.v_message ||
-                    tramiteSeleccionado.mensaje ||
-                    'Sin descripción provista.'
+                  tramiteSeleccionado.v_message ||
+                  tramiteSeleccionado.mensaje ||
+                  'Sin descripción provista.'
                   }}
                 </span>
               </p>
@@ -212,21 +207,15 @@
 
           <div class="modal-premium-actions">
 
-            <button
-              class="btn-premium-action btn-p-approve"
-              (click)="actualizarEstado('Aceptado')"
-              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading"
-            >
+            <button class="btn-premium-action btn-p-approve" (click)="actualizarEstado('Aceptado')"
+              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading">
               <i class="fas fa-check-circle"></i>
 
               {{ isLoading ? 'Guardando...' : 'Aceptar Trámite' }}
             </button>
 
-            <button
-              class="btn-premium-action btn-p-reject"
-              (click)="actualizarEstado('Rechazado')"
-              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading"
-            >
+            <button class="btn-premium-action btn-p-reject" (click)="actualizarEstado('Rechazado')"
+              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading">
               <i class="fas fa-times-circle"></i>
 
               {{ isLoading ? 'Guardando...' : 'Rechazar Trámite' }}
@@ -245,11 +234,7 @@
                 Previsualizacion del Documento
               </h5>
 
-              <button
-                (click)="abrirPdfFlotante()"
-                class="btn-external-link"
-                title="Maximizar en ventana flotante"
-              >
+              <button (click)="abrirPdfFlotante()" class="btn-external-link" title="Maximizar en ventana flotante">
                 <i class="fas fa-expand-arrows-alt"></i>
 
                 <span style="font-size: 12px; margin-left: 5px; font-weight: 500;">
@@ -262,22 +247,18 @@
 
               @if (pdfSafeUrl) {
 
-                <iframe
-                  [src]="pdfSafeUrl"
-                  type="application/pdf"
-                  class="pdf-iframe-embed"
-                >
-                </iframe>
+              <iframe [src]="pdfSafeUrl" type="application/pdf" class="pdf-iframe-embed">
+              </iframe>
 
               } @else {
 
-                <div class="no-pdf-placeholder">
-                  <i class="fas fa-folder-open mb-3"></i>
+              <div class="no-pdf-placeholder">
+                <i class="fas fa-folder-open mb-3"></i>
 
-                  <p>
-                    No se cargó un archivo digital para este ticket.
-                  </p>
-                </div>
+                <p>
+                  No se cargó un archivo digital para este ticket.
+                </p>
+              </div>
 
               }
 
@@ -289,19 +270,13 @@
 
     </div>
   </div>
-}
+  }
 
-@if (mostrarPdfFlotante() && pdfSafeUrl) {
+  @if (mostrarPdfFlotante() && pdfSafeUrl) {
 
-  <div
-    class="pdf-floating-overlay"
-    (click)="cerrarPdfFlotante()"
-  >
+  <div class="pdf-floating-overlay" (click)="cerrarPdfFlotante()">
 
-    <div
-      class="pdf-floating-window"
-      (click)="$event.stopPropagation()"
-    >
+    <div class="pdf-floating-window" (click)="$event.stopPropagation()">
 
       <div class="pdf-floating-header">
 
@@ -312,10 +287,7 @@
           Trámite #{{ tramiteSeleccionado?.id }}
         </h5>
 
-        <button
-          class="btn-close-floating"
-          (click)="cerrarPdfFlotante()"
-        >
+        <button class="btn-close-floating" (click)="cerrarPdfFlotante()">
           <i class="fas fa-times"></i>
           Cerrar Vista
         </button>
@@ -324,15 +296,43 @@
 
       <div class="pdf-floating-body">
 
-        <iframe
-          [src]="pdfSafeUrl"
-          type="application/pdf"
-          class="pdf-floating-iframe"
-        >
+        <iframe [src]="pdfSafeUrl" type="application/pdf" class="pdf-floating-iframe">
         </iframe>
 
       </div>
 
     </div>
   </div>
-}
+  }
+
+  @if (deleteModal()) {
+  <div class="modal-backdrop" (click)="closeDeleteModal()">
+    <div class="modal confirm-modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Eliminar Trámite</h2>
+        <div class="header-actions">
+          <button class="btn-help" (click)="showTooltip()">?</button>
+          <button class="close-btn" (click)="closeDeleteModal()">×</button>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <p>¿Qué deseas hacer con esta investigación?</p>
+        @if (tooltipVisible()) {
+        <div class="tooltip-box">
+          Advertencia: El archivo será eliminado en el segundo caso, asegúrese de hacer una copia de seguridad.<br>
+          Desactivar: Los datos no serán visibles en el portal público, pero aún se conservan.<br>
+          Eliminar: Los datos se borran definitivamente.
+        </div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn-cancel" (click)="closeDeleteModal()">Cancelar</button>
+        <button class="btn-warning" (click)="deleteAction('0')">Desactivar</button>
+        <button class="btn-danger" (click)="deleteAction('1')">Eliminar</button>
+      </div>
+    </div>
+  </div>
+  }
+</div>

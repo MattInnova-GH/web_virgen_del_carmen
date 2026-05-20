@@ -58,7 +58,6 @@ export class AdminDocumentos implements OnInit {
     }
     return result;
   });
-  // ==================================
 
   ngOnInit() {
     this.loadData();
