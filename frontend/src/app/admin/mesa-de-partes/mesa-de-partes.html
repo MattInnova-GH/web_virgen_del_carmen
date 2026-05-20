@@ -1,0 +1,338 @@
+<div class="admin-header">
+  <h2>Mesa de Partes</h2>
+  <p>Gestión y revisión de documentos institucionales recibidos</p>
+</div>
+
+<div class="mdp-admin-card">
+  <div class="table-responsive">
+    <table class="mdp-table">
+      <thead>
+        <tr>
+          <th># IDENTIFICACIÓN</th>
+          <th>NOMBRE</th>
+          <th>FECHA</th>
+          <th>ESTADO</th>
+          <th>CÓDIGO SEGUIMIENTO</th>
+          <th>OBSERVACIÓN</th>
+          <th>ACCIONES</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (tramite of tramites(); track tramite.id) {
+
+          <tr>
+            <td><strong>{{ tramite.id }}</strong></td>
+
+            <td>
+              {{ tramite.full_name || tramite.nombre }}
+            </td>
+
+            <td>
+              {{ tramite.fechaFormateada | date:'dd/MM/yyyy' }}
+            </td>
+
+            <!-- ✅ ESTA ES LA ÚNICA PARTE CORREGIDA -->
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-pendiente':
+                    (tramite.processing_status || tramite.statusNormalized) === 'Pendiente',
+
+                  'badge-aprobado':
+                    (tramite.processing_status || tramite.statusNormalized) === 'Aceptado',
+
+                  'badge-rechazado':
+                    (tramite.processing_status || tramite.statusNormalized) === 'Rechazado'
+                }"
+              >
+                {{
+                  tramite.processing_status ||
+                  tramite.statusNormalized
+                }}
+              </span>
+            </td>
+
+            <td>
+              <code class="tracking-code">
+                {{ tramite.tracking_code || tramite.codigo_seguimiento }}
+              </code>
+            </td>
+
+            <td>
+              <button
+                class="btn-action btn-view"
+                (click)="abrirEvaluacion(tramite)"
+                title="Ver y Evaluar Documento"
+              >
+                <i class="fas fa-eye"></i>
+                Ver detalles
+              </button>
+            </td>
+
+            <td>
+              <button
+                class="btn-action btn-delete"
+                (click)="eliminarTramite(tramite.id)"
+                title="Eliminar Trámite"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </td>
+          </tr>
+
+        } @empty {
+
+          <tr>
+            <td colspan="7" class="text-center py-4">
+              No se encontraron trámites registrados.
+            </td>
+          </tr>
+
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+@if (showModal && tramiteSeleccionado) {
+  <div class="modal-overlay-premium">
+    <div class="admin-modal-premium">
+
+      <div class="modal-premium-header">
+        <div class="header-title-box">
+          <span class="badge-header-id">
+            ID: #{{ tramiteSeleccionado.id }}
+          </span>
+
+          <h3>Evaluación y Control de Trámite</h3>
+        </div>
+
+        <button
+          class="modal-premium-close"
+          (click)="cerrarModal()"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-premium-body">
+
+        <div class="modal-column-info">
+
+          <div class="info-premium-section">
+            <h4>
+              <i class="fas fa-user-circle"></i>
+              Información del Remitente
+            </h4>
+
+            <div class="info-premium-grid">
+              <p>
+                <strong>Nombre completo:</strong>
+                <span>
+                  {{ tramiteSeleccionado.full_name || tramiteSeleccionado.nombre }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Condición Jurídica:</strong>
+                <span>
+                  {{ tramiteSeleccionado.c_condition || tramiteSeleccionado.condicion }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Documento (DNI/RUC):</strong>
+                <span>
+                  {{ tramiteSeleccionado.DNI_RUC || tramiteSeleccionado.dni }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Correo Electrónico:</strong>
+                <span>
+                  {{ tramiteSeleccionado.email || tramiteSeleccionado.correo }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Teléfono de Contacto:</strong>
+                <span>
+                  {{ tramiteSeleccionado.phone_number || tramiteSeleccionado.telefono }}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="info-premium-section mt-3">
+            <h4>
+              <i class="fas fa-file-invoice"></i>
+              Especificaciones del Documento
+            </h4>
+
+            <div class="info-premium-grid">
+              <p>
+                <strong>Tipo de Documento:</strong>
+                <span>
+                  {{ tramiteSeleccionado.document_type || tramiteSeleccionado.tipo_documento }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Asunto Principal:</strong>
+                <span>
+                  {{ tramiteSeleccionado.v_subject || tramiteSeleccionado.asunto }}
+                </span>
+              </p>
+
+              <p>
+                <strong>Número de Folios:</strong>
+
+                <span class="badge-folios">
+                  {{ tramiteSeleccionado.number_of_pages || tramiteSeleccionado.folios }} pág.
+                </span>
+              </p>
+
+              <p class="full-width-message">
+                <strong>Mensaje / Sumilla:</strong>
+
+                <br>
+
+                <span class="text-message-box">
+                  {{
+                    tramiteSeleccionado.v_message ||
+                    tramiteSeleccionado.mensaje ||
+                    'Sin descripción provista.'
+                  }}
+                </span>
+              </p>
+            </div>
+          </div>
+
+          <div class="modal-premium-actions">
+
+            <button
+              class="btn-premium-action btn-p-approve"
+              (click)="actualizarEstado('Aceptado')"
+              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading"
+            >
+              <i class="fas fa-check-circle"></i>
+
+              {{ isLoading ? 'Guardando...' : 'Aceptar Trámite' }}
+            </button>
+
+            <button
+              class="btn-premium-action btn-p-reject"
+              (click)="actualizarEstado('Rechazado')"
+              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading"
+            >
+              <i class="fas fa-times-circle"></i>
+
+              {{ isLoading ? 'Guardando...' : 'Rechazar Trámite' }}
+            </button>
+
+          </div>
+        </div>
+
+        <div class="modal-column-preview">
+
+          <div class="preview-container-box">
+
+            <div class="preview-header-bar">
+              <h5>
+                <i class="fas fa-file-pdf text-danger"></i>
+                Visor de Documento Adjunto
+              </h5>
+
+              <button
+                (click)="abrirPdfFlotante()"
+                class="btn-external-link"
+                title="Maximizar en ventana flotante"
+              >
+                <i class="fas fa-expand-arrows-alt"></i>
+
+                <span style="font-size: 12px; margin-left: 5px; font-weight: 500;">
+                  Agrandar
+                </span>
+              </button>
+            </div>
+
+            <div class="preview-content-area">
+
+              @if (pdfSafeUrl) {
+
+                <iframe
+                  [src]="pdfSafeUrl"
+                  type="application/pdf"
+                  class="pdf-iframe-embed"
+                >
+                </iframe>
+
+              } @else {
+
+                <div class="no-pdf-placeholder">
+                  <i class="fas fa-folder-open mb-3"></i>
+
+                  <p>
+                    No se cargó un archivo digital para este ticket.
+                  </p>
+                </div>
+
+              }
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+}
+
+@if (mostrarPdfFlotante() && pdfSafeUrl) {
+
+  <div
+    class="pdf-floating-overlay"
+    (click)="cerrarPdfFlotante()"
+  >
+
+    <div
+      class="pdf-floating-window"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="pdf-floating-header">
+
+        <h5>
+          <i class="fas fa-file-pdf"></i>
+
+          Modo de Inspección Ampliado —
+          Trámite #{{ tramiteSeleccionado?.id }}
+        </h5>
+
+        <button
+          class="btn-close-floating"
+          (click)="cerrarPdfFlotante()"
+        >
+          <i class="fas fa-times"></i>
+          Cerrar Vista
+        </button>
+
+      </div>
+
+      <div class="pdf-floating-body">
+
+        <iframe
+          [src]="pdfSafeUrl"
+          type="application/pdf"
+          class="pdf-floating-iframe"
+        >
+        </iframe>
+
+      </div>
+
+    </div>
+  </div>
+}

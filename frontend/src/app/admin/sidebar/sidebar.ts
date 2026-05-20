@@ -66,5 +66,10 @@ export class Sidebar {
       icon: 'fa-solid fa-address-book',
       route: '/admin/contactos',
     },
+    {
+      label: 'Mesa de Partes',
+      icon: 'fa-solid fa-address-book',
+      route: '/admin/mesa-de-partes',
+    },
   ];
 }
