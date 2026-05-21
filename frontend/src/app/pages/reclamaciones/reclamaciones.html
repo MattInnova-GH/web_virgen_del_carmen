@@ -1,6 +1,477 @@
+<!-- Hero -->
 <section class="hero-component">
   <div class="hero-content">
-    <h1>Libro de Reclamaciones</h1>
+    <h1>Libro de Reclamaciones Virtual</h1>
     <p>Instituto de Educación Superior Pedagógico Público Virgen del Carmen</p>
+  </div>
+</section>
+
+<!-- Main -->
+<section class="rec-main">
+  <div class="rec-container">
+
+    <!-- Tabs -->
+    <div class="rec-tabs">
+      <button class="rec-tab" [class.active]="activeTab === 'form'" (click)="activeTab = 'form'">
+        <i class="fas fa-file-alt"></i> Formulario de Reclamación
+      </button>
+      <button class="rec-tab" [class.active]="activeTab === 'seguimiento'" (click)="activeTab = 'seguimiento'">
+        <i class="fas fa-search"></i> Seguimiento
+      </button>
+    </div>
+
+    <!-- TAB: FORMULARIO -->
+    @if (activeTab === 'form') {
+    <div class="rec-card">
+
+      @if (!showSuccess) {
+
+      <div class="rec-card-header">
+        <i class="fas fa-book"></i>
+        <h2>Registro de Reclamo / Queja</h2>
+        <p>Ley N° 29571 — Código de Protección y Defensa del Consumidor</p>
+      </div>
+
+      @if (submitError) {
+      <div class="rec-error">
+        <i class="fas fa-exclamation-circle"></i> {{ submitError }}
+      </div>
+      }
+
+      <form (ngSubmit)="enviar()" #recForm="ngForm">
+
+        <!-- SECCIÓN 1: CONSUMIDOR -->
+        <div class="rec-section">
+          <div class="rec-section-header">1. IDENTIFICACIÓN DEL CONSUMIDOR RECLAMANTE</div>
+
+          <div class="rec-row two">
+            <div class="rec-group">
+              <label>Tipo de Documento <span class="req">*</span></label>
+              <select [(ngModel)]="form.doc_type" name="doc_type" required>
+                <option value="">Selecciona...</option>
+                <option value="DNI">DNI</option>
+                <option value="CE">Carné de Extranjería</option>
+                <option value="Pasaporte">Pasaporte</option>
+              </select>
+            </div>
+            <div class="rec-group">
+              <label>Número de Documento <span class="req">*</span></label>
+              <input type="text" [(ngModel)]="form.dni" name="dni" placeholder="Mínimo 8 caracteres" required minlength="8" />
+            </div>
+          </div>
+
+          <div class="rec-row two">
+            <div class="rec-group">
+              <label>Apellido Paterno <span class="req">*</span></label>
+              <input type="text" [(ngModel)]="form.apellido_paterno" name="apellido_paterno" placeholder="Máximo 50 caracteres" required maxlength="50" />
+            </div>
+            <div class="rec-group">
+              <label>Apellido Materno <span class="req">*</span></label>
+              <input type="text" [(ngModel)]="form.apellido_materno" name="apellido_materno" placeholder="Máximo 50 caracteres" required maxlength="50" />
+            </div>
+          </div>
+
+          <div class="rec-row two">
+            <div class="rec-group">
+              <label>Nombres <span class="req">*</span></label>
+              <input type="text" [(ngModel)]="form.nombres" name="nombres" placeholder="Máximo 50 caracteres" required maxlength="50" />
+            </div>
+            <div class="rec-group">
+              <label>Teléfono <span class="req">*</span></label>
+              <input type="tel" [(ngModel)]="form.telefono" name="telefono" placeholder="9 dígitos" required maxlength="15" />
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>Correo Electrónico <span class="req">*</span></label>
+              <input type="email" [(ngModel)]="form.email" name="email" placeholder="ejemplo@correo.com" required />
+            </div>
+          </div>
+
+          <div class="rec-row three">
+            <div class="rec-group">
+              <label>Departamento <span class="req">*</span></label>
+              <select [(ngModel)]="form.department" name="department" required (ngModelChange)="onDepartmentChange()">
+                <option value="">Selecciona...</option>
+                @for (dep of departamentos; track dep) {
+                  <option [value]="dep">{{ dep }}</option>
+                }
+              </select>
+            </div>
+            <div class="rec-group">
+              <label>Provincia <span class="req">*</span></label>
+              <select [(ngModel)]="form.province" name="province" (ngModelChange)="onProvinceChange()" [disabled]="!provincias.length">
+                <option value="">Selecciona...</option>
+                @for (p of provincias; track p) {
+                  <option [value]="p">{{ p }}</option>
+                }
+              </select>
+            </div>
+            <div class="rec-group">
+              <label>Distrito <span class="req">*</span></label>
+              <select [(ngModel)]="form.district" name="district" [disabled]="!distritos.length">
+                <option value="">Selecciona...</option>
+                @for (d of distritos; track d) {
+                  <option [value]="d">{{ d }}</option>
+                }
+              </select>
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>Domicilio <span class="req">*</span></label>
+              <input type="text" [(ngModel)]="form.domicilio" name="domicilio" placeholder="Máximo 200 caracteres" required maxlength="200" />
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>¿Es menor de edad?</label>
+              <div class="rec-radios">
+                <label class="rec-radio-item">
+                  <input type="radio" [(ngModel)]="form.is_minor" name="is_minor" [value]="true" /> Sí
+                </label>
+                <label class="rec-radio-item">
+                  <input type="radio" [(ngModel)]="form.is_minor" name="is_minor" [value]="false" /> No
+                </label>
+              </div>
+            </div>
+          </div>
+
+          @if (form.is_minor) {
+          <div class="rec-minor-box">
+            <h4><i class="fas fa-user-shield"></i> Datos del Representante (Menor de Edad)</h4>
+
+            <div class="rec-row two">
+              <div class="rec-group">
+                <label>Tipo de Documento <span class="req">*</span></label>
+                <select [(ngModel)]="form.parent_doc_type" name="parent_doc_type">
+                  <option value="">Selecciona...</option>
+                  <option value="DNI">DNI</option>
+                  <option value="CE">Carné de Extranjería</option>
+                  <option value="Pasaporte">Pasaporte</option>
+                </select>
+              </div>
+              <div class="rec-group">
+                <label>Número de Documento <span class="req">*</span></label>
+                <input type="text" [(ngModel)]="form.parent_dni" name="parent_dni" placeholder="Mínimo 8 caracteres" />
+              </div>
+            </div>
+
+            <div class="rec-row two">
+              <div class="rec-group">
+                <label>Apellido Paterno <span class="req">*</span></label>
+                <input type="text" [(ngModel)]="form.parent_apellido_paterno" name="parent_apellido_paterno" placeholder="Máximo 50 caracteres" />
+              </div>
+              <div class="rec-group">
+                <label>Apellido Materno <span class="req">*</span></label>
+                <input type="text" [(ngModel)]="form.parent_apellido_materno" name="parent_apellido_materno" placeholder="Máximo 50 caracteres" />
+              </div>
+            </div>
+
+            <div class="rec-row two">
+              <div class="rec-group">
+                <label>Nombres <span class="req">*</span></label>
+                <input type="text" [(ngModel)]="form.parent_nombres" name="parent_nombres" placeholder="Máximo 50 caracteres" />
+              </div>
+              <div class="rec-group">
+                <label>Teléfono <span class="req">*</span></label>
+                <input type="tel" [(ngModel)]="form.parent_telefono" name="parent_telefono" placeholder="9 dígitos" />
+              </div>
+            </div>
+
+            <div class="rec-row one">
+              <div class="rec-group">
+                <label>Email <span class="req">*</span></label>
+                <input type="email" [(ngModel)]="form.parent_email" name="parent_email" placeholder="ejemplo@correo.com" />
+              </div>
+            </div>
+
+            <div class="rec-row three">
+              <div class="rec-group">
+                <label>Departamento <span class="req">*</span></label>
+                <select [(ngModel)]="form.parent_department" name="parent_department" (ngModelChange)="onParentDepartmentChange()">
+                  <option value="">Selecciona...</option>
+                  @for (dep of departamentos; track dep) {
+                    <option [value]="dep">{{ dep }}</option>
+                  }
+                </select>
+              </div>
+              <div class="rec-group">
+                <label>Provincia <span class="req">*</span></label>
+                <select [(ngModel)]="form.parent_province" name="parent_province" (ngModelChange)="onParentProvinceChange()" [disabled]="!parentProvincias.length">
+                  <option value="">Selecciona...</option>
+                  @for (p of parentProvincias; track p) {
+                    <option [value]="p">{{ p }}</option>
+                  }
+                </select>
+              </div>
+              <div class="rec-group">
+                <label>Distrito <span class="req">*</span></label>
+                <select [(ngModel)]="form.parent_district" name="parent_district" [disabled]="!parentDistritos.length">
+                  <option value="">Selecciona...</option>
+                  @for (d of parentDistritos; track d) {
+                    <option [value]="d">{{ d }}</option>
+                  }
+                </select>
+              </div>
+            </div>
+
+            <div class="rec-row one">
+              <div class="rec-group">
+                <label>Domicilio <span class="req">*</span></label>
+                <input type="text" [(ngModel)]="form.parent_domicilio" name="parent_domicilio" placeholder="Máximo 200 caracteres" />
+              </div>
+            </div>
+          </div>
+          }
+
+        </div>
+
+        <!-- SECCIÓN 3: BIEN/SERVICIO -->
+        <div class="rec-section">
+          <div class="rec-section-header">2. IDENTIFICACIÓN DEL BIEN / SERVICIO CONTRATADO</div>
+
+          <div class="rec-group">
+            <label>Tipo de Servicio/Bien <span class="req">*</span></label>
+            <div class="rec-checkboxes">
+              @for (srv of serviceOptions; track srv) {
+              <label class="rec-check-item">
+                <input type="checkbox" [checked]="isServiceSelected(srv)" (change)="toggleService(srv)" />
+                {{ srv }}
+              </label>
+              }
+            </div>
+            @if (showOtroServicio) {
+            <input type="text" [(ngModel)]="otroServicio" name="otroServicio" placeholder="Especifica el servicio/bien reclamado" class="rec-otro-input" />
+            }
+          </div>
+
+          <div class="rec-row two">
+            <div class="rec-group">
+              <label>Monto Reclamado (Opcional)</label>
+              <div class="rec-amount">
+                <span>S/.</span>
+                <input type="number" [(ngModel)]="form.amount" name="amount" placeholder="0.00" min="0" step="0.01" />
+              </div>
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>Descripción del Servicio/Bien <span class="req">*</span></label>
+              <textarea [(ngModel)]="form.service_description" name="service_description" placeholder="Ej: Matrícula para el ciclo 2025 — Programa de Educación Inicial" required></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 4: DETALLE -->
+        <div class="rec-section">
+          <div class="rec-section-header">3. DETALLE DE LA RECLAMACIÓN Y PEDIDO</div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>Descripción Detallada del Reclamo / Queja <span class="req">*</span></label>
+              <textarea [(ngModel)]="form.claim_description" name="claim_description"
+                placeholder="Describe detalladamente qué sucedió, cuándo ocurrió y por qué estás disconforme..." required minlength="50"></textarea>
+              <small>Mínimo 50 caracteres. Sé específico para una mejor respuesta.</small>
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>¿Qué esperas que se resuelva? <span class="req">*</span></label>
+              <textarea [(ngModel)]="form.claim_request" name="claim_request"
+                placeholder="Ej: Devolución de dinero, corrección del error, etc." required></textarea>
+            </div>
+          </div>
+
+          <div class="rec-row one">
+            <div class="rec-group">
+              <label>Tipo de Reclamación <span class="req">*</span></label>
+              <div class="rec-radios vertical">
+                <label class="rec-radio-item">
+                  <input type="radio" [(ngModel)]="form.claim_type" name="claim_type" value="Reclamo" />
+                  <span><strong>RECLAMO:</strong> Disconformidad relacionada a los productos o servicios brindados.</span>
+                </label>
+                <label class="rec-radio-item">
+                  <input type="radio" [(ngModel)]="form.claim_type" name="claim_type" value="Queja" />
+                  <span><strong>QUEJA:</strong> Disconformidad no relacionada a los productos/servicios, o malestar respecto a la atención al público.</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN 5: DECLARACIÓN -->
+        <div class="rec-section">
+          <div class="rec-section-header">4. DECLARACIÓN Y CONFORMIDAD</div>
+
+          <label class="rec-check-item declaration">
+            <input type="checkbox" [(ngModel)]="form.declaration" name="declaration" />
+            <span>Declaro bajo juramento que la información proporcionada es veraz y completa.</span>
+          </label>
+
+          <div class="rec-legal">
+            <p>En cumplimiento de la Ley N° 29733 — Ley de Protección de Datos Personales, la información será utilizada
+            exclusivamente para la gestión de reclamos por el I.E.S.P.P. "VIRGEN DEL CARMEN".</p>
+          </div>
+
+          <div class="rec-date-display">
+            <strong>Fecha y Hora del Sistema:</strong> {{ currentDate }}
+          </div>
+        </div>
+
+        <!-- CAPTCHA -->
+        <div class="rec-captcha-row">
+          <div class="rec-group">
+            <label>Código de Verificación <span class="req">*</span></label>
+            <div class="rec-captcha">
+              <span class="captcha-code">{{ captchaCode }}</span>
+              <button type="button" class="btn-refresh" (click)="generateCaptcha()" title="Generar nuevo código">
+                <i class="fas fa-sync-alt"></i>
+              </button>
+            </div>
+            <input type="text" [(ngModel)]="captchaInput" name="captchaInput" placeholder="Ingresa el código" required />
+          </div>
+        </div>
+
+        <!-- BOTONES -->
+        <div class="rec-actions">
+          <button type="reset" class="btn-cancelar" (click)="nuevoReclamo()">
+            <i class="fas fa-times"></i> Cancelar
+          </button>
+          <button type="submit" class="btn-enviar" [disabled]="isSubmitting">
+            @if (!isSubmitting) {
+              <i class="fas fa-paper-plane"></i> Enviar Reclamo
+            } @else {
+              <i class="fas fa-spinner fa-spin"></i> Enviando...
+            }
+          </button>
+        </div>
+
+        <div class="rec-plazo">
+          <i class="fas fa-clock"></i>
+          La I.E.S.P.P. "VIRGEN DEL CARMEN" dará respuesta en un plazo no mayor a <strong>15 días hábiles</strong>.
+        </div>
+
+      </form>
+
+      } @else {
+
+      <!-- SUCCESS -->
+      <div class="rec-success">
+        <div class="rec-success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h2>¡Reclamo Registrado Exitosamente!</h2>
+        <p>Su solicitud fue registrada en el Libro de Reclamaciones Virtual.</p>
+
+        <div class="rec-tracking-box">
+          <span class="rec-tracking-label">Número de Reclamo</span>
+          <strong>Nº {{ claimNumber }}</strong>
+        </div>
+
+        <div class="rec-tracking-box">
+          <span class="rec-tracking-label">Código de Seguimiento</span>
+          <strong class="code">{{ trackingCodeResult }}</strong>
+        </div>
+
+        <p class="rec-note">
+          <i class="fas fa-info-circle"></i>
+          Guarda estos datos para consultar el estado de tu reclamo. Recibirás respuesta en máximo <strong>15 días hábiles</strong>.
+        </p>
+
+        <button class="btn-enviar" (click)="nuevoReclamo()">
+          <i class="fas fa-plus"></i> Nuevo Reclamo
+        </button>
+      </div>
+
+      }
+
+    </div>
+    }
+
+    <!-- TAB: SEGUIMIENTO -->
+    @if (activeTab === 'seguimiento') {
+    <div class="rec-card">
+      <div class="rec-card-header">
+        <i class="fas fa-search"></i>
+        <h2>Seguimiento de Reclamo</h2>
+        <p>Ingresa tu código de seguimiento o DNI para consultar el estado.</p>
+      </div>
+
+      <div class="rec-search-box">
+        <div class="rec-row two">
+          <div class="rec-group">
+            <label>Código de Seguimiento</label>
+            <input type="text" [(ngModel)]="searchCode" name="searchCode" placeholder="Ej: R-JUA-1747756800000" />
+          </div>
+          <div class="rec-group">
+            <label>O tu DNI</label>
+            <input type="text" [(ngModel)]="searchDni" name="searchDni" placeholder="Ej: 12345678" />
+          </div>
+        </div>
+
+        @if (searchError) {
+        <div class="rec-error">
+          <i class="fas fa-exclamation-circle"></i> {{ searchError }}
+        </div>
+        }
+
+        <div class="rec-actions">
+          <button class="btn-enviar" (click)="buscarReclamo()" [disabled]="isSearching">
+            @if (!isSearching) {
+              <i class="fas fa-search"></i> Buscar Reclamo
+            } @else {
+              <i class="fas fa-spinner fa-spin"></i> Buscando...
+            }
+          </button>
+        </div>
+      </div>
+
+      @if (searchResult) {
+      <div class="rec-result">
+        <div class="rec-result-header">
+          <div class="rec-result-field">
+            <span>Número de Reclamo</span>
+            <strong>Nº {{ formatId(searchResult.id) }}</strong>
+          </div>
+          <div class="rec-result-field">
+            <span>Estado</span>
+            <span class="rec-status-badge" [class]="getStatusClass(searchResult.processing_status)">
+              {{ searchResult.processing_status }}
+            </span>
+          </div>
+          <div class="rec-result-field">
+            <span>Tipo</span>
+            <strong>{{ searchResult.claim_type }}</strong>
+          </div>
+          <div class="rec-result-field">
+            <span>Fecha de Presentación</span>
+            <strong>{{ formatDate(searchResult.createdAt) }}</strong>
+          </div>
+        </div>
+
+        <div class="rec-result-detail">
+          <h4>Resumen del Reclamo</h4>
+          <p>{{ searchResult.claim_description }}</p>
+        </div>
+
+        @if (searchResult.admin_response) {
+        <div class="rec-result-response">
+          <h4><i class="fas fa-reply"></i> Respuesta de la Institución</h4>
+          <p>{{ searchResult.admin_response }}</p>
+          <small>Respondido el {{ formatDate(searchResult.responded_at) }}</small>
+        </div>
+        }
+      </div>
+      }
+
+    </div>
+    }
+
   </div>
 </section>

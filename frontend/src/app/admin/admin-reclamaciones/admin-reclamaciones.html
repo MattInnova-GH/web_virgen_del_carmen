@@ -1,8 +1,246 @@
 <div class="admin-page">
+
+  <!-- Header -->
   <div class="page-header">
     <div>
       <h1 class="page-title">Libro de Reclamaciones</h1>
       <p class="page-sub">Gestión y revisión de reclamos recibidos</p>
     </div>
+    <button class="btn-reload" (click)="cargar()" [disabled]="isLoading">
+      <i class="fas fa-sync-alt" [class.fa-spin]="isLoading"></i> Actualizar
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-num">{{ counts.total }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+    <div class="stat-card pendiente">
+      <span class="stat-num">{{ counts.pendiente }}</span>
+      <span class="stat-label">Pendientes</span>
+    </div>
+    <div class="stat-card proceso">
+      <span class="stat-num">{{ counts.proceso }}</span>
+      <span class="stat-label">En Proceso</span>
+    </div>
+    <div class="stat-card respondido">
+      <span class="stat-num">{{ counts.respondido }}</span>
+      <span class="stat-label">Respondidos</span>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="filters-bar">
+    <input type="text" [(ngModel)]="filterText" (ngModelChange)="applyFilters()"
+      placeholder="Buscar por nombre, DNI o código..." class="filter-input" />
+    <select [(ngModel)]="filterStatus" (ngModelChange)="applyFilters()" class="filter-select">
+      <option value="">Todos los estados</option>
+      <option value="Pendiente">Pendiente</option>
+      <option value="En Proceso">En Proceso</option>
+      <option value="Respondido">Respondido</option>
+      <option value="Cerrado">Cerrado</option>
+    </select>
+    <select [(ngModel)]="filterType" (ngModelChange)="applyFilters()" class="filter-select">
+      <option value="">Todos los tipos</option>
+      <option value="Reclamo">Reclamo</option>
+      <option value="Queja">Queja</option>
+    </select>
+  </div>
+
+  <!-- Error -->
+  @if (loadError) {
+  <div class="ar-error">
+    <i class="fas fa-exclamation-circle"></i> {{ loadError }}
+  </div>
+  }
+
+  <!-- Loading -->
+  @if (isLoading) {
+  <div class="ar-loading">
+    <i class="fas fa-spinner fa-spin"></i> Cargando...
+  </div>
+  }
+
+  <!-- Tabla -->
+  @if (!isLoading) {
+  <div class="table-wrap">
+    <table class="ar-table">
+      <thead>
+        <tr>
+          <th>Nº</th>
+          <th>Fecha</th>
+          <th>Reclamante</th>
+          <th>DNI</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (r of filtered; track r.id) {
+        <tr>
+          <td class="td-id">{{ formatId(r.id) }}</td>
+          <td>{{ formatDate(r.createdAt) }}</td>
+          <td class="td-name">{{ r.nombres }} {{ r.apellido_paterno }}</td>
+          <td>{{ r.dni }}</td>
+          <td>
+            <span class="type-badge" [class.type-reclamo]="r.claim_type === 'Reclamo'" [class.type-queja]="r.claim_type === 'Queja'">
+              {{ r.claim_type }}
+            </span>
+          </td>
+          <td>
+            <span class="status-badge" [class]="getStatusClass(r.processing_status)">
+              {{ r.processing_status }}
+            </span>
+          </td>
+          <td>
+            <div class="action-btns">
+              <button class="btn-ver" (click)="openDetail(r)" title="Ver detalle">
+                <i class="fas fa-eye"></i>
+              </button>
+              <button class="btn-responder" (click)="openRespond(r)" title="Responder">
+                <i class="fas fa-reply"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        } @empty {
+        <tr>
+          <td colspan="7" class="td-empty">No hay reclamos que coincidan con los filtros.</td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  }
+
+</div>
+
+<!-- MODAL: Detalle -->
+@if (showDetailModal && selectedItem) {
+<div class="ar-modal-backdrop" (click)="closeModals()">
+  <div class="ar-modal" (click)="$event.stopPropagation()">
+    <div class="ar-modal-header">
+      <h2><i class="fas fa-file-alt"></i> Detalle del Reclamo Nº {{ formatId(selectedItem.id) }}</h2>
+      <button class="btn-close-modal" (click)="closeModals()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ar-modal-body">
+
+      <div class="detail-section">
+        <h4>Estado</h4>
+        <span class="status-badge" [class]="getStatusClass(selectedItem.processing_status)">{{ selectedItem.processing_status }}</span>
+        &nbsp;<span class="type-badge" [class.type-reclamo]="selectedItem.claim_type === 'Reclamo'" [class.type-queja]="selectedItem.claim_type === 'Queja'">{{ selectedItem.claim_type }}</span>
+      </div>
+
+      <div class="detail-section">
+        <h4>Consumidor</h4>
+        <div class="detail-grid">
+          <div><span>Nombre completo</span><strong>{{ fullName }}</strong></div>
+          <div><span>Documento</span><strong>{{ selectedItem.doc_type }}: {{ selectedItem.dni }}</strong></div>
+          <div><span>Teléfono</span><strong>{{ selectedItem.telefono }}</strong></div>
+          <div><span>Email</span><strong>{{ selectedItem.email }}</strong></div>
+          <div><span>Ubicación</span><strong>{{ selectedItem.district }}, {{ selectedItem.province }}, {{ selectedItem.department }}</strong></div>
+          <div><span>Domicilio</span><strong>{{ selectedItem.domicilio }}</strong></div>
+        </div>
+      </div>
+
+      @if (selectedItem.is_minor && selectedItem.parent_nombres) {
+      <div class="detail-section">
+        <h4>Representante (Menor de edad)</h4>
+        <div class="detail-grid">
+          <div><span>Nombre</span><strong>{{ selectedItem.parent_nombres }} {{ selectedItem.parent_apellido_paterno }}</strong></div>
+          <div><span>Documento</span><strong>{{ selectedItem.parent_doc_type }}: {{ selectedItem.parent_dni }}</strong></div>
+          <div><span>Email</span><strong>{{ selectedItem.parent_email }}</strong></div>
+        </div>
+      </div>
+      }
+
+      <div class="detail-section">
+        <h4>Servicios Reclamados</h4>
+        <div class="tag-list">
+          @for (srv of serviceList; track srv) {
+          <span class="srv-tag">{{ srv }}</span>
+          }
+        </div>
+        @if (selectedItem.amount) {
+        <p class="detail-amount">Monto reclamado: <strong>S/. {{ selectedItem.amount }}</strong></p>
+        }
+        <p class="detail-text">{{ selectedItem.service_description }}</p>
+      </div>
+
+      <div class="detail-section">
+        <h4>Descripción del Reclamo</h4>
+        <p class="detail-text">{{ selectedItem.claim_description }}</p>
+        <h4 style="margin-top:12px;">Pedido del Consumidor</h4>
+        <p class="detail-text">{{ selectedItem.claim_request }}</p>
+      </div>
+
+      @if (selectedItem.admin_response) {
+      <div class="detail-section response-section">
+        <h4><i class="fas fa-reply"></i> Respuesta de la Institución</h4>
+        <p class="detail-text">{{ selectedItem.admin_response }}</p>
+        <small>Respondido el {{ formatDate(selectedItem.responded_at) }}</small>
+      </div>
+      }
+
+    </div>
+    <div class="ar-modal-footer">
+      <button class="btn-responder-full" (click)="openRespond(selectedItem)">
+        <i class="fas fa-reply"></i> Responder
+      </button>
+      <button class="btn-cancelar" (click)="closeModals()">Cerrar</button>
+    </div>
   </div>
 </div>
+}
+
+<!-- MODAL: Responder -->
+@if (showRespondModal && selectedItem) {
+<div class="ar-modal-backdrop" (click)="closeModals()">
+  <div class="ar-modal" (click)="$event.stopPropagation()">
+    <div class="ar-modal-header">
+      <h2><i class="fas fa-reply"></i> Responder Reclamo Nº {{ formatId(selectedItem.id) }}</h2>
+      <button class="btn-close-modal" (click)="closeModals()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ar-modal-body">
+      <p class="respond-info">
+        <strong>{{ fullName }}</strong> — {{ selectedItem.claim_type }} — {{ formatDate(selectedItem.createdAt) }}
+      </p>
+
+      @if (saveError) {
+      <div class="ar-save-error"><i class="fas fa-exclamation-circle"></i> {{ saveError }}</div>
+      }
+      @if (saveSuccess) {
+      <div class="ar-save-success"><i class="fas fa-check-circle"></i> {{ saveSuccess }}</div>
+      }
+
+      <div class="rec-group" style="margin-bottom: 16px;">
+        <label>Estado del Reclamo</label>
+        <select [(ngModel)]="respondForm.processing_status" name="resp_status">
+          <option value="En Proceso">En Proceso</option>
+          <option value="Respondido">Respondido</option>
+          <option value="Cerrado">Cerrado</option>
+        </select>
+      </div>
+
+      <div class="rec-group">
+        <label>Respuesta al Reclamante</label>
+        <textarea [(ngModel)]="respondForm.admin_response" name="resp_text"
+          placeholder="Redacta la respuesta oficial de la institución..." rows="6"></textarea>
+      </div>
+    </div>
+    <div class="ar-modal-footer">
+      <button class="btn-responder-full" (click)="guardarRespuesta()" [disabled]="isSaving">
+        @if (!isSaving) {
+          <i class="fas fa-save"></i> Guardar Respuesta
+        } @else {
+          <i class="fas fa-spinner fa-spin"></i> Guardando...
+        }
+      </button>
+      <button class="btn-cancelar" (click)="closeModals()">Cancelar</button>
+    </div>
+  </div>
+</div>
+}

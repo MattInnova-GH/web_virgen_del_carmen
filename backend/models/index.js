@@ -10,6 +10,7 @@ const AcademicPersonal = require('./academic_personal.model');
 const Career = require('./career.model');
 const AcademicPapers = require('./academic_papers.model');
 const DigitalIntakeOffice = require('./digital_intake_office.model');
+const Reclamacion = require('./reclamacion.model');
 
 module.exports = {
     sequelize,
@@ -22,5 +23,6 @@ module.exports = {
     AcademicPersonal,
     Career,
     AcademicPapers,
-    DigitalIntakeOffice
+    DigitalIntakeOffice,
+    Reclamacion
 }
