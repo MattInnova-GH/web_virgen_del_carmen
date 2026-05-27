@@ -106,12 +106,11 @@ exports.deleteInvestigations = async (req, res) => {
         if (!investigation)
             return res.status(404).json({ message: 'Investigación no encontrada.' });
 
-        deleteFile(investigation.pdf_url);
-
         if (del === '0') {
             await investigation.update({ status: false });
             fmessage = 'Investigación archivada/desactivada correctamente.'
         } else if (del === '1') {
+            deleteFile(investigation.pdf_url);
             await investigation.destroy();
             fmessage = 'Investigación eliminada correctamente.'
         } else {

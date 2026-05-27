@@ -160,12 +160,11 @@ exports.deleteAcademicPaper = async (req, res) => {
         if (!academicPaper)
             return res.status(404).json({ message: 'Documento no encontrado.' });
 
-        deleteFile(academicPaper.pdf_url);
-
         if (del === '0') {
             await academicPaper.update({ status: false });
             fmessage = 'Documento archivado/desactivado correctamente.'
         } else if (del === '1') {
+            deleteFile(academicPaper.pdf_url);
             await academicPaper.destroy();
             fmessage = 'Documento eliminado correctamente.'
         } else {

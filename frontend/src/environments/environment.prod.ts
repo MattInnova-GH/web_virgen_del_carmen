@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
 
-  apiUrl: 'https://tudominio.com/api',
-  baseUrl: 'https://tudominio.com'
+  apiUrl: 'https://api.elbambi.website/api',
+  baseUrl: 'https://api.elbambi.website'
 };

@@ -151,12 +151,14 @@
             </div>
           </div>
         </div>
-
+        <!--
         <div class="editor-section">
           <quill-editor [(ngModel)]="formData.content" [modules]="quillConfig" theme="snow" class="full-editor"
             [class.editor-dark]="editorTheme() === 'dark'" [class.editor-light]="editorTheme() === 'light'">
           </quill-editor>
         </div>
+        -->
+        
       </div>
 
       <div class="modal-footer">
@@ -195,13 +197,13 @@
       <div class="modal-body">
         <p>¿Qué deseas hacer con este comunicado?</p>
 
-        @if (tooltipVisible()) {
+        
         <div class="tooltip-box">
           Advertencia: El archivo será elimanado en ambos casos, asegurese de hacer una copia de seguridad.<br>
           Desactivar: Los datos no serán visibles en el portal público, pero aún se conservan.<br>
           Eliminar: Los datos se borran definitivamente.
         </div>
-        }
+        
       </div>
 
       <div class="modal-footer">

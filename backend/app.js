@@ -13,7 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: 'http://localhost:4200',
+    origin: [
+        'https://elbambi.website',
+        'http://elbambi.website',
+        'https://api.elbambi.website',
+        'http://api.elbambi.website',
+        'http://localhost:4200'
+    ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -28,12 +34,22 @@ app.use(
                     "'self'",
                     "data:",
                     "https:",
+                    "http:",
+                    "https://api.elbambi.website",
+                    "http://localhost:3000",
+                    "https://scontent.fpio4-1.fna.fbcdn.net"
+                ],
+                frameSrc: [
+                    "'self'",
+                    "https://api.elbambi.website",
                     "http://localhost:3000"
                 ],
-
-                imgSrc: ["'self'", "data:", "https:"],
-                frameSrc: ["'self'", "http://localhost:3000"],
-                frameAncestors: ["'self'", "http://localhost:4200"]
+                frameAncestors: [
+                    "'self'",
+                    "https://elbambi.website",
+                    "http://elbambi.website",
+                    "http://localhost:4200"
+                ]
             },
         },
     })
@@ -54,6 +70,14 @@ app.use('/api', appRoutes.DigitalIntakeOfficeRoutes);
 app.use('/api', appRoutes.ReclamacionRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
+
+app.get('/', (req, res) => {
+    res.send('Bienvenido');
+});
+
+app.get('/test', (req, res) => {
+    res.json({ ok: true, env: process.env.NODE_ENV });
+});
 
 sequelize.authenticate()
     .then(() => {
