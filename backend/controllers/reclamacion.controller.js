@@ -1,5 +1,7 @@
 const db = require('../models');
 const { generateTrackingCode } = require('../helpers/reclamacion.query');
+const sendComplaintResponseMail = require('../helpers/sendComplaintsBookMail');
+const sendComplaintRegistrationMail = require('../helpers/sendComplaintRegistrationMail');
 
 const createReclamacion = async (req, res) => {
     try {
@@ -27,10 +29,17 @@ const createReclamacion = async (req, res) => {
 
         const newReclamacion = await db.Reclamacion.create({
             tracking_code,
-            doc_type, dni,
-            apellido_paterno, apellido_materno, nombres,
-            telefono, email,
-            department, province, district, domicilio,
+            doc_type,
+            dni,
+            apellido_paterno,
+            apellido_materno,
+            nombres,
+            telefono,
+            email,
+            department,
+            province,
+            district,
+            domicilio,
             is_minor: is_minor === 'true' || is_minor === true,
             parent_doc_type: parent_doc_type || null,
             parent_dni: parent_dni || null,
@@ -43,7 +52,9 @@ const createReclamacion = async (req, res) => {
             parent_province: parent_province || null,
             parent_district: parent_district || null,
             parent_domicilio: parent_domicilio || null,
-            service_type: Array.isArray(service_type) ? service_type : JSON.parse(service_type),
+            service_type: Array.isArray(service_type)
+                ? service_type
+                : JSON.parse(service_type),
             amount: amount || null,
             service_description,
             claim_description,
@@ -51,6 +62,8 @@ const createReclamacion = async (req, res) => {
             claim_type,
             processing_status: 'Pendiente'
         });
+
+        await sendComplaintRegistrationMail(newReclamacion);
 
         return res.status(201).json(newReclamacion);
     } catch (error) {
@@ -90,6 +103,12 @@ const respondReclamacion = async (req, res) => {
             admin_response,
             processing_status,
             responded_at: new Date()
+        });
+
+        await sendComplaintResponseMail({
+            ...reclamacion.toJSON(),
+            admin_response,
+            processing_status
         });
 
         return res.status(200).json(reclamacion);
