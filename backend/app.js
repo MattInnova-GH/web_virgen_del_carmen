@@ -71,6 +71,7 @@ app.use('/api', appRoutes.AcademicPapersRoutes);
 app.use('/api', appRoutes.AuthRoutes);
 app.use('/api', appRoutes.DigitalIntakeOfficeRoutes);
 app.use('/api', appRoutes.ReclamacionRoutes);
+app.use('/api', appRoutes.chatbotRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
 

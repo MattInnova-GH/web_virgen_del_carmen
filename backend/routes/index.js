@@ -9,6 +9,7 @@ const AcademicPapersRoutes = require('./academic_papers.routes');
 const AuthRoutes = require('./auth.routes');
 const DigitalIntakeOfficeRoutes = require('./digital_intake_office.routes');
 const ReclamacionRoutes = require('./reclamacion.routes');
+const chatbotRoutes = require('./chatbot.routes');
 
 module.exports = {
     NewsRoutes,
@@ -21,5 +22,6 @@ module.exports = {
     AcademicPapersRoutes,
     AuthRoutes,
     DigitalIntakeOfficeRoutes,
-    ReclamacionRoutes
+    ReclamacionRoutes,
+    chatbotRoutes
 }
