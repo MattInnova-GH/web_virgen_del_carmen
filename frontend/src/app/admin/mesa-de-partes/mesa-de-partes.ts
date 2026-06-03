@@ -35,16 +35,16 @@ export class MesaDePartesAdmin implements OnInit {
       next: (data) => {
         this.tramites.set(
           data.map(tramite => {
-            let estadoDefecto = 'Pendiente';
-            if (tramite.processing_status === 'Aceptado') {
-              estadoDefecto = 'Aceptado';
-            } else if (tramite.processing_status === 'Rechazado') {
-              estadoDefecto = 'Rechazado';
-            }
             return {
               ...tramite,
-              fechaFormateada: tramite.created_at || tramite.fecha || tramite.createdAt || new Date(),
-              statusNormalized: estadoDefecto
+              fechaFormateada:
+                tramite.created_at ||
+                tramite.fecha ||
+                tramite.createdAt ||
+                new Date(),
+
+              statusNormalized:
+                tramite.processing_status || 'Pendiente'
             };
           })
         );
@@ -87,7 +87,7 @@ export class MesaDePartesAdmin implements OnInit {
     this.mostrarPdfFlotante.set(false);
   }
 
-  actualizarEstado(nuevoEstado: 'Aceptado' | 'Rechazado'): void {
+  actualizarEstado(nuevoEstado: 'Aceptado' | 'Rechazado' | 'Finalizado'): void {
     if (!this.tramiteSeleccionado || this.isLoading) return;
 
     const id = this.tramiteSeleccionado.id;
@@ -113,11 +113,15 @@ export class MesaDePartesAdmin implements OnInit {
           })
         );
 
+        this.tramiteSeleccionado = {
+          ...this.tramiteSeleccionado,
+          processing_status: nuevoEstado,
+          statusNormalized: nuevoEstado
+        }
+
+        this.isLoading = false;
+
         this.cdRef.detectChanges();
-        setTimeout(() => {
-          this.isLoading = false;
-          this.cerrarModal();
-        }, 400);
       },
       error: (err) => {
         console.error('Error al actualizar estado:', err);

@@ -2,6 +2,7 @@ const db = require('../models');
 const buildDigitalIntakeOfficeQuery = require('../helpers/digital_intake_office.query');
 const deleteFile = require('../middlewares/deleteFile');
 const { where } = require('sequelize');
+const sendDigitalIntakeMail = require('../helpers/sendDigitalIntakeMail');
 
 const generateTrackingCode = async (
     full_name,
@@ -108,6 +109,9 @@ exports.createDigitalIntake = async (req, res) => {
             description
         });
 
+        sendDigitalIntakeMail(newDigitalIntake)
+            .catch(err => console.error('Error enviando correo:', err));
+
         return res.status(201).json(newDigitalIntake);
     } catch (error) {
         console.error(error.message);
@@ -134,7 +138,7 @@ exports.getDigitalIntake = async (req, res) => {
         );
 
         const digitalIntake = await db.DigitalIntakeOffice.findAll(query);
-        
+
         res.status(200).json(digitalIntake);
     } catch (error) {
         console.error(error.message);
@@ -148,8 +152,31 @@ exports.updateDigitalIntake = async (req, res) => {
         const { processing_status } = req.body;
 
         const tramite = await db.DigitalIntakeOffice.findByPk(id);
-        if (!tramite)
-            return res.status(404).json({ message: 'El trámite no existe.' });
+        const estadoActual = tramite.processing_status;
+
+        if (estadoActual === 'Finalizado') {
+            return res.status(400).json({
+                message: 'El trámite ya fue finalizado.'
+            });
+        }
+
+        if (
+            estadoActual === 'Pendiente' &&
+            !['Aceptado', 'Rechazado'].includes(processing_status)
+        ) {
+            return res.status(400).json({
+                message: 'Estado inválido.'
+            });
+        }
+
+        if (
+            ['Aceptado', 'Rechazado'].includes(estadoActual) &&
+            processing_status !== 'Finalizado'
+        ) {
+            return res.status(400).json({
+                message: 'Solo puede finalizar el trámite.'
+            });
+        }
 
         tramite.processing_status = processing_status;
         await tramite.save();

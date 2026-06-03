@@ -12,6 +12,9 @@ const appRoutes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const testMailConnection = require('./test/testMail');
+const sendTestMail = require('./test/sendTestMail');
+
 app.use(cors({
     origin: [
         'https://elbambi.website',
@@ -81,6 +84,8 @@ app.get('/test', (req, res) => {
 
 sequelize.authenticate()
     .then(() => {
+        //testMailConnection();
+        //sendTestMail();
         console.log('DB conectada');
 
         app.listen(PORT, () => {

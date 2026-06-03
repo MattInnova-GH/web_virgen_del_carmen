@@ -344,71 +344,40 @@
 @if (showSuccessModal) {
 
 <div class="modal-overlay">
-
   <div class="success-modal">
-
     <button class="modal-close" (click)="closeModal()">
-
       ×
-
     </button>
-
     <div class="modal-icon">
-
       <i class="fas fa-check-circle"></i>
-
     </div>
-
     <h2>
-
       Documento enviado correctamente
-
     </h2>
-
     <p>
-
       Su solicitud fue registrada
       satisfactoriamente en la
       Mesa de Partes Virtual.
 
     </p>
-
     <p>
-
       La institución atenderá
       su solicitud en el menor
       tiempo posible.
-
     </p>
-
     <div class="tracking-box">
-
-      <span class="tracking-label">
-
-        Código de seguimiento
-
-      </span>
-
+      <span class="tracking-label">Código de seguimiento</span>
       <strong>
-
         {{ trackingCode }}
-
       </strong>
-
     </div>
-
     <p class="tracking-note">
-
       Guarde este código para
       consultar el estado de
       su trámite posteriormente.
-
     </p>
-
   </div>
-
 </div>
-
 }
 
 @if (showConsultaModal && consultaResult) {
@@ -437,6 +406,23 @@
     <div class="consulta-tracking-box">
       <span class="tracking-label">Código de Seguimiento</span>
       <strong>{{ consultaResult.tracking_code }}</strong>
+    </div>
+
+    <div class="consulta-status-message" [class.msg-pendiente]="consultaResult.processing_status === 'Pendiente'"
+      [class.msg-aceptado]="consultaResult.processing_status === 'Aceptado'"
+      [class.msg-rechazado]="consultaResult.processing_status === 'Rechazado'"
+      [class.msg-finalizado]="consultaResult.processing_status === 'Finalizado'">
+
+      <i class="fas" [class.fa-clock]="consultaResult.processing_status === 'Pendiente'"
+        [class.fa-check-circle]="consultaResult.processing_status === 'Aceptado'"
+        [class.fa-times-circle]="consultaResult.processing_status === 'Rechazado'"
+        [class.fa-flag-checkered]="consultaResult.processing_status === 'Finalizado'">
+      </i>
+
+      <span>
+        {{ getStatusMessage(consultaResult.processing_status) }}
+      </span>
+
     </div>
 
     <div class="consulta-grid">
@@ -504,11 +490,7 @@
         }
 
         @if (getFileType(consultaResult.attached_file_url) === 'image') {
-        <img
-          [src]="getFileUrl(consultaResult.attached_file_url)"
-          alt="Vista previa"
-          class="consulta-file-preview"
-        />
+        <img [src]="getFileUrl(consultaResult.attached_file_url)" alt="Vista previa" class="consulta-file-preview" />
         }
 
         <span class="consulta-file-name">
@@ -517,10 +499,7 @@
 
       </div>
 
-      <button
-        class="btn-ver-archivo"
-        (click)="abrirArchivo(getFileUrl(consultaResult.attached_file_url))"
-      >
+      <button class="btn-ver-archivo" (click)="abrirArchivo(getFileUrl(consultaResult.attached_file_url))">
         <i class="fas fa-external-link-alt"></i>
         Ver Archivo Adjunto
       </button>
@@ -538,10 +517,7 @@
         <span class="consulta-file-name">Enlace del Documento</span>
       </div>
 
-      <button
-        class="btn-ver-archivo btn-ver-link"
-        (click)="abrirArchivo(consultaResult.document_url)"
-      >
+      <button class="btn-ver-archivo btn-ver-link" (click)="abrirArchivo(consultaResult.document_url)">
         <i class="fas fa-external-link-alt"></i>
         Abrir Enlace
       </button>

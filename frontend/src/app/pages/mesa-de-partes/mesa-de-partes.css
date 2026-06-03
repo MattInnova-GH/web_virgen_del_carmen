@@ -905,3 +905,47 @@
     align-items: flex-start;
   }
 }
+
+.consulta-status-message {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  padding: 16px;
+  margin-bottom: 20px;
+
+  border-radius: 10px;
+  border-left: 5px solid;
+
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.consulta-status-message i {
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.msg-pendiente {
+  background: #fff8e6;
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.msg-aceptado {
+  background: #eaf8ee;
+  border-color: #28a745;
+  color: #155724;
+}
+
+.msg-rechazado {
+  background: #fdecec;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+.msg-finalizado {
+  background: #eaf4ff;
+  border-color: #17a2b8;
+  color: #004085;
+}

@@ -4,8 +4,6 @@
 /* ===================================================
    HEADER & CONTENEDORES
    =================================================== */
-
-
 .mdp-admin-card {
   background: white;
   border-radius: 12px;
@@ -579,4 +577,40 @@
 @keyframes scaleUpWindow {
   from { transform: scale(0.95); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
+}
+
+.current-status-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+  margin-bottom: 10px;
+}
+
+.current-status-box .label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.btn-p-finish {
+  background: linear-gradient(135deg, #323f7c, #4a5aaa);
+  box-shadow: 0 4px 12px rgba(50, 63, 124, 0.3);
+}
+
+.btn-p-finish:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2b376e, #3f4f9a);
+  transform: translateY(-1px);
+}
+
+.btn-p-finish:disabled {
+  background: #cbd5e1;
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.badge-finalizado {
+  background-color: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
 }

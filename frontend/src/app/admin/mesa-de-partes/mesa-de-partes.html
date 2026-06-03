@@ -38,14 +38,10 @@
 
             <td>
               <span class="badge" [ngClass]="{
-                  'badge-pendiente':
-                    (tramite.processing_status || tramite.statusNormalized) === 'Pendiente',
-
-                  'badge-aprobado':
-                    (tramite.processing_status || tramite.statusNormalized) === 'Aceptado',
-
-                  'badge-rechazado':
-                    (tramite.processing_status || tramite.statusNormalized) === 'Rechazado'
+                  'badge-pendiente': (tramite.processing_status || tramite.statusNormalized) === 'Pendiente',
+                  'badge-aprobado': (tramite.processing_status || tramite.statusNormalized) === 'Aceptado',
+                  'badge-rechazado': (tramite.processing_status || tramite.statusNormalized) === 'Rechazado',
+                  'badge-finalizado': (tramite.processing_status || tramite.statusNormalized) === 'Finalizado'
                 }">
                 {{
                 tramite.processing_status ||
@@ -105,6 +101,17 @@
           </span>
 
           <h3>Evaluación y Control de Trámite</h3>
+
+          <div class="current-status-box">
+            <span class="badge" [ngClass]="{
+                'badge-pendiente': tramiteSeleccionado.statusNormalized === 'Pendiente',
+                'badge-aprobado': tramiteSeleccionado.statusNormalized === 'Aceptado',
+                'badge-rechazado': tramiteSeleccionado.statusNormalized === 'Rechazado',
+                'badge-finalizado': tramiteSeleccionado.statusNormalized === 'Finalizado'
+              }">
+              {{ tramiteSeleccionado.statusNormalized }}
+            </span>
+          </div>
         </div>
 
         <button class="modal-premium-close" (click)="cerrarModal()">
@@ -207,19 +214,43 @@
 
           <div class="modal-premium-actions">
 
-            <button class="btn-premium-action btn-p-approve" (click)="actualizarEstado('Aceptado')"
-              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading">
-              <i class="fas fa-check-circle"></i>
+            @if (tramiteSeleccionado.statusNormalized === 'Pendiente') {
 
-              {{ isLoading ? 'Guardando...' : 'Aceptar Trámite' }}
+            <button class="btn-premium-action btn-p-approve" (click)="actualizarEstado('Aceptado')"
+              [disabled]="isLoading">
+
+              Aceptar Trámite
             </button>
 
             <button class="btn-premium-action btn-p-reject" (click)="actualizarEstado('Rechazado')"
-              [disabled]="tramiteSeleccionado.statusNormalized !== 'Pendiente' || isLoading">
-              <i class="fas fa-times-circle"></i>
+              [disabled]="isLoading">
 
-              {{ isLoading ? 'Guardando...' : 'Rechazar Trámite' }}
+              Rechazar Trámite
             </button>
+
+            }
+
+            @if (
+            tramiteSeleccionado.statusNormalized === 'Aceptado' ||
+            tramiteSeleccionado.statusNormalized === 'Rechazado'
+            ) {
+
+            <button class="btn-premium-action btn-p-finish" (click)="actualizarEstado('Finalizado')"
+              [disabled]="isLoading">
+
+              Finalizar Trámite
+            </button>
+
+            }
+
+            @if (tramiteSeleccionado.statusNormalized === 'Finalizado') {
+
+            <button class="btn-premium-action" disabled>
+
+              Trámite Finalizado
+            </button>
+
+            }
 
           </div>
         </div>
