@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AcademicPersonal = require('../controllers/academic_personal.controller');
 const auth = require('../middlewares/auth');
-const upload = require('../middlewares/personal_upload'); // ✅ cambiado a "upload"
+const upload = require('../middlewares/personal_upload'); 
 
 router.post('/academic_personal/create', auth, upload.single('file'), AcademicPersonal.createAcademicPersonal);
 router.get('/academic_personal/list', AcademicPersonal.getAcademicPersonal);

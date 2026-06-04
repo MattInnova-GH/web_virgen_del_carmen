@@ -109,8 +109,7 @@ exports.createDigitalIntake = async (req, res) => {
             description
         });
 
-        sendDigitalIntakeMail(newDigitalIntake)
-            .catch(err => console.error('Error enviando correo:', err));
+        sendDigitalIntakeMail(newDigitalIntake).catch(err => console.error('Error enviando correo:', err));
 
         return res.status(201).json(newDigitalIntake);
     } catch (error) {

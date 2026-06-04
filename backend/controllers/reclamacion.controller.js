@@ -63,7 +63,7 @@ const createReclamacion = async (req, res) => {
             processing_status: 'Pendiente'
         });
 
-        await sendComplaintRegistrationMail(newReclamacion);
+        sendComplaintRegistrationMail(newReclamacion).catch(err => console.error('Error enviando correo:', err));
 
         return res.status(201).json(newReclamacion);
     } catch (error) {

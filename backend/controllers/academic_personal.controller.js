@@ -15,8 +15,7 @@ exports.createAcademicPersonal = async (req, res) => {
         let pdf_url = null;   
 
         if (req.file) {                  
-            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
-            pdf_url = `${relDir}/${req.file.filename}`;
+            pdf_url = `/personal_cv/${req.file.filename}`;
         }
 
         const newAcademicPersonal = await db.AcademicPersonal.create({
@@ -67,8 +66,7 @@ exports.updateAcademicPersonal = async (req, res) => {
 
         if (req.file) {
             deleteFile(academicPersonal.pdf_url);
-            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
-            academicPersonal.pdf_url = `${relDir}/${req.file.filename}`;
+            academicPersonal.pdf_url = `/personal_cv/${req.file.filename}`;
         }
 
         academicPersonal.type = type;

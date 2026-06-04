@@ -16,8 +16,7 @@ exports.createInvestigation = async (req, res) => {
         let pdf_url = null;
 
         if (req.file) {
-            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
-            pdf_url = `${relDir}/${req.file.filename}`;
+            pdf_url = `/pdf/documents/investigaciones/${req.file.filename}`;
         }
 
         const newInvestigation = await db.Investigations.create({
@@ -74,8 +73,7 @@ exports.updateInvestigation = async (req, res) => {
 
         if (req.file) {
             deleteFile(investigations.pdf_url);
-            const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
-            investigations.pdf_url = `${relDir}/${req.file.filename}`;
+            investigations.pdf_url = `/pdf/documents/investigaciones/${req.file.filename}`;
         }
 
         investigations.title = title;
