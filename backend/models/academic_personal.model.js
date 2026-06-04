@@ -24,11 +24,19 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
+    area: {                              // ✅ NUEVO
+        type: DataTypes.STRING(255),
+        allowNull: true
+    },
     grade: {
         type: DataTypes.STRING(255),
         allowNull: false
     },
     img_url: {
+        type: DataTypes.TEXT,
+        allowNull: true
+    },
+    pdf_url: {                           // ✅ NUEVO
         type: DataTypes.TEXT,
         allowNull: true
     },

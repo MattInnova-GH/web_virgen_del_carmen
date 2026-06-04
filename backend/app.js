@@ -74,6 +74,7 @@ app.use('/api', appRoutes.ReclamacionRoutes);
 app.use('/api', appRoutes.chatbotRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
+app.use('/personal_cv', express.static(path.join(__dirname, 'public/personal_cv'))); // ✅ NUEVO
 
 app.get('/', (req, res) => {
     res.send('Bienvenido');
