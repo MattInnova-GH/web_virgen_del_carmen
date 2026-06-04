@@ -1,4 +1,4 @@
- <div class="admin-page">
+<div class="admin-page">
 
   <div class="page-header">
     <div>
@@ -10,10 +10,8 @@
     </button>
   </div>
 
-  <!-- SECCIONES DESPLEGABLES -->
   @for (type of sectionTypes; track type) {
   <div class="seccion-card">
-
     <button class="seccion-header" (click)="toggleSection(type)">
       <div class="seccion-header-left">
         <i class="fas fa-users seccion-icon"></i>
@@ -28,7 +26,6 @@
 
     @if (isSectionOpen(type)) {
     <div class="seccion-body">
-
       @if (groupedPersonal()[type].length === 0) {
       <p class="seccion-vacia">No hay personal en esta sección.</p>
       } @else {
@@ -40,8 +37,10 @@
               <th>Nombres y Apellidos</th>
               <th>Correo Institucional</th>
               <th>Cargo</th>
+              <th>Área</th>
               <th>Tipo</th>
               <th>Año</th>
+              <th>CV</th>
               <th>Estado</th>
               <th>Acciones</th>
             </tr>
@@ -50,9 +49,7 @@
             @for (p of groupedPersonal()[type]; track p.id) {
             <tr>
               <td>{{ p.id }}</td>
-
               <td class="td-title">{{ p.full_name }}</td>
-
               <td>
                 @if (p.institucional_email) {
                 {{ p.institucional_email }}
@@ -60,17 +57,24 @@
                 <span style="color:#777">—</span>
                 }
               </td>
-
               <td>{{ p.position }}</td>
+              <td>{{ p.area || '—' }}</td>
               <td>{{ p.type }}</td>
               <td>{{ p.year }}</td>
-
+              <td>
+                @if (p.pdf_url) {
+                <button class="btn-pdf-link" (click)="openPdfViewer(apiBase + p.pdf_url)">
+                  <i class="fas fa-file-pdf"></i> Ver CV
+                </button>
+                } @else {
+                <span style="color:#777">—</span>
+                }
+              </td>
               <td>
                 <span class="badge" [class.badge-blue]="p.status" [class.badge-orange]="!p.status">
                   {{ p.status ? 'Activo' : 'Inactivo' }}
                 </span>
               </td>
-
               <td class="td-actions">
                 <button class="btn-icon btn-edit" (click)="openEditModal(p)">
                   <i class="fas fa-pen"></i>
@@ -85,40 +89,55 @@
         </table>
       </div>
       }
-
     </div>
     }
-
   </div>
   }
 
-  <!-- MODAL (sin cambios) -->
+  <!-- MODAL CREAR / EDITAR -->
   @if (showModal()) {
   <div class="modal-backdrop">
-    <div class="modal">
+    <div class="modal modal-wide">
       <div class="modal-header">
         <h2>{{ isEditMode() ? 'Editar Personal Académico' : 'Agregar Personal Académico' }}</h2>
         <button class="close-btn" (click)="closeModal()">×</button>
       </div>
 
       <div class="modal-body">
-        <div class="form-grid">
-          <input [(ngModel)]="formData.names" placeholder="Nombres">
-          <input [(ngModel)]="formData.last_names" placeholder="Apellidos">
-          <select [(ngModel)]="formData.type">
-            <option value="Autoridad">Autoridad</option>
-            <option value="Docente">Docente</option>
-            <option value="Administrativo">Administrativo</option>
-            <option value="Complementario">Complementario</option>
-          </select>
-          <input [(ngModel)]="formData.institucional_email" placeholder="Correo Institucional">
-          <input [(ngModel)]="formData.position" placeholder="Cargo">
-          <input [(ngModel)]="formData.grade" placeholder="Grado (Abreviatura)">
-          <input [(ngModel)]="formData.year" placeholder="Año">
-          <input [(ngModel)]="formData.img_url" placeholder="URL de imagen">
+
+        <div class="modal-form-col">
+          <div class="form-grid">
+            <input [(ngModel)]="formData.names" placeholder="Nombres">
+            <input [(ngModel)]="formData.last_names" placeholder="Apellidos">
+            <select [(ngModel)]="formData.type">
+              <option value="Autoridad">Autoridad</option>
+              <option value="Docente">Docente</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="Complementario">Complementario</option>
+            </select>
+            <input [(ngModel)]="formData.institucional_email" placeholder="Correo Institucional">
+            <input [(ngModel)]="formData.position" placeholder="Cargo">
+            <input [(ngModel)]="formData.area" placeholder="Área">
+            <input [(ngModel)]="formData.grade" placeholder="Grado (Abreviatura)">
+            <input [(ngModel)]="formData.year" placeholder="Año">
+            <input [(ngModel)]="formData.img_url" placeholder="URL de imagen">
+          </div>
+
+          <div class="pdf-upload-area" (click)="pdfInput.click()" (dragover)="$event.preventDefault()" (drop)="onPdfDrop($event)">
+            <input #pdfInput type="file" accept="application/pdf" style="display:none" (change)="onPdfSelected($event)">
+            <i class="fas fa-file-upload pdf-upload-icon"></i>
+            <span class="pdf-upload-label">
+              {{ selectedPdfName() || 'Haz clic o arrastra el CV (PDF)' }}
+            </span>
+            @if (selectedPdfName()) {
+            <button class="pdf-remove-btn" (click)="removePdf($event)">
+              <i class="fas fa-times"></i>
+            </button>
+            }
+          </div>
         </div>
 
-        <div class="preview">
+        <div class="modal-preview-col">
           <div class="preview-frame">
             @if (formData.img_url) {
             <img [src]="formData.img_url">
@@ -129,7 +148,21 @@
             </div>
             }
           </div>
+
+          <div class="pdf-preview-frame">
+            @if (pdfPreviewUrl()) {
+            <iframe [src]="pdfPreviewUrl()!" class="pdf-iframe"></iframe>
+            } @else if (isEditMode() && formData.pdf_url) {
+            <iframe [src]="apiBase + formData.pdf_url" class="pdf-iframe"></iframe>
+            } @else {
+            <div class="no-preview">
+              <i class="fas fa-file-pdf"></i>
+              <span>Vista previa CV</span>
+            </div>
+            }
+          </div>
         </div>
+
       </div>
 
       <div class="modal-footer">
@@ -142,7 +175,7 @@
   </div>
   }
 
-  <!-- MODAL ELIMINAR (sin cambios) -->
+  <!-- MODAL ELIMINAR -->
   @if (deleteModal()) {
   <div class="modal-backdrop" (click)="closeDeleteModal()">
     <div class="modal confirm-modal" (click)="$event.stopPropagation()">
@@ -153,7 +186,6 @@
           <button class="close-btn" (click)="closeDeleteModal()">×</button>
         </div>
       </div>
-
       <div class="modal-body">
         <p>¿Qué deseas hacer con este registro?</p>
         @if (tooltipVisible()) {
@@ -163,12 +195,24 @@
         </div>
         }
       </div>
-
       <div class="modal-footer">
         <button class="btn-cancel" (click)="closeDeleteModal()">Cancelar</button>
         <button class="btn-warning" (click)="deleteAction('0')">Desactivar</button>
         <button class="btn-danger" (click)="deleteAction('1')">Eliminar</button>
       </div>
+    </div>
+  </div>
+  }
+
+  <!-- VISOR PDF FLOTANTE -->
+  @if (pdfViewerUrl()) {
+  <div class="pdf-viewer-backdrop" (click)="closePdfViewer()">
+    <div class="pdf-viewer-modal" (click)="$event.stopPropagation()">
+      <div class="pdf-viewer-header">
+        <span class="pdf-viewer-title"><i class="fas fa-file-pdf"></i> Curriculum Vitae</span>
+        <button class="close-btn" (click)="closePdfViewer()">×</button>
+      </div>
+      <iframe [src]="pdfViewerUrl()!" class="pdf-viewer-iframe"></iframe>
     </div>
   </div>
   }

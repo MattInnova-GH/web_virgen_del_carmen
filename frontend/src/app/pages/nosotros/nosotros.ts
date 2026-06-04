@@ -1,13 +1,19 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 
 interface Personal {
+  id: number;
   nombre: string;
   cargo: string;
+  area: string;
   foto: string;
+  email: string;
+  descripcion: string;
+  pdf_url: string;
 }
 
 type ContentType = 'mision' | 'vision' | 'valores' | 'organigrama' | null;
@@ -19,9 +25,12 @@ interface AcademicPersonalDB {
   last_names: string;
   grade: string;
   position: string;
+  area: string;
   img_url: string;
   year: number;
   description: string;
+  institucional_email: string;
+  pdf_url: string;
   status: boolean;
 }
 
@@ -37,12 +46,23 @@ export class Nosotros implements OnInit {
   activeContent = signal<ContentType>(null);
 
   private http = inject(HttpClient);
+  private sanitizer = inject(DomSanitizer);
   career = signal<any>(null);
 
   selectedYear = 0;
   years: number[] = [];
+  selectedArea: string | null = null;
+
+  activeProfile = signal<Personal | null>(null);
+  safePdfUrl = signal<SafeResourceUrl | null>(null);
 
   private allPersonal = signal<AcademicPersonalDB[]>([]);
+
+  availableAreas = computed(() => {
+    const filtered = this.allPersonal().filter(p => p.status && p.year === this.selectedYear);
+    const areas = filtered.map(p => p.area).filter(a => a && a.trim() !== '');
+    return [...new Set(areas)];
+  });
 
   private abbreviateName(grade: string, names: string, lastNames: string): string {
     const parts = (names ?? '').trim().split(/\s+/);
@@ -54,16 +74,47 @@ export class Nosotros implements OnInit {
 
   get currentPersonal(): Personal[] {
     return this.allPersonal()
-      .filter(p => p.status && p.year === this.selectedYear)
+      .filter(p => {
+        if (!p.status || p.year !== this.selectedYear) return false;
+        if (this.selectedArea !== null && p.area !== this.selectedArea) return false;
+        return true;
+      })
       .map(p => ({
+        id: p.id,
         nombre: this.abbreviateName(p.grade, p.names, p.last_names),
         cargo: p.position,
+        area: p.area ?? '',
         foto: p.img_url ?? '',
+        email: p.institucional_email ?? '',
+        descripcion: p.description ?? '',
+        pdf_url: p.pdf_url ?? '',
       }));
   }
 
   selectYear(year: number): void {
     this.selectedYear = year;
+    this.selectedArea = null;
+  }
+
+  selectArea(area: string | null): void {
+    this.selectedArea = area;
+  }
+
+  openProfile(persona: Personal) {
+    this.activeProfile.set(persona);
+    if (persona.pdf_url) {
+      const base = environment.apiUrl.replace('/api', '');
+      this.safePdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(base + persona.pdf_url));
+    } else {
+      this.safePdfUrl.set(null);
+    }
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeProfile() {
+    this.activeProfile.set(null);
+    this.safePdfUrl.set(null);
+    document.body.style.overflow = '';
   }
 
   constructor(private route: ActivatedRoute) { }
@@ -72,29 +123,16 @@ export class Nosotros implements OnInit {
     this.http.get<any[]>(`${environment.apiUrl}/career/list`).subscribe({
       next: data => {
         const activo = data.find(c => c.status);
-        if (activo) this.career.set({
-          ...activo,
-          history: activo.history,
-          mision: activo.mision,
-          vision: activo.vision,
-        });
+        if (activo) this.career.set({ ...activo });
       }
     });
 
     this.http.get<AcademicPersonalDB[]>(`${environment.apiUrl}/academic_personal/list`).subscribe({
       next: data => {
         this.allPersonal.set(data);
-
-        // Obtener años únicos
         const uniqueYears = [...new Set(data.map(p => p.year))];
-
-        // Ordenar de mayor a menor
         this.years = uniqueYears.sort((a, b) => b - a);
-
-        // Seleccionar automáticamente el año más reciente
-        if (this.years.length > 0) {
-          this.selectedYear = this.years[0];
-        }
+        if (this.years.length > 0) this.selectedYear = this.years[0];
       },
     });
 
@@ -107,31 +145,16 @@ export class Nosotros implements OnInit {
       }
     });
   }
-  /**
-   * Muestra el contenido seleccionado (Misión/Visión/Valores)
-   * @param contentType - Tipo de contenido: 'mision', 'vision' o 'valores'
-   */
+
   private stripHtml(html: string): string {
     if (!html) return '';
     const tmp = document.createElement('div');
     tmp.innerHTML = html;
-    const text = tmp.textContent || tmp.innerText || '';
-    return text.replace(/\s+/g, ' ').trim();
+    return (tmp.textContent || tmp.innerText || '').replace(/\s+/g, ' ').trim();
   }
 
   showContent(type: ContentType) {
     this.activeContent.update(current => current === type ? null : type);
-  }
-
-  getShortHistory(html: string): string {
-    if (!html) return '';
-
-    const text = this.stripHtml(html);
-    const maxLength = 220; // puedes ajustar
-
-    if (text.length <= maxLength) return text;
-
-    return text.substring(0, maxLength) + '...';
   }
 
   toggleHistory(): void {
@@ -140,7 +163,6 @@ export class Nosotros implements OnInit {
 
   sanitizeHtml(html: string): string {
     if (!html) return '';
-
     return html
       .replace(/&nbsp;/g, ' ')
       .replace(/<p>\s*<\/p>/g, '')
@@ -158,4 +180,3 @@ export class Nosotros implements OnInit {
     this.imageViewer.set(false);
   }
 }
-

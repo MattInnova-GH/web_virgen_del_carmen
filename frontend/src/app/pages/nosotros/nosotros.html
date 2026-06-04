@@ -143,12 +143,25 @@
       }
     </aside>
 
-    <!-- Grid de personal -->
+    <!-- Contenido -->
     <div class="autoridades-content">
+
+      <!-- Filtro por áreas -->
+      <div class="area-filter-bar">
+        <button class="area-chip" [class.active]="selectedArea === null" (click)="selectArea(null)">
+          Todos
+        </button>
+        @for (area of availableAreas(); track area) {
+        <button class="area-chip" [class.active]="selectedArea === area" (click)="selectArea(area)">
+          {{ area }}
+        </button>
+        }
+      </div>
+
       @if (currentPersonal.length > 0) {
       <div class="autoridades-grid">
-        @for (persona of currentPersonal; track persona.nombre) {
-        <div class="autor-card" [class.autor-placeholder]="!persona.foto">
+        @for (persona of currentPersonal; track persona.id) {
+        <div class="autor-card" [class.autor-placeholder]="!persona.foto" (click)="openProfile(persona)">
           @if (persona.foto) {
           <img [src]="persona.foto" [alt]="persona.nombre" class="autor-img" />
           } @else {
@@ -159,6 +172,9 @@
           <div class="autor-info">
             <h3 class="autor-name">{{ persona.nombre }}</h3>
             <p class="autor-role">{{ persona.cargo }}</p>
+            @if (persona.area) {
+            <span class="autor-area-tag">{{ persona.area }}</span>
+            }
           </div>
         </div>
         }
@@ -166,13 +182,55 @@
       } @else {
       <p class="empty-msg">Sin personal registrado para {{ selectedYear }}.</p>
       }
-    </div>
 
+    </div>
   </div>
 </section>
 
-@if (imageViewer()) {
-<div class="image-viewer" (click)="closeImageViewer()">
-  <img src="images/organigrama-institucional-ii.png" (click)="$event.stopPropagation()">
+<!-- MODAL PERFIL -->
+@if (activeProfile()) {
+<div class="profile-backdrop" (click)="closeProfile()">
+  <div class="profile-modal" (click)="$event.stopPropagation()">
+
+    <button class="profile-close" (click)="closeProfile()">×</button>
+
+    <div class="profile-top">
+      <div class="profile-avatar">
+        @if (activeProfile()!.foto) {
+        <img [src]="activeProfile()!.foto" [alt]="activeProfile()!.nombre" />
+        } @else {
+        <div class="profile-avatar-placeholder">
+          <i class="fas fa-user"></i>
+        </div>
+        }
+      </div>
+
+      <div class="profile-info">
+        <h2 class="profile-name">{{ activeProfile()!.nombre }}</h2>
+        <p class="profile-role">{{ activeProfile()!.cargo }}</p>
+        @if (activeProfile()!.area) {
+        <span class="profile-area-badge">{{ activeProfile()!.area }}</span>
+        }
+        @if (activeProfile()!.email) {
+        <p class="profile-email"><i class="fas fa-envelope"></i> {{ activeProfile()!.email }}</p>
+        }
+        @if (activeProfile()!.descripcion) {
+        <p class="profile-desc">{{ activeProfile()!.descripcion }}</p>
+        }
+      </div>
+    </div>
+
+    <!-- CV -->
+    @if (activeProfile()!.pdf_url) {
+    <div class="profile-cv-section">
+      <div class="profile-cv-header">
+        <i class="fas fa-file-pdf"></i>
+        <span>Currículum Vitae</span>
+      </div>
+      <iframe [src]="safePdfUrl()!" class="profile-cv-iframe"></iframe>
+    </div>
+    }
+
+  </div>
 </div>
 }
