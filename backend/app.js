@@ -12,9 +12,6 @@ const appRoutes = require('./routes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const testMailConnection = require('./test/testMail');
-const sendTestMail = require('./test/sendTestMail');
-
 app.use(cors({
     origin: [
         'https://elbambi.website',
@@ -74,7 +71,7 @@ app.use('/api', appRoutes.ReclamacionRoutes);
 app.use('/api', appRoutes.chatbotRoutes);
 
 app.use('/pdf', express.static(path.join(__dirname, 'public/pdf')));
-app.use('/personal_cv', express.static(path.join(__dirname, 'public/personal_cv'))); // ✅ NUEVO
+app.use('/personal_cv', express.static(path.join(__dirname, 'public/personal_cv')));
 
 app.get('/', (req, res) => {
     res.send('Bienvenido');
@@ -86,8 +83,6 @@ app.get('/test', (req, res) => {
 
 sequelize.authenticate()
     .then(() => {
-        //testMailConnection();
-        //sendTestMail();
         console.log('DB conectada');
 
         app.listen(PORT, () => {

@@ -1,20 +1,20 @@
 const db = require('../models');
 const buildAcademicPersonalQuery = require('../helpers/academic_personal.query');
-const deleteFile = require('../middlewares/deleteFile');  // ✅ NUEVO
+const deleteFile = require('../middlewares/deleteFile'); 
 
 exports.createAcademicPersonal = async (req, res) => {
     try {
         const { type, names, last_names, position, area, grade, img_url, year, institucional_email, description } = req.body;
 
         if (!type || !names || !last_names || !grade || !year) {
-            if (req.file)                                                                          // ✅ NUEVO
+            if (req.file)                                                                        
                 deleteFile(`${req.file.destination.replace(/\\/g, '/').split('/public')[1]}/${req.file.filename}`);
             return res.status(400).json({ error: 'Complete todos los campos.' });
         }
 
-        let pdf_url = null;                                                                        // ✅ NUEVO
+        let pdf_url = null;   
 
-        if (req.file) {                                                                            // ✅ NUEVO
+        if (req.file) {                  
             const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
             pdf_url = `${relDir}/${req.file.filename}`;
         }
@@ -24,17 +24,17 @@ exports.createAcademicPersonal = async (req, res) => {
             names,
             last_names,
             position,
-            area,          // ✅ NUEVO
+            area,  
             grade,
             img_url,
-            pdf_url,       // ✅ NUEVO
+            pdf_url,    
             year,
             institucional_email,
             description
         });
         return res.status(201).json(newAcademicPersonal);
     } catch (error) {
-        if (req.file)                                                                              // ✅ NUEVO
+        if (req.file)  
             deleteFile(`${req.file.destination.replace(/\\/g, '/').split('/public')[1]}/${req.file.filename}`);
         console.error(error.message);
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
@@ -65,7 +65,7 @@ exports.updateAcademicPersonal = async (req, res) => {
         if (!academicPersonal)
             return res.status(404).json({ message: 'Personal académico no encontrado.' });
 
-        if (req.file) {                                                                            // ✅ NUEVO
+        if (req.file) {
             deleteFile(academicPersonal.pdf_url);
             const relDir = req.file.destination.replace(/\\/g, '/').split('/public')[1];
             academicPersonal.pdf_url = `${relDir}/${req.file.filename}`;
@@ -75,7 +75,7 @@ exports.updateAcademicPersonal = async (req, res) => {
         academicPersonal.names = names;
         academicPersonal.last_names = last_names;
         academicPersonal.position = position;
-        academicPersonal.area = area;          // ✅ NUEVO
+        academicPersonal.area = area;       
         academicPersonal.grade = grade;
         academicPersonal.institucional_email = institucional_email;
         academicPersonal.img_url = img_url;
@@ -85,7 +85,7 @@ exports.updateAcademicPersonal = async (req, res) => {
         await academicPersonal.save();
         res.status(200).json(academicPersonal);
     } catch (error) {
-        if (req.file)                                                                              // ✅ NUEVO
+        if (req.file)
             deleteFile(`${req.file.destination.replace(/\\/g, '/').split('/public')[1]}/${req.file.filename}`);
         console.error(error.message);
         return res.status(500).json({ message: 'Error interno del servidor. Inténtelo de nuevo más tarde.' });
@@ -105,7 +105,7 @@ exports.deleteAcademicPersonal = async (req, res) => {
             await academicPersonal.update({ status: false });
             fmessage = 'Personal académico archivado/desactivado correctamente.'
         } else if (del === '1') {
-            deleteFile(academicPersonal.pdf_url);   // ✅ NUEVO
+            deleteFile(academicPersonal.pdf_url);
             await academicPersonal.destroy();
             fmessage = 'Personal académico eliminado correctamente.'
         } else {

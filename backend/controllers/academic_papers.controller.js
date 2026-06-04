@@ -92,7 +92,6 @@ exports.updateAcademicPaper = async (req, res) => {
 
         if (req.file) {
             deleteFile(academicPaper.pdf_url);
-
             academicPaper.pdf_url = `/pdf/documents/${newFolder}/${req.file.filename}`;
         }
 
