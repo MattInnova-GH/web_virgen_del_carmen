@@ -328,7 +328,7 @@ export class MesaDePartes implements OnInit {
     const messages: Record<string, string> = {
 
       Pendiente:
-        'Su trámite ha sido recibido correctamente y se encuentra en proceso de evaluación por parte de la institución. Le recomendamos conservar su código de seguimiento y consultar periódicamente el estado de su solicitud.',
+        'Su trámite ha sido recibido correctamente y se encuentra en proceso de evaluación por parte de la institución. Le recomendamos conservar su código de seguimiento y consultar periódicamente el estado de su solicitud.\nEn el caso de no encontrar el correo de confirmación en su bandeja principal revise el correo no deseado.',
 
       Aceptado:
         'Su trámite ha sido aceptado satisfactoriamente. Se ha enviado una notificación al correo electrónico registrado con información adicional. Por favor, revise su bandeja de entrada y también la carpeta de spam o correo no deseado.',

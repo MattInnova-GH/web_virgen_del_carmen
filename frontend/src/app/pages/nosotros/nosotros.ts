@@ -103,7 +103,7 @@ export class Nosotros implements OnInit {
   openProfile(persona: Personal) {
     this.activeProfile.set(persona);
     if (persona.pdf_url) {
-      const base = environment.apiUrl.replace('/api', '');
+      const base = environment.baseUrl
       this.safePdfUrl.set(this.sanitizer.bypassSecurityTrustResourceUrl(base + persona.pdf_url));
     } else {
       this.safePdfUrl.set(null);

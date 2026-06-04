@@ -17,7 +17,7 @@ export class AdminPersonal implements OnInit {
   private sanitizer = inject(DomSanitizer);
 
   apiUrl = `${environment.apiUrl}/academic_personal`;
-  apiBase = environment.apiUrl.replace('/api', '');
+  apiBase = environment.baseUrl;
 
   personal = signal<any[]>([]);
 
