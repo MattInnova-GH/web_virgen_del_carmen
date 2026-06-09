@@ -107,7 +107,7 @@ export class Psicopedagogico {
       ],
       reporte: {
         titulo: 'Reporte de Atenciones de Mayo – Agosto del 2024',
-        url: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/Presentacion1-1.pdf',
+        url: 'images/psicopedagogico.pdf',
       },
     },
     2025: { presentacion: '', talleres: [], campanas: [], reporte: null },

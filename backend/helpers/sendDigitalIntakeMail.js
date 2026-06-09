@@ -21,7 +21,7 @@ const sendDigitalIntakeMail = async (data) => {
 
     await transporter.sendMail({
         from: process.env.MAIL_USER,
-        to: process.env.MAIL_USER,
+        to: process.env.MAIL_RECEPTOR,
         replyTo: data.email,
         subject: `Mesa de Partes Virtual - Nuevo trámite - ${data.tracking_code}`,
         html: digitalIntakeTemplate(data),

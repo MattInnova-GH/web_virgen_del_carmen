@@ -14,10 +14,10 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors({
     origin: [
-        'https://elbambi.website',
-        'http://elbambi.website',
-        'https://api.elbambi.website',
-        'http://api.elbambi.website',
+        'https://eespvirgendelcarmen.edu.pe',
+        'http://eespvirgendelcarmen.edu.pe',
+        'https://api.eespvirgendelcarmen.edu.pe',
+        'http://api.eespvirgendelcarmen.edu.pe',
         'http://localhost:4200'
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -35,19 +35,19 @@ app.use(
                     "data:",
                     "https:",
                     "http:",
-                    "https://api.elbambi.website",
+                    "https://api.eespvirgendelcarmen.edu.pe",
                     "http://localhost:3000",
                     "https://scontent.fpio4-1.fna.fbcdn.net"
                 ],
                 frameSrc: [
                     "'self'",
-                    "https://api.elbambi.website",
+                    "https://api.eespvirgendelcarmen.edu.pe",
                     "http://localhost:3000"
                 ],
                 frameAncestors: [
                     "'self'",
-                    "https://elbambi.website",
-                    "http://elbambi.website",
+                    "https://eespvirgendelcarmen.edu.pe",
+                    "http://eespvirgendelcarmen.edu.pe",
                     "http://localhost:4200"
                 ]
             },

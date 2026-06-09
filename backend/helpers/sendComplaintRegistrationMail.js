@@ -5,7 +5,7 @@ const sendComplaintRegistrationMail = async (data) => {
 
     await transporter.sendMail({
         from: process.env.MAIL_USER,
-        to: process.env.MAIL_USER,
+        to: process.env.MAIL_RECEPTOR,
         replyTo: data.email,
         subject: `Libro de Reclamaciones - Nuevo registro - ${data.tracking_code}`,
         html: complaintRegistrationTemplate(data)

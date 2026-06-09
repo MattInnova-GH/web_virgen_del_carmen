@@ -30,17 +30,18 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
 
   latestNoticias = signal<any[]>([]);
   latestComunicados = signal<any[]>([]);
+  contact = signal<any | null>(null);
   @ViewChild('carousel') carousel!: ElementRef;
   @ViewChild('track') track!: ElementRef;
 
   heroImages: { src: string; alt: string }[] = [
     {
-      src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/3-copia-scaled.jpg',
+      src: 'images/hero-1.jpg',
       alt: 'Hero 1',
     },
-    { src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/1.png', alt: 'Hero 2' },
+    { src: 'images/hero-2.png', alt: 'Hero 2' },
     {
-      src: 'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2024/08/2-1-scaled.jpg',
+      src: 'images/hero-3.jpg',
       alt: 'Hero 3',
     },
   ];
@@ -68,18 +69,18 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
     },
     {
       image:
-        'https://www.pedagogicomariamadre.edu.pe/inicio/wp-content/uploads/2019/09/logo-siges.png',
+        'images/logo-siges.png',
       url: 'https://www.gob.pe/institucion/minedu/noticias/506778-minedu-crea-el-sistema-integrado-de-informacion-de-la-educacion-superior-y-tecnico-productiva',
       alt: 'SIGES',
     },
     {
-      image: 'https://ugelarequipasur.gob.pe/wp-content/uploads/2021/07/logo-perueduca.png',
+      image: 'images/logo-perueduca.png',
       url: 'https://www.perueduca.pe/#/home',
       alt: 'Perú Educa',
     },
     {
       image:
-        'https://eespvirgendelcarmen.edu.pe/wp-content/uploads/2022/12/Enlaces-de-interes_06.png',
+        'images/logo-titulos.png',
       url: 'https://www.gob.pe/941-consultar-titulos-de-instituciones-tecnologicas-y-pedagogicas',
       alt: 'Consulta de Títulos',
     },
@@ -103,7 +104,7 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
     private renderer: Renderer2,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.http.get<any[]>(`${this.api}/news/list`).subscribe({
@@ -111,6 +112,14 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
     });
     this.http.get<any[]>(`${this.api}/press_releases/list`).subscribe({
       next: data => this.latestComunicados.set(data.filter(n => n.status).slice(0, 3))
+    });
+
+    this.http.get<any[]>(`${this.api}/contacts/list`).subscribe({
+      next: data => {
+        if (data.length > 0) {
+          this.contact.set(data[0]);
+        }
+      }
     });
   }
 
@@ -152,6 +161,23 @@ export class Inicio implements OnInit, AfterViewInit, OnDestroy {
       event.preventDefault();
       this.licenciaActiva = !this.licenciaActiva;
     }
+  }
+
+  get whatsappUrl(): string {
+
+    const phone = this.contact()?.phone;
+
+    if (!phone) {
+      return '#';
+    }
+
+    const cleanPhone = phone.replace(/\D/g, '');
+
+    const fullPhone = cleanPhone.startsWith('51')
+      ? cleanPhone
+      : `51${cleanPhone}`;
+
+    return `https://wa.me/${fullPhone}`;
   }
 
   // ── Loop infinito: clona los items al final del track ──

@@ -69,7 +69,7 @@
   </a>
 
   <!-- WhatsApp -->
-  <a href="#" class="whatsapp">
+  <a [href]="whatsappUrl" target="_blank" rel="noopener noreferrer" class="whatsapp">
     <i class="fab fa-whatsapp"></i>
   </a>
 </section>
@@ -142,7 +142,8 @@
             <p>Proceso de admisión</p>
           </a>
 
-          <a href="https://www.microsoft.com/es-es/microsoft-teams/log-in" target="_blank" rel="noopener" class="gestion-card">
+          <a href="https://www.microsoft.com/es-es/microsoft-teams/log-in" target="_blank" rel="noopener"
+            class="gestion-card">
             <i class="fa-solid fa-book-open-reader"></i>
             <h3>Biblioteca Virtual</h3>
             <p>Recursos bibliográficos</p>
@@ -195,7 +196,9 @@
         <a routerLink="/noticias" class="news-card">
           <img [src]="noticia.img_url" [alt]="noticia.title" />
           <div class="news-body">
-            <strong><p class="news-title">{{ noticia.title }}</p></strong>
+            <strong>
+              <p class="news-title">{{ noticia.title }}</p>
+            </strong>
             <span class="news-date">
               {{ noticia.createdAt | date:'dd/MM/yyyy' }}
             </span>
@@ -214,7 +217,9 @@
         @for (com of latestComunicados(); track com.id) {
         <div class="comunicado-item">
           <div class="comunicado-text">
-            <strong><p>{{ com.title }}</p></strong>
+            <strong>
+              <p>{{ com.title }}</p>
+            </strong>
             <span class="news-date">{{ com.createdAt | date:'dd/MM/yyyy' }}</span>
           </div>
 

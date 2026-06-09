@@ -32,60 +32,89 @@ const digitalIntakeTemplate = (data) => {
                         "
                     >
 
-                        <!-- HEADER -->
+                        <!-- Header -->
                         <tr>
-                            <td
-                                style="
-                                    background:#0d6efd;
-                                    color:white;
-                                    padding:25px;
-                                    text-align:center;
-                                "
-                            >
-                                <h1 style="margin:0;">
-                                    I.E.S.P.P. Virgen del Carmen
-                                </h1>
-                                <br>
-                            <h1 style="margin:0;">
+                            <td style="
+                                background:#323f7c;
+                                color:white;
+                                text-align:center;
+                                padding:35px 25px;
+                            ">
+                                <h1 style="
+                                    margin:0;
+                                    font-size:26px;
+                                    font-weight:700;
+                                ">
                                     Mesa de Partes Virtual
                                 </h1>
 
-                                <p style="margin-top:8px;">
-                                    Nuevo trámite recibido
+                                <p style="
+                                    margin:10px 0 0;
+                                    font-size:14px;
+                                    opacity:.9;
+                                ">
+                                    I.E.S.P.P. Virgen del Carmen
                                 </p>
                             </td>
                         </tr>
 
                         <!-- TRACKING -->
                         <tr>
-                            <td
-                                style="
-                                    padding:20px;
+                            <td style="padding:25px 35px 10px;">
+
+                                <div style="
+                                    background:#fff8ef;
+                                    border-left:5px solid #f28c1b;
+                                    padding:18px;
+                                    border-radius:8px;
+                                ">
+                                    <strong style="
+                                        color:#323f7c;
+                                        font-size:16px;
+                                    ">
+                                        Trámite registrado correctamente
+                                    </strong>
+
+                                    <p style="
+                                        margin:10px 0 0;
+                                        line-height:1.6;
+                                        font-size:14px;
+                                    ">
+                                        Hemos recibido su trámite y ha sido registrado
+                                        satisfactoriamente en la Mesa de Partes Virtual
+                                        del Instituto de Educacion Superior Pedagogico Publico Virgen del Carmen.
+                                    </p>
+                                </div>
+
+                            </td>
+                        </tr>
+                        <!-- Código -->
+                        <tr>
+                            <td style="padding:15px 35px;">
+
+                                <div style="
+                                    background:#f4f7ff;
+                                    border:1px solid #dbe4ff;
+                                    border-radius:10px;
                                     text-align:center;
-                                "
-                            >
+                                    padding:20px;
+                                ">
+                                    <div style="
+                                        color:#666;
+                                        font-size:13px;
+                                        margin-bottom:8px;
+                                    ">
+                                        Código de Seguimiento
+                                    </div>
 
-                                <p
-                                    style="
-                                        color:#6c757d;
-                                        margin-bottom:10px;
-                                    "
-                                >
-                                    Código de Seguimiento
-                                </p>
-
-                                <div
-                                    style="
-                                        display:inline-block;
-                                        background:#e9f2ff;
-                                        color:#0d6efd;
-                                        padding:12px 25px;
-                                        border-radius:8px;
-                                        font-size:20px;
+                                    <div style="
+                                        color:#323f7c;
+                                        font-size:24px;
                                         font-weight:bold;
-                                    "
-                                >
-                                    ${data.tracking_code}
+                                        letter-spacing:1px;
+                                    ">
+                                        ${data.tracking_code}
+                                    </div>
                                 </div>
 
                             </td>
@@ -97,8 +126,8 @@ const digitalIntakeTemplate = (data) => {
 
                                 <h3
                                     style="
-                                        border-bottom:1px solid #ddd;
-                                        padding-bottom:10px;
+                                        color:#323f7c;
+                                        font-size:16px;
                                     "
                                 >
                                     Información del Remitente
@@ -142,8 +171,8 @@ const digitalIntakeTemplate = (data) => {
 
                                 <h3
                                     style="
-                                        border-bottom:1px solid #ddd;
-                                        padding-bottom:10px;
+                                        color:#323f7c;
+                                        font-size:16px;
                                     "
                                 >
                                     Datos del Documento
@@ -173,7 +202,7 @@ const digitalIntakeTemplate = (data) => {
                                         margin-top:20px;
                                         background:#f8f9fa;
                                         padding:15px;
-                                        border-left:4px solid #0d6efd;
+                                        border-left:4px solid #f28c1b;
                                         border-radius:5px;
                                     "
                                 >

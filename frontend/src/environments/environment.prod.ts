@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.elbambi.website/api',
-  baseUrl: 'https://api.elbambi.website'
+  apiUrl: 'https://api.eespvirgendelcarmen.edu.pe/api',
+  baseUrl: 'https://api.eespvirgendelcarmen.edu.pe'
 };

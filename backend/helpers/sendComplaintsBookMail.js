@@ -7,7 +7,7 @@ const sendComplaintResponseMail = async (data) => {
 
     await transporter.sendMail({
         from: process.env.MAIL_USER,
-        to: process.env.MAIL_USER,
+        to: process.env.MAIL_RECEPTOR,
         replyTo: data.email,
         subject: `Respuesta emitida - ${data.tracking_code}`,
         html
