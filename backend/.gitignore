@@ -1,5 +1,7 @@
 *.sql
 *.env
+*.env.example
+*.env.deploy.example
 .DS_Store
 npm-debug.log*
 logs
@@ -12,3 +14,5 @@ package.json
 node_modules/
 .idea/
 .vscode/
+sql/
+*.sql

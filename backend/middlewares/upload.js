@@ -2,16 +2,6 @@ const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
 
-const slugify = (text) => {
-    return text
-        .toString()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '_')
-        .replace(/^_+|_+$/g, '')
-};
-
 const normalizeType = (text) => {
     return text
         .toString()
@@ -19,7 +9,7 @@ const normalizeType = (text) => {
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '_')
-        .replace(/^_+|_+$/g, '');
+        .replace(/(?:^_+|_+$)/g, '');
 };
 
 const storage = multer.diskStorage({
@@ -51,7 +41,7 @@ const storage = multer.diskStorage({
         const ext = path.extname(file.originalname);
         const baseName = path.basename(file.originalname, ext);
 
-        const safeName = slugify(baseName);
+        const safeName = normalizeType(baseName);
 
         cb(null, `${Date.now()}-${safeName}${ext}`);
     }

@@ -9,7 +9,7 @@ const slugify = (text) => {
         .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, '_')
-        .replace(/^_+|_+$/g, '');
+        .replace(/(?:^_+|_+$)/g, '');
 };
 
 const storage = multer.diskStorage({

@@ -64,7 +64,7 @@ exports.getInvestigations = async (req, res) => {
 
 exports.updateInvestigation = async (req, res) => {
     const { id } = req.params;
-    const { title, author, content, pdf_url, publication_date, description } = req.body;
+    const { title, author, content, publication_date, description } = req.body;
     try {
         const investigations = await db.Investigations.findByPk(id);
 

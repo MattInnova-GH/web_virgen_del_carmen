@@ -24,7 +24,7 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    area: {                              // ✅ NUEVO
+    area: {
         type: DataTypes.STRING(255),
         allowNull: true
     },
@@ -36,7 +36,7 @@ const AcademicPersonal = sequelize.define('AcademicPersonal', {
         type: DataTypes.TEXT,
         allowNull: true
     },
-    pdf_url: {                           // ✅ NUEVO
+    pdf_url: {
         type: DataTypes.TEXT,
         allowNull: true
     },
